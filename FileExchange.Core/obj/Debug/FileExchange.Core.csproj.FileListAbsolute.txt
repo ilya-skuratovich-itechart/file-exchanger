@@ -1,0 +1,10 @@
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.Core.dll.config
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.Core.dll
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.Core.pdb
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.dll
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.SqlServer.dll
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.xml
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.SqlServer.xml
+D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csprojResolveAssemblyReference.cache
+D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.dll
+D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.pdb
