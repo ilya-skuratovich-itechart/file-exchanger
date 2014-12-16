@@ -8,29 +8,24 @@ namespace FileExchange.Core.UOW
     public class UnitOfWork : IUnitOfWork
     {
         private FileExchangeDbContext _fileExchangeContext { get; set; }
-        private TransactionScope _transaction;
         public FileExchangeDbContext DbContext
         {
             get { return _fileExchangeContext; }
         }
 
-        public UnitOfWork(FileExchangeDbContext fileExchangeContext)
+        public UnitOfWork()
         {
-            _fileExchangeContext = fileExchangeContext;
+            _fileExchangeContext = new FileExchangeDbContext();
         }
 
-        public void StartTransaction()
+        public TransactionScope BeginTransaction()
         {
-            _transaction = new TransactionScope();
+           return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
         }
 
-        public void Commit()
+        public void SaveChanges()
         {
             _fileExchangeContext.SaveChanges();
-            if (_transaction != null)
-            {
-                _transaction.Complete();
-            }
         }
 
         public void Rollback()
@@ -51,9 +46,12 @@ namespace FileExchange.Core.UOW
 
         public void Dispose()
         {
-            _fileExchangeContext.Dispose();
-            _fileExchangeContext = null;
+            if (_fileExchangeContext != null)
+            {
+                _fileExchangeContext.Dispose();
+                _fileExchangeContext = null;
+            }
         }
-       
+
     }
 }

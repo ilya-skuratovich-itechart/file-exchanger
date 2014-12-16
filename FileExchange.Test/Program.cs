@@ -4,8 +4,13 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using FileExchange.Core;
+using FileExchange.Core.AutofacModules;
 using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.Repositories;
+using FileExchange.Core.Services;
+using FileExchange.Core.UOW;
 
 namespace FileExchange.Test
 {
@@ -15,13 +20,26 @@ namespace FileExchange.Test
         {
             try
             {
+                var builder = new ContainerBuilder();
+                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-          
-            using (var db = new FileExchangeDbContext())
-            {
-                db.UserRoles.Add(new UserRoles() {RoleId = 1,RoleName = "test"});
-                db.SaveChanges();
-            }
+                builder.RegisterType<ExchangeFileService>().As<IExchangeFileService>()
+                    .UsingConstructor(typeof (IUnitOfWork));
+                builder.RegisterType<FileCategoriesService>().As<IFileCategoriesService>()
+                    .UsingConstructor(typeof (IUnitOfWork));
+                builder.RegisterType<FileCommentService>().As<IFileCommentService>()
+                    .UsingConstructor(typeof (IUnitOfWork));
+                builder.RegisterType<FileNotificationSubscriberService>().As<IFileNotificationSubscriberService>()
+                    .UsingConstructor(typeof (IUnitOfWork));
+                builder.RegisterType<NewsService>().As<INewsService>()
+                    .UsingConstructor(typeof (IUnitOfWork));
+                var container = builder.Build();
+
+
+                var unitOfWork = container.Resolve<IUnitOfWork>();
+                var exhcangeFileService = container.Resolve<IExchangeFileService>();
+                exhcangeFileService.GetAll();
+                var tmp = unitOfWork;
             }
             catch (ModelValidationException exc)
             {

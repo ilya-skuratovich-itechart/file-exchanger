@@ -6,12 +6,14 @@ namespace FileExchange.Core.Services
     public interface IExchangeFileService
     {
         List<ExchangeFile> GetUserFiles(int userId);
-        
+
         List<ExchangeFile> GetAll();
 
-        ExchangeFile GetUserFile(int fileId,int userId);
+        List<ExchangeFile> GetCategoryFiles(int fileCategoryId);
 
-        void Add(int userId, int fileCategoryId, string filePath, string tags);
+        ExchangeFile GetUserFile(int fileId, int userId);
+
+        void Add(int userId, int fileCategoryId, string uniqFileName,string origFileName, string tags);
 
         void RemoveUserFile(int userId, int fileId);
     }

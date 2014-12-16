@@ -4,31 +4,35 @@
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
     <h2>Create a new account.</h2>
 </hgroup>
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
+@using (Html.BeginForm(new { @class = "form-horizontal" }))
+{
     <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="control-group">
+            @Html.LabelFor(m => m.UserName)
+            <div class="controls">
+                @Html.TextBoxFor(m => m.UserName, new {@class = "input-xlarge"})
+            </div>
+            @Html.ValidationMessageFor(x => x.UserName)
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.Password)
+            <div class="controls">
+                @Html.PasswordFor(m => m.Password, new {@class = "input-xlarge"})
+            </div>
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.ConfirmPassword)
+            <div class="controls">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input-xlarge" })
+            </div>
+        </div>
+        <input type="submit" class="btn btn-success" value="Register" />
     </fieldset>
 }
 

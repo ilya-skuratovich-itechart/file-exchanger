@@ -1,0 +1,28 @@
+﻿@model FileExchange.Models.LastNewsModel
+
+@if (Model.AllowEdit)
+{
+    <div >
+        @Html.ActionLink("Add", MVC.News.ActionNames.AddNews, MVC.News.Name, new { @class = "glyphicon glyphicon-plus" })
+    </div>
+}
+<div>
+   
+</div>
+@foreach (var news in @Model.News)
+{
+    <div class="newsBlockInfo">
+        <div class="news_date">@news.CreateDate.ToString("dd.MM")</div>
+        <a href=' @Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)'>@news.Header.Take(30)</a><br>
+        <p>@news.Header.Take(60)</p>
+    </div>
+}
+
+
+
+
+
+
+
+
+

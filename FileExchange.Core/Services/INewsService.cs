@@ -11,7 +11,9 @@ namespace FileExchange.Core.Services
 
         News Add(string header, string text,string imgPath);
 
-        News Update(int newsId,string header, string text, string imgPath);
+        News Update(int newsId,string header, string text, string uniqueImageName,string origImageName);
+
+        List<News> GetLastNews(int count); 
 
         void Remove(int newsId);
 

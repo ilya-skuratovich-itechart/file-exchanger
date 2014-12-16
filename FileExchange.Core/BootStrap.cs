@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FileExchange.Core.Repositories;
+using FileExchange.Core.Services;
 
 namespace FileExchange.Core
 {
@@ -18,8 +19,8 @@ namespace FileExchange.Core
         static BootStrap()
         {
             var builder = new ContainerBuilder();
+            builder.RegisterGeneric(typeof (GenericRepository<>)).As(typeof(IGenericRepository<>));
             Container = builder.Build();
-            builder.RegisterGeneric(typeof (GenericRepository<>)).As(typeof (IGenericRepository<>));
         }
     }
 }

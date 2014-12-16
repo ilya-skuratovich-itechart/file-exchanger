@@ -16,8 +16,9 @@ namespace FileExchange
     {
         protected void Application_Start()
         {
+            AutofacConfig.ConfigureContainer();
+            SimpleMemberShipInitialazer.Initializate();
             AreaRegistration.RegisterAllAreas();
-
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

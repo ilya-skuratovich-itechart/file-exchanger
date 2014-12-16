@@ -1,0 +1,57 @@
+﻿@model FileExchange.Models.NewsModel
+@{
+    ViewBag.Title = "AddNews";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    @Scripts.Render("~/bundles/tinymce")
+    <script type="text/javascript">
+        $(function () {
+            tinyMCE.init({
+                selector: 'textarea',
+                plugins: "pagebreak,layer,table,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,template,wordcount,advlist,autosave",
+                mode: "textareas",
+                width: 750,
+                height: 450
+            });
+        });
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@using (Html.BeginForm(MVC.News.AddNews(), FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div class="col-md-9 personal-info">
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Заголовок:</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.Header)
+                @Html.TextBoxFor(m => m.Header, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Текст:</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.Text)
+                @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Фото:</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.File)
+                <input type="file" name="File" id="File" accept="image/x-png, image/gif, image/jpeg" class="form-control"/>
+                @Html.TextBoxFor(m => m.File, new {type = "file", style = "display:none"})
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-lg-8">
+                <input type="submit" value="Сохранить" class="btn-primary" />
+
+            </div>
+        </div>
+
+    </div>
+}

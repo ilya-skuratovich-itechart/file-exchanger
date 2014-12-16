@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.EntityConfiguration;
 
 namespace FileExchange.Core
 {
@@ -21,14 +22,20 @@ namespace FileExchange.Core
 
         public DbSet<News> News { get; set; }
 
+        public DbSet<MemberShip> Membership { get; set; }
+
         public FileExchangeDbContext()
             : base("FileExchangeDbConnectionString") 
         {
+            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           
-           
+            modelBuilder.Configurations.Add(new MembershipMapping());
+            modelBuilder.Configurations.Add(new RolesMapping());
+            modelBuilder.Configurations.Add(new UsersInRolesMapping());
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
+
     }
 }

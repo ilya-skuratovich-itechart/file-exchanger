@@ -17,8 +17,11 @@ namespace FileExchange.Core.BusinessObjects
         [ForeignKey("FileCategory")]
         public int FileCategoryId { get; set; }
 
-        [MaxLength(512)]
-        public string FilePath { get; set; }
+        [MaxLength(56)]
+        public string UniqFileName { get; set; }
+
+        [MaxLength(128)]
+        public string OrigFileName { get; set; }
 
         [MaxLength(1024)]
         public string Tags { get; set; }

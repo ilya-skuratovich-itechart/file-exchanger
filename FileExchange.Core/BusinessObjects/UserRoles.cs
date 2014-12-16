@@ -11,6 +11,7 @@ namespace FileExchange.Core.BusinessObjects
     [Table("webpages_Roles")]
     public class UserRoles
     {
+        public virtual ICollection<UserInRoles> UserInRoles { get; set; }
         [Key]
         public int RoleId { get; set; }
 
@@ -19,10 +20,14 @@ namespace FileExchange.Core.BusinessObjects
         [NotMapped]
         public UserRoleTypes RoleType
         {
-            get { return (UserRoleTypes) RoleId; }
+            get { return (UserRoleTypes)RoleId; }
         }
 
         public virtual ICollection<UserProfile> Users { get; set; }
+        public UserRoles()
+        {
+            UserInRoles = new HashSet<UserInRoles>();
+        }
     }
 
     public enum UserRoleTypes

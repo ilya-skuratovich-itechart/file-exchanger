@@ -15,7 +15,11 @@ namespace FileExchange.Core.BusinessObjects
 
         public string Text { get; set; }
 
-        public string ImagePath { get; set; }
+        [MaxLength(56)]
+        public string UniqImageName { get; set; }
+
+        [MaxLength(128)]
+        public string OrigImageName{ get; set; }
 
         public DateTime CreateDate { get; set; }
 

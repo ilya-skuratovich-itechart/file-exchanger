@@ -2,34 +2,88 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Xml.Linq;
+using EntityFramework.Extensions;
 using FileExchange.Core.UOW;
 
 namespace FileExchange.Core.Repositories
 {
 
-    public abstract class GenericRepository<T> : IGenericRepository<T>
+    public class GenericRepository<T> : IGenericRepository<T>
         where T : class
     {
         protected DbContext _entities;
         protected  IDbSet<T> _dbset;
 
+        public GenericRepository()
+        {
+            
+        }
         public void InitializeDbContext(DbContext entities)
         {
             _entities = entities;
             _dbset = entities.Set<T>();
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll(string[] includes = null)
         {
-
-            return _dbset.AsEnumerable<T>();
+            var query = _dbset.AsQueryable();
+            if (includes != null && includes.Any())
+            {
+                foreach (var include in includes)
+                    query = query.Include(include);
+            }
+            return query.AsEnumerable<T>();
         }
 
-        public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate,
+                                    string[] includes = null)
         {
 
-            IEnumerable<T> query = _dbset.Where(predicate).AsEnumerable();
-            return query;
+            var query = _dbset.AsQueryable();
+            if (includes != null && includes.Any())
+            {
+                foreach (var include in includes)
+                    query = query.Include(include);
+            }
+            return query.Where(predicate).AsEnumerable<T>();
+        }
+
+        public IEnumerable<T> GetPaged(int pageNumber, int pageSize, string[] includes = null)
+        {
+            var query = _dbset.AsQueryable();
+            if (includes != null && includes.Any())
+            {
+                foreach (var include in includes)
+                    query = query.Include(include);
+            }
+            return query
+                .AsEnumerable()
+               .Skip(pageNumber-1*pageSize)
+               .Take(pageSize);
+        }
+
+        public IEnumerable<T> FindPaged(System.Linq.Expressions.Expression<Func<T, bool>> predicate, int pageNumber,
+            int pageSize,
+            string[] includes = null)
+        {
+            var query = _dbset.AsQueryable();
+            if (includes != null && includes.Any())
+            {
+                foreach (var include in includes)
+                    query = query.Include(include);
+            }
+            return query
+               .Where(predicate)
+               .AsEnumerable()
+               .Skip(pageNumber - 1 * pageSize)
+               .Take(pageSize);
+        }
+
+        public void RemoveBy(Expression<Func<T, bool>> predicate)
+        {
+            _dbset.Where(predicate).Delete();
         }
 
         public virtual T Add(T entity)

@@ -16,7 +16,7 @@ namespace FileExchange.Core.Services
         public ExchangeFileService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            BootStrap.Container.Resolve<IGenericRepository<ExchangeFile>>();
+            _exchangeFileRepository =  BootStrap.Container.Resolve<IGenericRepository<ExchangeFile>>();
             _exchangeFileRepository.InitializeDbContext(unitOfWork.DbContext);
         }
 
@@ -41,13 +41,21 @@ namespace FileExchange.Core.Services
               .SingleOrDefault();
         }
 
-        public void Add(int userId, int fileCategoryId, string filePath, string tags)
+        public List<ExchangeFile> GetCategoryFiles(int fileCategoryId)
+        {
+            return _exchangeFileRepository
+                .FindBy(f => f.FileCategoryId == fileCategoryId)
+                .ToList();
+        }
+
+        public void Add(int userId, int fileCategoryId, string uniqFileName, string origFileName, string tags)
         {
             _exchangeFileRepository.Add(
                 new ExchangeFile()
                 {
                     FileCategoryId = fileCategoryId,
-                    FilePath = filePath,
+                    UniqFileName = uniqFileName,
+                    OrigFileName = origFileName,
                     Tags = tags,
                     CreateDate = DateTime.UtcNow
                 });

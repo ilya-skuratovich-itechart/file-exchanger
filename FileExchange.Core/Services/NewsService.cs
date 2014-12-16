@@ -13,25 +13,25 @@ namespace FileExchange.Core.Services
     public class NewsService : INewsService
     {
         private IUnitOfWork _unitOfWork;
-        private IGenericRepository<News> _exchangeFileRepository;
+        private IGenericRepository<News> _repository;
 
         public NewsService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            BootStrap.Container.Resolve<IGenericRepository<ExchangeFile>>();
-            _exchangeFileRepository.InitializeDbContext(unitOfWork.DbContext);
+            _repository = BootStrap.Container.Resolve<IGenericRepository<News>>();
+            _repository.InitializeDbContext(unitOfWork.DbContext);
         }
 
         public List<News> GetAll()
         {
-            return _exchangeFileRepository
+            return _repository
                 .GetAll()
                 .ToList();
         }
 
         public News GetById(int newsId)
         {
-            return _exchangeFileRepository
+            return _repository
                  .FindBy(n=>n.NewsId==newsId)
                  .SingleOrDefault();
         }
@@ -44,12 +44,17 @@ namespace FileExchange.Core.Services
                 Text = text,
                 CreateDate = DateTime.UtcNow
             };
-            return _exchangeFileRepository.Add(news);
+            return _repository.Add(news);
         }
 
-        public News Update(int newsId,string header, string text, string imgPath)
+        public List<News> GetLastNews(int count)
         {
-            var news = _exchangeFileRepository
+            return _repository.GetPaged(1, count)
+                .ToList();
+        }
+        public News Update(int newsId,string header, string text, string uniqueImageName,string origImageName)
+        {
+            var news = _repository
                   .FindBy(n => n.NewsId == newsId)
                   .SingleOrDefault();
             if (news==null)
@@ -57,19 +62,20 @@ namespace FileExchange.Core.Services
             news.ModifyDate = DateTime.UtcNow;
             news.Header = header;
             news.Text = text;
-            news.ImagePath = imgPath;
-            _exchangeFileRepository.Edit(news);
+            news.UniqImageName = uniqueImageName;
+            news.OrigImageName = origImageName;
+            _repository.Edit(news);
             return news;
         }
 
         public void Remove(int newsId)
         {
-            var news = _exchangeFileRepository
+            var news = _repository
                  .FindBy(n => n.NewsId == newsId)
                  .SingleOrDefault();
             if (news == null)
                 throw new ArgumentException(string.Format("news object not found. NewsId:{0}", news));
-            _exchangeFileRepository.Delete(news);
+            _repository.Delete(news);
         }
     }
 }

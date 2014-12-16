@@ -1,10 +1,13 @@
-﻿namespace FileExchange.Core.UOW
+﻿using System;
+using System.Transactions;
+
+namespace FileExchange.Core.UOW
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IDisposable
     {
         FileExchangeDbContext DbContext { get; }
-        void StartTransaction();
+        TransactionScope BeginTransaction();
         void Rollback();
-        void Commit();
+        void SaveChanges();
     }
 }
