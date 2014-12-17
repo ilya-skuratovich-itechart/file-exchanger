@@ -1,20 +1,24 @@
 ﻿@model FileExchange.Models.LastNewsModel
+@using FileExchange.Helplers
 
 @if (Model.AllowEdit)
 {
-    <div >
-        @Html.ActionLink("Add", MVC.News.ActionNames.AddNews, MVC.News.Name, new { @class = "glyphicon glyphicon-plus" })
+    <div class="edit_topblock">
+        @Html.ActionLink("Add news", MVC.News.ActionNames.AddNews, MVC.News.Name,null, new { @class = "glyphicon glyphicon-plus" })
     </div>
 }
-<div>
-   
-</div>
-@foreach (var news in @Model.News)
+
+@foreach (FileExchange.Models.EditNewsModel news in @Model.News)
 {
-    <div class="newsBlockInfo">
+    <div class="news">
+        <div class="edit_newsIcon">
+            @Html.ActionLink(" ", MVC.News.ActionNames.EditNews, MVC.News.Name, new { newsId = news.NewsId }, new { @class = "glyphicon glyphicon-pencil" })
+        </div>
         <div class="news_date">@news.CreateDate.ToString("dd.MM")</div>
-        <a href=' @Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)'>@news.Header.Take(30)</a><br>
-        <p>@news.Header.Take(60)</p>
+        <a href='@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)'>@(news.Header.Length > 30 ? news.Header.Remove(30) : news.Header) </a><br>
+        <p>
+            @Html.RemoveHtmlTags(news.Text, 40)
+        </p>
     </div>
 }
 

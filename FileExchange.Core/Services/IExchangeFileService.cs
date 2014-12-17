@@ -9,6 +9,9 @@ namespace FileExchange.Core.Services
 
         List<ExchangeFile> GetAll();
 
+        List<ExchangeFile> GetUserFilesPaged(int userId, int startRecNum, int pageLenght, bool sortAsc, string sortField,
+            out int totalRecords);
+
         List<ExchangeFile> GetCategoryFiles(int fileCategoryId);
 
         ExchangeFile GetUserFile(int fileId, int userId);

@@ -54,6 +54,12 @@ namespace FileExchange.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult EditNews()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditNews);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public NewsController Actions { get { return MVC.News; } }
@@ -72,6 +78,7 @@ namespace FileExchange.Controllers
         {
             public readonly string GetLastNews = "GetLastNews";
             public readonly string AddNews = "AddNews";
+            public readonly string EditNews = "EditNews";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -79,6 +86,7 @@ namespace FileExchange.Controllers
         {
             public const string GetLastNews = "GetLastNews";
             public const string AddNews = "AddNews";
+            public const string EditNews = "EditNews";
         }
 
 
@@ -88,6 +96,15 @@ namespace FileExchange.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_AddNews
         {
+            public readonly string news = "news";
+        }
+        static readonly ActionParamsClass_EditNews s_params_EditNews = new ActionParamsClass_EditNews();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_EditNews EditNewsParams { get { return s_params_EditNews; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_EditNews
+        {
+            public readonly string newsid = "newsid";
             public readonly string news = "news";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -102,9 +119,11 @@ namespace FileExchange.Controllers
             {
                 public readonly string _lastNews = "_lastNews";
                 public readonly string AddNews = "AddNews";
+                public readonly string EditNews = "EditNews";
             }
             public readonly string _lastNews = "~/Views/News/_lastNews.cshtml";
             public readonly string AddNews = "~/Views/News/AddNews.cshtml";
+            public readonly string EditNews = "~/Views/News/EditNews.cshtml";
         }
     }
 
@@ -136,14 +155,38 @@ namespace FileExchange.Controllers
         }
 
         [NonAction]
-        partial void AddNewsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.NewsModel news);
+        partial void AddNewsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.CreateNewsModel news);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult AddNews(FileExchange.Models.NewsModel news)
+        public override System.Web.Mvc.ActionResult AddNews(FileExchange.Models.CreateNewsModel news)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddNews);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "news", news);
             AddNewsOverride(callInfo, news);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditNewsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int newsid);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditNews(int newsid)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditNews);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "newsid", newsid);
+            EditNewsOverride(callInfo, newsid);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditNewsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.EditNewsModel news);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditNews(FileExchange.Models.EditNewsModel news)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditNews);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "news", news);
+            EditNewsOverride(callInfo, news);
             return callInfo;
         }
 

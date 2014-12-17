@@ -8,6 +8,7 @@ namespace FileExchange.Core.UOW
     public class UnitOfWork : IUnitOfWork
     {
         private FileExchangeDbContext _fileExchangeContext { get; set; }
+        private TransactionScope _transactionScope { get; set; }
         public FileExchangeDbContext DbContext
         {
             get { return _fileExchangeContext; }
@@ -20,7 +21,8 @@ namespace FileExchange.Core.UOW
 
         public TransactionScope BeginTransaction()
         {
-           return new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
+           _transactionScope= new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
+            return _transactionScope;
         }
 
         public void SaveChanges()
@@ -51,6 +53,8 @@ namespace FileExchange.Core.UOW
                 _fileExchangeContext.Dispose();
                 _fileExchangeContext = null;
             }
+            if (_transactionScope!=null)
+                _transactionScope.Dispose();
         }
 
     }

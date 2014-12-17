@@ -66,7 +66,6 @@
     <Compile Include="BusinessObjects\UserRoles.cs" />
     <Compile Include="Data\UserRoleNames.cs" />
     <Compile Include="EntityConfiguration\Mappings.cs" />
-    <Compile Include="EntityConfiguration\UserCategoriesInitialazer.cs" />
     <Compile Include="FileExchangeDBContext.cs" />
     <Compile Include="Migrations\201412161309479_InitialCreate.cs" />
     <Compile Include="Migrations\201412161309479_InitialCreate.Designer.cs">

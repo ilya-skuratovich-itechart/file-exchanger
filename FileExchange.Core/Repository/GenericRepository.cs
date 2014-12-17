@@ -64,8 +64,11 @@ namespace FileExchange.Core.Repositories
                .Take(pageSize);
         }
 
-        public IEnumerable<T> FindPaged(System.Linq.Expressions.Expression<Func<T, bool>> predicate, int pageNumber,
-            int pageSize,
+        public IEnumerable<T> FindPaged(System.Linq.Expressions.Expression<Func<T, bool>> predicate, int startDisplayRec,
+            int displayLenght,
+            bool sortAsc,
+            string sortField,
+            out int totalRecords,
             string[] includes = null)
         {
             var query = _dbset.AsQueryable();
@@ -74,11 +77,19 @@ namespace FileExchange.Core.Repositories
                 foreach (var include in includes)
                     query = query.Include(include);
             }
+            if (!string.IsNullOrEmpty(sortField))
+            {
+                if (sortAsc)
+                    query = query.OrderBy(x => GetPropertyValue(x, sortField));
+                else
+                    query = query.OrderByDescending(x => GetPropertyValue(x, sortField));
+            }
+            totalRecords = query.Count();
             return query
                .Where(predicate)
                .AsEnumerable()
-               .Skip(pageNumber - 1 * pageSize)
-               .Take(pageSize);
+               .Skip(startDisplayRec)
+               .Take(displayLenght);
         }
 
         public void RemoveBy(Expression<Func<T, bool>> predicate)
@@ -104,6 +115,13 @@ namespace FileExchange.Core.Repositories
         public virtual void Save()
         {
             _entities.SaveChanges();
+        }
+
+        private object GetPropertyValue(object obj, string name)
+        {
+            return obj == null ? null : obj.GetType()
+                                           .GetProperty(name)
+                                           .GetValue(obj, null);
         }
     }
 }

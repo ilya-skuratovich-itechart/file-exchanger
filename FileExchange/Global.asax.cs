@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FileExchange.Mapper;
 
 namespace FileExchange
 {
@@ -17,6 +18,7 @@ namespace FileExchange
         protected void Application_Start()
         {
             AutofacConfig.ConfigureContainer();
+            MapperService.RegisterMapping();
             SimpleMemberShipInitialazer.Initializate();
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);

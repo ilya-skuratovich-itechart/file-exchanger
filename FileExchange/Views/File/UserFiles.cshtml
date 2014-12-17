@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "UserFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#userFiles').dataTable(
+            {
+                "oLanguage": {
+                    "sEmptyTable": "No files found."
+                },
+                "bFilter": false,
+                "aoColumns": [
+                    {
+                        "sName": "btn_editFile",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": false,
+                        "fnRender": function(oObj) {
+                            return '<a href=\"@Url.Action(MVC.File.ActionNames.FileSections, MVC.File.Name)"/' +
+                                oObj.aData[2] + '"><div class="glyphicon glyphicon-pencil"></div></a>';
+                        }
+                    },
+                    {
+                        "sName": "FileId",
+                        "bSearchable": false,
+                        "bSortable": true
+                    },
+                    {
+                        "sName": "OrigFileName",
+                        "bSearchable": false,
+                        "bSortable": true
+                    },
+                    {
+                        "sName": "CreateDate",
+                        "bSearchable": false,
+                        "bSortable": false
+                    }, {
+                        "sName": "ModifyDate",
+                        "bSearchable": false,
+                        "bSortable": false
+                    }
+                ]
+            });
+            $('#userFiles')
+                .removeClass('display')
+                .addClass('table table-striped table-bordered');
+        });
+    </script>
+
+    @Styles.Render("~/Content/datatable")
+    @Scripts.Render("~/bundles/datatable")
+
+}
+<div class="col-lg-12">
+    <h1 class="page-header">My files</h1>
+</div>
+<table cellpadding="0" cellspacing="0" border="0" id="userFiles">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Имя файла</th>
+            <th>Дата создания</th>
+            <th>Дата изменения</th>
+        </tr>
+    </thead>
+</table>

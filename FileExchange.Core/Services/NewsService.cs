@@ -36,12 +36,14 @@ namespace FileExchange.Core.Services
                  .SingleOrDefault();
         }
 
-        public News Add(string header, string text, string imgPath)
+        public News Add(string header, string text, string uniqueImageName, string origImageName)
         {
             var news = new News()
             {
                 Header = header,
                 Text = text,
+                UniqImageName = uniqueImageName,
+                OrigImageName = origImageName,
                 CreateDate = DateTime.UtcNow
             };
             return _repository.Add(news);

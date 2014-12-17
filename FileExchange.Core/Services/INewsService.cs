@@ -9,13 +9,12 @@ namespace FileExchange.Core.Services
 
         News GetById(int newsId);
 
-        News Add(string header, string text,string imgPath);
+        News Add(string header, string text, string uniqueImageName, string origImageName);
 
-        News Update(int newsId,string header, string text, string uniqueImageName,string origImageName);
+        News Update(int newsId, string header, string text, string uniqueImageName, string origImageName);
 
-        List<News> GetLastNews(int count); 
+        List<News> GetLastNews(int count);
 
         void Remove(int newsId);
-
     }
 }

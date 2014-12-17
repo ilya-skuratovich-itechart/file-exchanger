@@ -209,21 +209,29 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutofacModules\GeneralModule.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UserInRoles.cs" />
+    <Compile Include="FileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helplers\ConfigHelper.cs" />
+    <Compile Include="Helplers\HtmlExtensions.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Mapper\MapperService.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\EditNewsModel.cs" />
+    <Compile Include="Models\FileCategoryModel.cs" />
+    <Compile Include="Models\jQueryDataTableParamModel.cs" />
     <Compile Include="Models\LastNewsModel.cs" />
-    <Compile Include="Models\NewsModel.cs" />
+    <Compile Include="Models\CreateNewsModel.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -242,6 +250,61 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.autoFill.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.autoFill.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.colReorder.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.colReorder.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.colVis.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.colvis.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.colVis.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.fixedColumns.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.fixedColumns.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.fixedHeader.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.fixedHeader.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.keyTable.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.keyTable.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.responsive.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.scroller.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.scroller.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.tableTools.css" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.tableTools.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables-1.10.4\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables-1.10.4\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables-1.10.4\images\background.png" />
+    <Content Include="Content\DataTables-1.10.4\images\back_disabled.png" />
+    <Content Include="Content\DataTables-1.10.4\images\back_enabled.png" />
+    <Content Include="Content\DataTables-1.10.4\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\collection.png" />
+    <Content Include="Content\DataTables-1.10.4\images\collection_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\copy.png" />
+    <Content Include="Content\DataTables-1.10.4\images\copy_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\csv.png" />
+    <Content Include="Content\DataTables-1.10.4\images\csv_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\details_close.png" />
+    <Content Include="Content\DataTables-1.10.4\images\details_open.png" />
+    <Content Include="Content\DataTables-1.10.4\images\filler.png" />
+    <Content Include="Content\DataTables-1.10.4\images\forward_disabled.png" />
+    <Content Include="Content\DataTables-1.10.4\images\forward_enabled.png" />
+    <Content Include="Content\DataTables-1.10.4\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\insert.png" />
+    <Content Include="Content\DataTables-1.10.4\images\loading-background.png" />
+    <Content Include="Content\DataTables-1.10.4\images\pdf.png" />
+    <Content Include="Content\DataTables-1.10.4\images\pdf_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\print.png" />
+    <Content Include="Content\DataTables-1.10.4\images\print_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.4\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.4\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.4\images\sort_desc.png" />
+    <Content Include="Content\DataTables-1.10.4\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.4\images\xls.png" />
+    <Content Include="Content\DataTables-1.10.4\images\xls_hover.png" />
+    <Content Include="Content\DataTables-1.10.4\swf\copy_csv_xls.swf" />
+    <Content Include="Content\DataTables-1.10.4\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -285,7 +348,32 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.responsive.scss" />
+    <Content Include="Content\DataTables-1.10.4\css\dataTables.jqueryui.scss" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.autoFill.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.colReorder.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.colReorder.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.colVis.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.colVis.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.keyTable.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.responsive.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.responsive.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.scroller.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.scroller.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.tableTools.js" />
+    <Content Include="Scripts\DataTables-1.10.4\dataTables.tableTools.min.js" />
+    <Content Include="Scripts\DataTables-1.10.4\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables-1.10.4\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -454,7 +542,6 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
-    <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\tinymce\skins\lightgray\img\anchor.gif" />
     <Content Include="Scripts\tinymce\skins\lightgray\img\loader.gif" />
     <Content Include="Scripts\tinymce\skins\lightgray\img\object.gif" />
@@ -465,6 +552,12 @@
     <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <None Include="T4MVC.tt.hooks.t4" />
+    <None Include="T4MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4MVC.cs</LastGenOutput>
+    </None>
+    <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -488,16 +581,15 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
     <Content Include="Views\News\_lastNews.cshtml" />
     <Content Include="Views\News\AddNews.cshtml" />
+    <Content Include="Views\News\EditNews.cshtml" />
+    <Content Include="Views\File\FileSections.cshtml" />
+    <Content Include="Views\File\UserFiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

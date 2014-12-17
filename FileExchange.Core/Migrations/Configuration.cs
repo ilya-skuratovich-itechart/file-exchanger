@@ -21,33 +21,36 @@ namespace FileExchange.Core.Migrations
         protected override void Seed(FileExchange.Core.FileExchangeDbContext context)
         {
 
-            context.UserRoles.Add(
+            context.UserRoles.AddOrUpdate(
                 new UserRoles()
                 {
                     RoleId = (int)UserRoleTypes.Admin,
                     RoleName =UserRoleNames.Admin
                 });
 
-            context.UserRoles.Add(
+            context.UserRoles.AddOrUpdate(
                 new UserRoles()
                 {
                     RoleId = (int)UserRoleTypes.Moderator,
                     RoleName = UserRoleNames.Moderator
                 });
 
-            context.FielCategories.Add(new FileCategories()
+            context.FielCategories.AddOrUpdate(new FileCategories()
             {
+                CategoryId = 1,
                 CategoryName = "бухгалтерия"
             });
 
 
-            context.FielCategories.Add(new FileCategories()
+            context.FielCategories.AddOrUpdate(new FileCategories()
             {
+                CategoryId = 2,
                 CategoryName = "менеджмент"
             });
 
-            context.FielCategories.Add(new FileCategories()
+            context.FielCategories.AddOrUpdate(new FileCategories()
             {
+                CategoryId = 3,
                 CategoryName = "техподдержка"
             });
             context.SaveChanges();

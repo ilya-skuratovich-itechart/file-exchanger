@@ -23,12 +23,19 @@ namespace FileExchange
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+                        "~/Scripts/DataTables-1.10.4/jquery.dataTables.js",
+                        "~/Scripts/DataTables-1.10.4/dataTables.bootstrap.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include("~/Content/bootstrap.css", "~/Content/bootstrap-theme.css", "~/Content/bootstrap.css.map"));
+
+            bundles.Add(new StyleBundle("~/Content/datatable").Include("~/Content/DataTables-1.10.4/css/jquery.dataTables.css", "~/Content/DataTables-1.10.4/css/dataTables.bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 

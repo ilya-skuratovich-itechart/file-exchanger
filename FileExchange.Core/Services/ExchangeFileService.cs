@@ -40,6 +40,13 @@ namespace FileExchange.Core.Services
               .FindBy(f => f.UserId == userId && f.FileId==fileId)
               .SingleOrDefault();
         }
+        public List<ExchangeFile> GetUserFilesPaged(int userId,int startRecNum,int pageLenght,bool sortAsc,string sortField,out int totalRecords)
+        {
+            return _exchangeFileRepository
+              .FindPaged(f => f.UserId == userId, startRecNum, pageLenght, sortAsc, sortField, out totalRecords)
+              .ToList();
+        }
+
 
         public List<ExchangeFile> GetCategoryFiles(int fileCategoryId)
         {
@@ -60,6 +67,8 @@ namespace FileExchange.Core.Services
                     CreateDate = DateTime.UtcNow
                 });
         }
+
+        
 
         public void RemoveUserFile(int userId, int fileId)
         {

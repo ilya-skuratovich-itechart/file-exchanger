@@ -121,21 +121,15 @@ namespace FileExchange.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _ChangePasswordPartial = "_ChangePasswordPartial";
-                public readonly string _ExternalLoginsListPartial = "_ExternalLoginsListPartial";
-                public readonly string _RemoveExternalLoginsPartial = "_RemoveExternalLoginsPartial";
                 public readonly string _SetPasswordPartial = "_SetPasswordPartial";
                 public readonly string ExternalLoginConfirmation = "ExternalLoginConfirmation";
-                public readonly string ExternalLoginFailure = "ExternalLoginFailure";
                 public readonly string Login = "Login";
                 public readonly string Manage = "Manage";
                 public readonly string Register = "Register";
             }
             public readonly string _ChangePasswordPartial = "~/Views/Account/_ChangePasswordPartial.cshtml";
-            public readonly string _ExternalLoginsListPartial = "~/Views/Account/_ExternalLoginsListPartial.cshtml";
-            public readonly string _RemoveExternalLoginsPartial = "~/Views/Account/_RemoveExternalLoginsPartial.cshtml";
             public readonly string _SetPasswordPartial = "~/Views/Account/_SetPasswordPartial.cshtml";
             public readonly string ExternalLoginConfirmation = "~/Views/Account/ExternalLoginConfirmation.cshtml";
-            public readonly string ExternalLoginFailure = "~/Views/Account/ExternalLoginFailure.cshtml";
             public readonly string Login = "~/Views/Account/Login.cshtml";
             public readonly string Manage = "~/Views/Account/Manage.cshtml";
             public readonly string Register = "~/Views/Account/Register.cshtml";

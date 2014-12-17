@@ -9,6 +9,7 @@ D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\Autofac.xml
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.xml
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.Extended.xml
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.SqlServer.xml
+D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csprojResolveAssemblyReference.cache
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.Migrations.InitialCreate.resources
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csproj.GenerateResource.Cache
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.dll
