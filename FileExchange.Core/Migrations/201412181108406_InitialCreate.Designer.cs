@@ -13,7 +13,7 @@ namespace FileExchange.Core.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201412161309479_InitialCreate"; }
+            get { return "201412181108406_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

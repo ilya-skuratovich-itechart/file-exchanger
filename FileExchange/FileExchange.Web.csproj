@@ -216,7 +216,7 @@
     <Compile Include="FileController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filtres\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -227,6 +227,8 @@
     </Compile>
     <Compile Include="Mapper\MapperService.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CreateExchangeFileModel.cs" />
+    <Compile Include="Models\EditExchangeFileModel.cs" />
     <Compile Include="Models\EditNewsModel.cs" />
     <Compile Include="Models\FileCategoryModel.cs" />
     <Compile Include="Models\jQueryDataTableParamModel.cs" />
@@ -246,6 +248,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-tagsinput.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -346,6 +349,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\DataTables-1.10.4\css\dataTables.responsive.scss" />
@@ -586,6 +590,8 @@
     <Content Include="Views\News\EditNews.cshtml" />
     <Content Include="Views\File\FileSections.cshtml" />
     <Content Include="Views\File\UserFiles.cshtml" />
+    <Content Include="Views\File\AddUserFile.cshtml" />
+    <Content Include="Views\File\EditUserFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,16 +11,21 @@ namespace FileExchange.Core.BusinessObjects
         public int NewsId { get; set; }
 
         [MaxLength(255)]
+        [Required]
         public string Header { get; set; }
 
+        [Required]
         public string Text { get; set; }
 
         [MaxLength(56)]
+        [Required]
         public string UniqImageName { get; set; }
 
         [MaxLength(128)]
-        public string OrigImageName{ get; set; }
+        [Required]
+        public string OrigImageName { get; set; }
 
+        [Required]
         public DateTime CreateDate { get; set; }
 
         public DateTime? ModifyDate { get; set; }

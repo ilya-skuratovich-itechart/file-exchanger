@@ -14,24 +14,27 @@ namespace FileExchange.Core.Migrations
                         FileId = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         FileCategoryId = c.Int(nullable: false),
-                        UniqFileName = c.String(maxLength: 56),
-                        OrigFileName = c.String(maxLength: 128),
+                        UniqFileName = c.String(nullable: false, maxLength: 56),
+                        OrigFileName = c.String(nullable: false, maxLength: 128),
                         Tags = c.String(maxLength: 1024),
+                        PermissionId = c.Int(nullable: false),
                         CreateDate = c.DateTime(nullable: false),
                         ModifyDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.FileId)
                 .ForeignKey("dbo.FileCategories", t => t.FileCategoryId)
+                .ForeignKey("dbo.FilesPersmissions", t => t.PermissionId)
                 .ForeignKey("dbo.UserProfile", t => t.UserId)
                 .Index(t => t.UserId)
-                .Index(t => t.FileCategoryId);
+                .Index(t => t.FileCategoryId)
+                .Index(t => t.PermissionId);
             
             CreateTable(
                 "dbo.FileCategories",
                 c => new
                     {
                         CategoryId = c.Int(nullable: false, identity: true),
-                        CategoryName = c.String(maxLength: 255),
+                        CategoryName = c.String(nullable: false, maxLength: 255),
                     })
                 .PrimaryKey(t => t.CategoryId);
             
@@ -41,12 +44,22 @@ namespace FileExchange.Core.Migrations
                     {
                         CommentId = c.Int(nullable: false, identity: true),
                         FileId = c.Int(nullable: false),
-                        Comment = c.String(maxLength: 1024),
+                        Comment = c.String(nullable: false, maxLength: 1024),
                         CreateDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.CommentId)
                 .ForeignKey("dbo.ExchangeFiles", t => t.FileId)
                 .Index(t => t.FileId);
+            
+            CreateTable(
+                "dbo.FilesPersmissions",
+                c => new
+                    {
+                        PermissionId = c.Int(nullable: false, identity: true),
+                        AllowViewAnonymousUsers = c.Boolean(nullable: false),
+                        DenyAll = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.PermissionId);
             
             CreateTable(
                 "dbo.FileNotificationSubscribers",
@@ -117,10 +130,10 @@ namespace FileExchange.Core.Migrations
                 c => new
                     {
                         NewsId = c.Int(nullable: false, identity: true),
-                        Header = c.String(maxLength: 255),
-                        Text = c.String(),
-                        UniqImageName = c.String(maxLength: 56),
-                        OrigImageName = c.String(maxLength: 128),
+                        Header = c.String(nullable: false, maxLength: 255),
+                        Text = c.String(nullable: false),
+                        UniqImageName = c.String(nullable: false, maxLength: 56),
+                        OrigImageName = c.String(nullable: false, maxLength: 128),
                         CreateDate = c.DateTime(nullable: false),
                         ModifyDate = c.DateTime(),
                     })
@@ -150,6 +163,7 @@ namespace FileExchange.Core.Migrations
             DropForeignKey("dbo.UserRolesUserProfiles", "UserRoles_RoleId", "dbo.webpages_Roles");
             DropForeignKey("dbo.webpages_UsersInRoles", "RoleId", "dbo.webpages_Roles");
             DropForeignKey("dbo.FileNotificationSubscribers", "FileId", "dbo.ExchangeFiles");
+            DropForeignKey("dbo.ExchangeFiles", "PermissionId", "dbo.FilesPersmissions");
             DropForeignKey("dbo.FileComments", "FileId", "dbo.ExchangeFiles");
             DropForeignKey("dbo.ExchangeFiles", "FileCategoryId", "dbo.FileCategories");
             DropIndex("dbo.UserRolesUserProfiles", new[] { "UserProfile_UserId" });
@@ -159,6 +173,7 @@ namespace FileExchange.Core.Migrations
             DropIndex("dbo.FileNotificationSubscribers", new[] { "UserId" });
             DropIndex("dbo.FileNotificationSubscribers", new[] { "FileId" });
             DropIndex("dbo.FileComments", new[] { "FileId" });
+            DropIndex("dbo.ExchangeFiles", new[] { "PermissionId" });
             DropIndex("dbo.ExchangeFiles", new[] { "FileCategoryId" });
             DropIndex("dbo.ExchangeFiles", new[] { "UserId" });
             DropTable("dbo.UserRolesUserProfiles");
@@ -168,6 +183,7 @@ namespace FileExchange.Core.Migrations
             DropTable("dbo.webpages_Roles");
             DropTable("dbo.UserProfile");
             DropTable("dbo.FileNotificationSubscribers");
+            DropTable("dbo.FilesPersmissions");
             DropTable("dbo.FileComments");
             DropTable("dbo.FileCategories");
             DropTable("dbo.ExchangeFiles");

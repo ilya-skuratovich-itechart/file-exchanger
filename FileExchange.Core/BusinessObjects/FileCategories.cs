@@ -8,7 +8,9 @@ namespace FileExchange.Core.BusinessObjects
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
+
         [MaxLength(255)]
+        [Required]
         public string CategoryName { get; set; }
     }
 }

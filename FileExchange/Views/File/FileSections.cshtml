@@ -7,13 +7,14 @@
 <div class="col-lg-12">
     <h1 class="page-header">Category files</h1>
 </div>
+
 @foreach (var fileCategory in Model)
 {
     <div class="col-lg-2 col-md-2 col-xs-2 thumb">
-        <a href="@Url.Action(MVC.File.ActionNames.FileSections, MVC.File.Name, new {fileId = fileCategory.CategoryId})">
-            @fileCategory.CategoryName
-            <img class="folderCategory" />
-        </a>
-    </div>
+            <a href="@Url.Action(MVC.File.ActionNames.FileSections, MVC.File.Name, new {fileId = fileCategory.CategoryId})">
+                @fileCategory.CategoryName
+                <img class="folderCategory" />
+            </a>
+        </div>
 
-}
+    }

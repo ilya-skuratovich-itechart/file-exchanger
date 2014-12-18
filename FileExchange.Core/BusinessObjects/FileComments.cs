@@ -11,11 +11,14 @@ namespace FileExchange.Core.BusinessObjects
         public int CommentId { get; set; }
 
         [ForeignKey("File")]
+        [Required]
         public int FileId { get; set; }
 
         [MaxLength(1024)]
+        [Required]
         public string Comment { get; set; }
 
+        [Required]
         public DateTime CreateDate { get; set; }
 
         public virtual ExchangeFile File { get; set; }

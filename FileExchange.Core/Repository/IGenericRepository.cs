@@ -13,10 +13,10 @@ namespace FileExchange.Core.Repositories
 
         IEnumerable<T> GetPaged(int pageNumber, int pageSize, string[] includes = null);
 
-        IEnumerable<T> FindPaged(System.Linq.Expressions.Expression<Func<T, bool>> predicate, int startDisplayRec,
+        IEnumerable<T> FindPaged<TSortKey>(System.Linq.Expressions.Expression<Func<T, bool>> predicate,
+            System.Linq.Expressions.Expression<Func<T, TSortKey>> sortExpression,
+            int startDisplayRec,
             int displayLenght,
-            bool sortAsc,
-            string sortField,
             out int totalRecords,
             string[] includes = null);
 

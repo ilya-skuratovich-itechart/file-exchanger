@@ -3,7 +3,7 @@ using System.Transactions;
 
 namespace FileExchange.Core.UOW
 {
-    public interface IUnitOfWork:IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         FileExchangeDbContext DbContext { get; }
         TransactionScope BeginTransaction();

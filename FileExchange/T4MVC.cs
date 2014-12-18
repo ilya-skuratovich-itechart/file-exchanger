@@ -61,6 +61,19 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -72,6 +85,7 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
+        public static readonly string bootstrap_tagsinput_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-tagsinput.min.js") ? Url("bootstrap-tagsinput.min.js") : Url("bootstrap-tagsinput.js");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -698,6 +712,8 @@ namespace Links
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string bootstrap_tagsinput_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-tagsinput.min.css") ? Url("bootstrap-tagsinput.min.css") : Url("bootstrap-tagsinput.css");
+             
         public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
              
         public static readonly string bootstrap_theme_css_map = Url("bootstrap-theme.css.map");

@@ -1,0 +1,71 @@
+﻿@model FileExchange.Models.CreateExchangeFileModel
+
+@{
+    ViewBag.Title = "AddUserFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/tagsinput")
+    @Styles.Render("~/Content/tagsinput")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<div class="col-lg-12">
+    <h1 class="page-header">Create a new file</h1>
+</div>
+
+@using (Html.BeginForm(MVC.File.AddUserFile(), FormMethod.Post, new { @class = "form-horizontal add_usr_file", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div class="col-md-9 personal-info">
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.FileCategories)</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.SelectedFileCategoryId)
+                @Html.DropDownListFor(f => f.SelectedFileCategoryId, Model.FileCategories, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.File)</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.File)
+                <input type="file" name="File" id="File" accept="image/x-png, image/gif, image/jpeg" class="form-control"/>
+                @Html.TextBoxFor(m => m.File, new {type = "file", style = "display:none"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.Tags)</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.Description)
+                @Html.TextBoxFor(f => f.Description, new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.Tags)</label>
+            <div class="col-lg-8">
+                @Html.TextBoxFor(f => f.Tags, new { @data_role = "tagsinput", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Permissions:</label>
+            <div class="col-lg-8">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(f => f.AllowViewAnonymousUsers)
+                    @Html.LabelFor(x => x.AllowViewAnonymousUsers)
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(f => f.DenyAll)
+                    @Html.LabelFor(x => x.DenyAll)
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-lg-8">
+                <input type="submit" value="Add" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", MVC.File.ActionNames.UserFiles, MVC.File.Name, null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}

@@ -40,18 +40,16 @@
             <label class="col-lg-3 control-label">Фото:</label>
             <div class="col-lg-8">
                 @Html.ValidationMessageFor(m => m.File)
-                <input type="file" name="File" id="File" accept="image/x-png, image/gif, image/jpeg" class="form-control"/>
-                @Html.TextBoxFor(m => m.File, new {type = "file", style = "display:none"})
+                <input type="file" name="File" id="File" accept="image/x-png, image/gif, image/jpeg" class="form-control" />
+                @Html.TextBoxFor(m => m.File, new { type = "file", style = "display:none" })
             </div>
-
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-lg-8">
-                <input type="submit" value="Сохранить" class="btn-primary" />
-
+                <input type="submit" value="Add" class="btn-primary" />
+                @Html.ActionLink("Отменить", MVC.Home.ActionNames.Index, MVC.Home.Name, null, new { @class = "btn btn-default" })
             </div>
         </div>
-
     </div>
 }

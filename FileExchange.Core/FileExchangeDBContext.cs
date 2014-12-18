@@ -5,11 +5,12 @@ using FileExchange.Core.EntityConfiguration;
 
 namespace FileExchange.Core
 {
-    public class FileExchangeDbContext: DbContext
+    public class FileExchangeDbContext : DbContext
     {
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         public DbSet<UserInRoles> UserInRoles { get; set; }
+
         public DbSet<UserRoles> UserRoles { get; set; }
 
         public DbSet<ExchangeFile> ExchangeFiles { get; set; }
@@ -25,9 +26,9 @@ namespace FileExchange.Core
         public DbSet<MemberShip> Membership { get; set; }
 
         public FileExchangeDbContext()
-            : base("FileExchangeDbConnectionString") 
+            : base("FileExchangeDbConnectionString")
         {
-            
+
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

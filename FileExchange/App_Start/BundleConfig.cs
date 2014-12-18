@@ -9,7 +9,7 @@ namespace FileExchange
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/bootstrapjs").Include(
-                        "~/Scripts/bootstrap.js"));
+                        "~/Scripts/bootstrap.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
                     "~/Scripts/tinymce/tinymce.js"));
 
@@ -28,6 +28,8 @@ namespace FileExchange
                         "~/Scripts/DataTables-1.10.4/jquery.dataTables.js",
                         "~/Scripts/DataTables-1.10.4/dataTables.bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/tagsinput").Include(
+                 "~/Scripts/bootstrap-tagsinput.js"));
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -38,6 +40,8 @@ namespace FileExchange
             bundles.Add(new StyleBundle("~/Content/datatable").Include("~/Content/DataTables-1.10.4/css/jquery.dataTables.css", "~/Content/DataTables-1.10.4/css/dataTables.bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/tagsinput").Include("~/Content/bootstrap-tagsinput.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

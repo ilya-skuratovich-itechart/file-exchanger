@@ -67,9 +67,9 @@
     <Compile Include="Data\UserRoleNames.cs" />
     <Compile Include="EntityConfiguration\Mappings.cs" />
     <Compile Include="FileExchangeDBContext.cs" />
-    <Compile Include="Migrations\201412161309479_InitialCreate.cs" />
-    <Compile Include="Migrations\201412161309479_InitialCreate.Designer.cs">
-      <DependentUpon>201412161309479_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201412181108406_InitialCreate.cs" />
+    <Compile Include="Migrations\201412181108406_InitialCreate.Designer.cs">
+      <DependentUpon>201412181108406_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,8 +97,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412161309479_InitialCreate.resx">
-      <DependentUpon>201412161309479_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412181108406_InitialCreate.resx">
+      <DependentUpon>201412181108406_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

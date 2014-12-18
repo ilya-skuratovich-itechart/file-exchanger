@@ -471,3 +471,8 @@ input[type="checkbox"].input-validation-error {
 .folderCategory {
     content: url("../Images/folder.png");
 }
+
+/*add a user file*/
+.add_usr_file .bootstrap-tagsinput {
+    min-width: 200px !important;
+}

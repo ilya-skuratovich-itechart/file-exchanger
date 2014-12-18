@@ -1,0 +1,73 @@
+﻿@model FileExchange.Models.EditExchangeFileModel
+@{
+    ViewBag.Title = "EditUserFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/tagsinput")
+    @Styles.Render("~/Content/tagsinput")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<div class="col-lg-12">
+    <h1 class="page-header">edit the file</h1>
+</div>
+
+@using (Html.BeginForm(MVC.File.EditUserFile(), FormMethod.Post, new { @class = "form-horizontal add_usr_file", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(f => f.FileId)
+    <div class="col-md-9 personal-info">
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.FileCategories)</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(m => m.SelectedFileCategoryId)
+                @Html.DropDownListFor(f => f.SelectedFileCategoryId, Model.FileCategories, new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.Description)</label>
+            <div class="col-lg-8">
+                @Html.ValidationMessageFor(f=>f.Description)
+                @Html.TextBoxFor(f => f.Description, new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.OrigFileName)</label>
+            <div class="col-lg-8">
+                @Html.HiddenFor(f => f.OrigFileName)
+                <span class="label label-default">@Model.OrigFileName </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(f => f.Tags)</label>
+            <div class="col-lg-8">
+                @Html.TextBoxFor(f => f.Tags, new { @data_role = "tagsinput", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Permissions:</label>
+            <div class="col-lg-8">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(f => f.AllowViewAnonymousUsers)
+                    @Html.LabelFor(x => x.AllowViewAnonymousUsers)
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(f => f.DenyAll)
+                    @Html.LabelFor(x => x.DenyAll)
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-lg-8">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                @Html.ActionLink("Delete", MVC.File.ActionNames.UserFiles, MVC.File.Name, null, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Cancel", MVC.File.ActionNames.UserFiles, MVC.File.Name, null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}
+

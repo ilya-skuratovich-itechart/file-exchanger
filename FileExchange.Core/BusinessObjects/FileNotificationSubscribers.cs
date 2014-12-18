@@ -10,15 +10,18 @@ namespace FileExchange.Core.BusinessObjects
         public string Subscriberid { get; set; }
 
         [ForeignKey("File")]
+        [Required]
         public int FileId { get; set; }
 
         [ForeignKey("User")]
+        [Required]
         public int UserId { get; set; }
 
+        [Required]
         public ExchangeFile File { get; set; }
 
         public UserProfile User { get; set; }
 
-        
+
     }
 }

@@ -18,14 +18,27 @@ namespace FileExchange.Core.BusinessObjects
         public int FileCategoryId { get; set; }
 
         [MaxLength(56)]
+        [Required]
         public string UniqFileName { get; set; }
 
         [MaxLength(128)]
+        [Required]
         public string OrigFileName { get; set; }
+
+        [MaxLength(256)]
+        [Required]
+        public string Description { get; set; }
 
         [MaxLength(1024)]
         public string Tags { get; set; }
 
+        [Required]
+        public bool AllowViewAnonymousUsers { get; set; }
+
+        [Required]
+        public bool AccessDenied { get; set; }
+
+        [Required]
         public DateTime CreateDate { get; set; }
 
         public DateTime? ModifyDate { get; set; }
@@ -36,7 +49,7 @@ namespace FileExchange.Core.BusinessObjects
 
         public virtual ICollection<FileComments> FileComments { get; set; }
 
-        public virtual ICollection<FileNotificationSubscribers> NotificationSubscribers { get; set; } 
+        public virtual ICollection<FileNotificationSubscribers> NotificationSubscribers { get; set; }
 
 
     }

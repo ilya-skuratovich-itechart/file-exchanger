@@ -53,6 +53,12 @@ namespace FileExchange.Core.Migrations
                 CategoryId = 3,
                 CategoryName = "техподдержка"
             });
+
+            context.FielCategories.AddOrUpdate(new FileCategories()
+            {
+                CategoryId = 4,
+                CategoryName = "tEST"
+            });
             context.SaveChanges();
         }
     }
