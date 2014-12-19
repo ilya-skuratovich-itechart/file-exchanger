@@ -11,7 +11,7 @@ namespace FileExchange.Core.Repositories
         IEnumerable<T> GetAll(string[] includes = null);
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate, string[] includes = null);
 
-        IEnumerable<T> GetPaged(int pageNumber, int pageSize, string[] includes = null);
+        IEnumerable<T> GetPaged<TSortKey>(System.Linq.Expressions.Expression<Func<T, TSortKey>> sortExpression, int pageNumber, int pageSize, out int pageCount, string[] includes = null);
 
         IEnumerable<T> FindPaged<TSortKey>(System.Linq.Expressions.Expression<Func<T, bool>> predicate,
             System.Linq.Expressions.Expression<Func<T, TSortKey>> sortExpression,

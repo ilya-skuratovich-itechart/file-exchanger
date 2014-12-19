@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Autofac;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Repositories;
@@ -48,14 +49,34 @@ namespace FileExchange.Core.Services
         }
 
 
-        public List<ExchangeFile> GetCategoryFiles(int fileCategoryId)
+        public IEnumerable<ExchangeFile> GetCategoryFiles(int fileCategoryId, bool isAuthorizedUser)
         {
             return _exchangeFileRepository
                 .FindBy(f => f.FileCategoryId == fileCategoryId)
                 .ToList();
         }
 
-        public ExchangeFile Add(int userId, int fileCategoryId, string description, string uniqFileName, string origFileName, string tags, bool accessDenied, bool allowViewAnonymousUsers)
+
+        public IEnumerable<ExchangeFile> GetCategoryFiles1(int fileCategoryId, bool isAuthorizedUser)
+        {
+            return _exchangeFileRepository
+                .FindBy(f => f.FileCategoryId == fileCategoryId
+                    && f.AccessDenied == false
+                    && (f.AllowViewAnonymousUsers || isAuthorizedUser))
+                .ToList();
+        }
+
+        public IEnumerable<ExchangeFile> GetCategoryFilesPaged(int fileCategoryId,int startRecNum,
+            int pageLenght, out int totalRecords)
+        {
+            Expression<Func<ExchangeFile, bool>> findExpression = f => f.FileCategoryId == fileCategoryId);
+            return _exchangeFileRepository
+                .FindPaged(findExpression, f => f.FileId, startRecNum, pageLenght, out totalRecords)
+                .ToList();
+        }
+
+        public ExchangeFile Add(int userId, int fileCategoryId, string description, string uniqFileName,
+            string origFileName, string tags, bool accessDenied, bool allowViewAnonymousUsers)
         {
             return _exchangeFileRepository.Add(
                 new ExchangeFile()

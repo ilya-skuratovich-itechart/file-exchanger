@@ -42,12 +42,54 @@ namespace FileExchange
             routes.MapRoute(
                 name: "EditUserFile",
                 url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.EditUserFile),
-                defaults: new { controller = MVC.File.Name, action = MVC.File.ActionNames.EditUserFile, fileId = UrlParameter.Optional });
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.EditUserFile,
+                        fileId = UrlParameter.Optional
+                    });
 
             routes.MapRoute(
-             name: "DeleteUserFile",
-             url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.DeleteUserFile),
-             defaults: new { controller = MVC.File.Name, action = MVC.File.ActionNames.DeleteUserFile, fileId = UrlParameter.Optional });
+                name: "DeleteUserFile",
+                url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.DeleteUserFile),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.DeleteUserFile,
+                        fileId = UrlParameter.Optional
+                    });
+
+            routes.MapRoute(
+                name: "ViewCategoryFiles",
+                url: string.Format("{0}/{1}/{{categoryId}}", MVC.File.Name, MVC.File.ActionNames.ViewCategoryFiles),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.ViewCategoryFiles,
+                        categoryId = UrlParameter.Optional
+                    });
+
+
+            routes.MapRoute(
+                name: "ViewCategoryFilesTableFilter",
+                url: string.Format("{0}/{1}", MVC.File.Name, MVC.File.ActionNames.ViewCategoryFilesTableFilter),
+                defaults: new {controller = MVC.File.Name, action = MVC.File.ActionNames.ViewCategoryFilesTableFilter});
+
+
+            routes.MapRoute(
+                name: "ViewNews",
+                url: string.Format("{0}/{1}/{{page}}/{{pageSize}}", MVC.News.Name, MVC.News.ActionNames.ViewNews),
+                defaults:
+                    new
+                    {
+                        controller = MVC.News.Name,
+                        action = MVC.News.ActionNames.ViewNews,
+                        page = UrlParameter.Optional,
+                        pageSize=UrlParameter.Optional
+                    });
 
             routes.MapRoute(
                 name: "Default",

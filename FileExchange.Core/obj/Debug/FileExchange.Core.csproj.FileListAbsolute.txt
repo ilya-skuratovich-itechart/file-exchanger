@@ -13,4 +13,3 @@ D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.pdb
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.Migrations.InitialCreate.resources
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csproj.GenerateResource.Cache
-D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csprojResolveAssemblyReference.cache

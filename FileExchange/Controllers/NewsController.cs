@@ -10,9 +10,11 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Helplers;
 using FileExchange.Models;
+using FileExchange.PageList;
 
 namespace FileExchange.Controllers
 {
+   
     public partial class NewsController : Controller
     {
         private IUnitOfWork _unitOfWork { get; set; }
@@ -69,13 +71,13 @@ namespace FileExchange.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string uniqFileName = Guid.NewGuid().ToString()+Path.GetExtension(news.File.FileName);
+                    string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(news.File.FileName);
                     using (var transaction = _unitOfWork.BeginTransaction())
                     {
                         _newsService.Add(news.Header, news.Text, uniqFileName, news.File.FileName);
                         var path =
                             System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
-                                Path.Combine(ConfigHelper.FilesFolder, uniqFileName )));
+                                Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
                         news.File.SaveAs(path);
                         _unitOfWork.SaveChanges();
                         transaction.Complete();
@@ -91,6 +93,16 @@ namespace FileExchange.Controllers
                 _unitOfWork.Rollback();
                 throw;
             }
+        }
+
+
+        public virtual ActionResult ViewNews(int page = 1, int pageSize = 10)
+        {
+            int totalItemsCount;
+            IEnumerable<ViewNewsViewModel> news = AutoMapper.Mapper.Map<IEnumerable<ViewNewsViewModel>>(_newsService.GetPaged(page, pageSize,out totalItemsCount));
+            FileExchange.PageList.PagedList<ViewNewsViewModel> pageList = new PagedList<ViewNewsViewModel>(news, page,
+                pageSize, totalItemsCount);
+            return View(pageList);
         }
 
 

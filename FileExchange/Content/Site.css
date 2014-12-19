@@ -452,6 +452,9 @@ input[type="checkbox"].input-validation-error {
         line-height: 29px;
         text-align: center;
     }
+    .img-view-news {
+        width: 100px; height: 100px;
+    }
 
 .edit_topblock {
     position: relative;

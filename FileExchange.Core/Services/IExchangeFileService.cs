@@ -7,15 +7,20 @@ namespace FileExchange.Core.Services
     {
         List<ExchangeFile> GetUserFiles(int userId);
 
+        ExchangeFile Add(int userId, int fileCategoryId, string description, string uniqFileName, string origFileName,
+            string tags, bool accessDenied, bool allowViewAnonymousUsers);
+
         List<ExchangeFile> GetAll();
 
         List<ExchangeFile> GetUserFilesPaged(int userId, int startRecNum, int pageLenght, out int totalRecords);
 
-        List<ExchangeFile> GetCategoryFiles(int fileCategoryId);
+        IEnumerable<ExchangeFile> GetCategoryFiles(int fileCategoryId, bool isAuthorizedUser);
+
+        ExchangeFile GetFilteredFile(int fileCategoryId, bool isAuthorizedUser);
+
+        IEnumerable<ExchangeFile> GetFilteredCategoryFilesPaged(int fileCategoryId,bool isAuthorizedUser, int startRecNum, int pageLenght, out int totalRecords);
 
         ExchangeFile GetUserFile(int fileId, int userId);
-
-        ExchangeFile Add(int userId, int fileCategoryId,string description, string uniqFileName,string origFileName, string tags, bool accessDenied, bool allowViewAnonymousUsers);
 
         ExchangeFile Update(int userId,int fileId, int fileCategoryId, string description, string tags, bool accessDenied, bool allowViewAnonymousUsers);
 

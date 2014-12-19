@@ -23,6 +23,10 @@ namespace FileExchange.Mapper
 
             AutoMapper.Mapper.CreateMap<ExchangeFile, EditExchangeFileModel>()
                .ForMember(s => s.SelectedFileCategoryId, m => m.MapFrom(f => f.FileCategoryId));
+
+            AutoMapper.Mapper.CreateMap<News, ViewNewsViewModel>()
+                .ForMember(m => m.ImagePath, e => e.ResolveUsing(n =>
+                    string.Format("/{0}", Path.Combine(ConfigHelper.FilesFolder, n.UniqImageName).Replace(@"\", "/")))); ;
         }
 
     }

@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Helplers;
+using FileExchange.ModelBinders;
 using FileExchange.Models;
+using FileExchange.Models.DataTable;
 using WebMatrix.WebData;
 
 namespace FileExchange.Controllers
@@ -98,7 +102,7 @@ namespace FileExchange.Controllers
         [HttpGet]
         public virtual ActionResult EditUserFile(int fileId)
         {
-            int userId = (int)WebSecurity.CurrentUserId;
+            int userId = WebSecurity.CurrentUserId;
 
             IEnumerable<System.Web.Mvc.SelectListItem> fileCategoriesListItems =
                 AutoMapper.Mapper.Map<IEnumerable<System.Web.Mvc.SelectListItem>>(_fileCategoriesService.GetAll());
@@ -112,7 +116,7 @@ namespace FileExchange.Controllers
         [HttpPost]
         public virtual ActionResult EditUserFile(EditExchangeFileModel userFile)
         {
-            int userId = (int)WebSecurity.CurrentUserId;
+            int userId = WebSecurity.CurrentUserId;
             if (ModelState.IsValid)
             {
                 _exchangeFileService.Update(userId, userFile.FileId, userFile.SelectedFileCategoryId,
@@ -156,8 +160,57 @@ namespace FileExchange.Controllers
             }
         }
 
+
+        public virtual ActionResult ViewCategoryFiles(int categoryId)
+        {
+
+            return View(categoryId);
+        }
+
+        public  ActionResult ViewFile(int fileId)
+        {
+            
+
+        }
+
         [Authorize]
-        public virtual JsonResult UserFilesTableFilter(jQueryDataTableParamModel param)
+        [HttpPost]
+        public virtual JsonResult ViewCategoryFilesTableFilter([ModelBinder(typeof(DataTablesBinder))] DefaultDataTablesRequest param)
+        {
+            try
+            { 
+                int totalRecords = 0;
+                IEnumerable<ExchangeFile> categoryFiles = _exchangeFileService.GetFilteredCategoryFilesPaged(param.Id,
+                    WebSecurity.IsAuthenticated, param.Start, param.Length, out totalRecords);
+
+                var resultUserFiles = from val in categoryFiles
+                    select new[]
+                    {
+                        Convert.ToString(val.FileId),
+                        string.Empty,
+                        val.OrigFileName,
+                        val.Description,
+                        string.Empty,
+                        Convert.ToString(val.CreateDate),
+                        Convert.ToString(val.ModifyDate)
+                    };
+                var result = new
+                {
+                    iTotalRecords = totalRecords,
+                    iTotalDisplayRecords = resultUserFiles.Count(),
+                    aaData = resultUserFiles
+
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+        [Authorize]
+        public virtual JsonResult UserFilesTableFilter(JQueryDataTablesModel param)
         {
             try
             {

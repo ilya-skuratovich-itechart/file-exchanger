@@ -68,6 +68,18 @@ namespace FileExchange.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ViewCategoryFiles()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewCategoryFiles);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult ViewCategoryFilesTableFilter()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ViewCategoryFilesTableFilter);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.JsonResult UserFilesTableFilter()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.UserFilesTableFilter);
@@ -93,6 +105,8 @@ namespace FileExchange.Controllers
             public readonly string AddUserFile = "AddUserFile";
             public readonly string EditUserFile = "EditUserFile";
             public readonly string DeleteUserFile = "DeleteUserFile";
+            public readonly string ViewCategoryFiles = "ViewCategoryFiles";
+            public readonly string ViewCategoryFilesTableFilter = "ViewCategoryFilesTableFilter";
             public readonly string UserFilesTableFilter = "UserFilesTableFilter";
         }
 
@@ -104,6 +118,8 @@ namespace FileExchange.Controllers
             public const string AddUserFile = "AddUserFile";
             public const string EditUserFile = "EditUserFile";
             public const string DeleteUserFile = "DeleteUserFile";
+            public const string ViewCategoryFiles = "ViewCategoryFiles";
+            public const string ViewCategoryFilesTableFilter = "ViewCategoryFilesTableFilter";
             public const string UserFilesTableFilter = "UserFilesTableFilter";
         }
 
@@ -133,6 +149,22 @@ namespace FileExchange.Controllers
         {
             public readonly string fileId = "fileId";
         }
+        static readonly ActionParamsClass_ViewCategoryFiles s_params_ViewCategoryFiles = new ActionParamsClass_ViewCategoryFiles();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ViewCategoryFiles ViewCategoryFilesParams { get { return s_params_ViewCategoryFiles; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ViewCategoryFiles
+        {
+            public readonly string categoryId = "categoryId";
+        }
+        static readonly ActionParamsClass_ViewCategoryFilesTableFilter s_params_ViewCategoryFilesTableFilter = new ActionParamsClass_ViewCategoryFilesTableFilter();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ViewCategoryFilesTableFilter ViewCategoryFilesTableFilterParams { get { return s_params_ViewCategoryFilesTableFilter; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ViewCategoryFilesTableFilter
+        {
+            public readonly string param = "param";
+        }
         static readonly ActionParamsClass_UserFilesTableFilter s_params_UserFilesTableFilter = new ActionParamsClass_UserFilesTableFilter();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_UserFilesTableFilter UserFilesTableFilterParams { get { return s_params_UserFilesTableFilter; } }
@@ -155,11 +187,13 @@ namespace FileExchange.Controllers
                 public readonly string EditUserFile = "EditUserFile";
                 public readonly string FileSections = "FileSections";
                 public readonly string UserFiles = "UserFiles";
+                public readonly string ViewCategoryFiles = "ViewCategoryFiles";
             }
             public readonly string AddUserFile = "~/Views/File/AddUserFile.cshtml";
             public readonly string EditUserFile = "~/Views/File/EditUserFile.cshtml";
             public readonly string FileSections = "~/Views/File/FileSections.cshtml";
             public readonly string UserFiles = "~/Views/File/UserFiles.cshtml";
+            public readonly string ViewCategoryFiles = "~/Views/File/ViewCategoryFiles.cshtml";
         }
     }
 
@@ -250,10 +284,34 @@ namespace FileExchange.Controllers
         }
 
         [NonAction]
-        partial void UserFilesTableFilterOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, FileExchange.Models.jQueryDataTableParamModel param);
+        partial void ViewCategoryFilesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int categoryId);
 
         [NonAction]
-        public override System.Web.Mvc.JsonResult UserFilesTableFilter(FileExchange.Models.jQueryDataTableParamModel param)
+        public override System.Web.Mvc.ActionResult ViewCategoryFiles(int categoryId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewCategoryFiles);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
+            ViewCategoryFilesOverride(callInfo, categoryId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ViewCategoryFilesTableFilterOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, FileExchange.Models.DataTable.DefaultDataTablesRequest param);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult ViewCategoryFilesTableFilter(FileExchange.Models.DataTable.DefaultDataTablesRequest param)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ViewCategoryFilesTableFilter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "param", param);
+            ViewCategoryFilesTableFilterOverride(callInfo, param);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UserFilesTableFilterOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, FileExchange.Models.JQueryDataTablesModel param);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult UserFilesTableFilter(FileExchange.Models.JQueryDataTablesModel param)
         {
             var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.UserFilesTableFilter);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "param", param);

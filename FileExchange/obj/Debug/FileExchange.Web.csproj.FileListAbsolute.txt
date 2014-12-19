@@ -92,3 +92,7 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\zh-Hant\System.Spatial.r
 D:\projects\file manager\FileExchanger\FileExchange\obj\Debug\FileExchange.Web.csprojResolveAssemblyReference.cache
 D:\projects\file manager\FileExchanger\FileExchange\obj\Debug\FileExchange.dll
 D:\projects\file manager\FileExchanger\FileExchange\obj\Debug\FileExchange.pdb
+D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.Mvc.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.xml
+D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.Mvc.xml

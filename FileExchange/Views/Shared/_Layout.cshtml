@@ -24,6 +24,7 @@
                     <ul id="menu">
                         <li>@Html.ActionLink("Home", MVC.Home.ActionNames.Index,MVC.Home.Name )</li>
                         <li>@Html.ActionLink("File categories", MVC.File.ActionNames.FileSections, MVC.File.Name)</li>
+                        <li>@Html.ActionLink("News", MVC.News.ActionNames.ViewNews, MVC.News.Name)</li>
                         @if (Request.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("My file", MVC.File.ActionNames.UserFiles, MVC.File.Name)</li>

@@ -50,7 +50,7 @@ namespace FileExchange.Core.Repositories
             return query.Where(predicate).AsEnumerable<T>();
         }
 
-        public IEnumerable<T> GetPaged(int pageNumber, int pageSize, string[] includes = null)
+        public IEnumerable<T> GetPaged<TSortKey>(System.Linq.Expressions.Expression<Func<T, TSortKey>> sortExpression, int pageNumber, int pageSize, out int pageCount, string[] includes = null)
         {
             var query = _dbset.AsQueryable();
             if (includes != null && includes.Any())
@@ -58,11 +58,17 @@ namespace FileExchange.Core.Repositories
                 foreach (var include in includes)
                     query = query.Include(include);
             }
-            return query
-                .AsEnumerable()
-               .Skip(pageNumber-1*pageSize)
-               .Take(pageSize);
+            pageCount = query.Count();
+
+            query = query
+                .OrderBy(sortExpression);
+            query = pageNumber == 1
+                ? query.Skip(0).Take(pageSize)
+                : query.Skip(((pageNumber - 1)*pageSize)).Take<T>(pageSize);
+            return query.AsEnumerable();
         }
+
+
 
         public IEnumerable<T> FindPaged<TSortKey>(System.Linq.Expressions.Expression<Func<T, bool>> predicate,
             System.Linq.Expressions.Expression<Func<T, TSortKey>> sortExpression,
@@ -85,6 +91,7 @@ namespace FileExchange.Core.Repositories
                 .Take(displayLenght)
                 .AsEnumerable();
         }
+
 
         public void RemoveBy(Expression<Func<T, bool>> predicate)
         {

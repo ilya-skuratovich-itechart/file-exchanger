@@ -11,6 +11,8 @@ namespace FileExchange.Core.Services
 
         News Add(string header, string text, string uniqueImageName, string origImageName);
 
+        IEnumerable<News> GetPaged(int pageNumber, int pageSize,out int pageCount);
+
         News Update(int newsId, string header, string text, string uniqueImageName, string origImageName);
 
         List<News> GetLastNews(int count);

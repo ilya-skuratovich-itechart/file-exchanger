@@ -9,7 +9,7 @@ namespace FileExchange
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/bootstrapjs").Include(
-                        "~/Scripts/bootstrap.min.js"));
+                        "~/Scripts/bootstrap.js"));
             bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
                     "~/Scripts/tinymce/tinymce.js"));
 

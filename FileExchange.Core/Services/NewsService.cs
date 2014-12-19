@@ -51,8 +51,15 @@ namespace FileExchange.Core.Services
 
         public List<News> GetLastNews(int count)
         {
-            return _repository.GetPaged(1, count)
+            int totalRecorsCount;
+            return _repository.GetPaged(n=>n.NewsId,1, count, out totalRecorsCount)
                 .ToList();
+        }
+
+
+        public IEnumerable<News> GetPaged(int pageNumber, int pageSize,out int pageCount)
+        {
+            return _repository.GetPaged(n => n.NewsId, pageNumber, pageSize, out pageCount);
         }
         public News Update(int newsId,string header, string text, string uniqueImageName,string origImageName)
         {

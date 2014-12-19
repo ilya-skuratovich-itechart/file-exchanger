@@ -1,0 +1,98 @@
+﻿@model int
+@{
+    ViewBag.Title = "ViewCategoryFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#userFiles').dataTable(
+            {
+                "oLanguage": {
+                    "sEmptyTable": "No files found."
+                },
+                "bProcessing": true,
+                "bFilter": false,
+                "bServerSide": true,
+                "ajax": {
+                    "type": "POST",
+                    "url": '@Url.Action(MVC.File.ActionNames.ViewCategoryFilesTableFilter, MVC.File.Name)',
+                    "data": function(d) {
+                        d.id = $("#fileCategoryId").val();
+                    }
+                },
+                "aoColumns": [
+                    {
+                        "sName": "FileId",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": false
+                    },
+                    {
+                        "sName": "btn_editFile",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": true,
+                        "mRender": function(data, type, oObj) {
+                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.File.ActionNames.EditUserFile, MVC.File.Name)/' +
+                                oObj[0] + '"></a>';
+                        }
+                    },
+                    {
+                        "sName": "OrigFileName",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "Description",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "DownloadFile",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function(data, type, oObj) {
+                            return ' <a class="glyphicon glyphicon-download" href=\"@Url.Action(MVC.File.ActionNames.EditUserFile, MVC.File.Name)/' +
+                                oObj[0] + '"></a>';
+                        }
+                    },
+                    {
+                        "sName": "CreateDate",
+                        "bSearchable": false,
+                        "bSortable": false
+                    }, {
+                        "sName": "ModifyDate",
+                        "bSearchable": false,
+                        "bSortable": false
+                    }
+                ]
+            });
+            $('#userFiles')
+                .removeClass('display')
+                .addClass('table table-striped table-bordered');
+        });
+    </script>
+
+    @Styles.Render("~/Content/datatable")
+    @Scripts.Render("~/bundles/datatable")
+
+}
+@Html.Hidden("fileCategoryId",Model)
+<div class="col-lg-12">
+    <h1 class="page-header">Category files</h1>
+</div>
+<table cellpadding="0" cellspacing="0" border="0" id="userFiles">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>File name</th>
+            <th>Description</th>
+            <th></th>
+            <th>Created date</th>
+            <th>Modified date</th>
+        </tr>
+    </thead>
+</table>
