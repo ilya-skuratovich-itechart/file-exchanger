@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Linq;
+using Autofac;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Repositories;
 using FileExchange.Core.UOW;
@@ -24,6 +25,13 @@ namespace FileExchange.Core.Services
                     FileId = fileId
 
                 });
+        }
+
+        public bool UserIsSubscibed(int userId, int fileId)
+        {
+            return _repository
+                .FindBy(s => s.FileId == fileId && s.UserId == userId)
+                .Any();
         }
 
         public void RemoveAll(int fileId)

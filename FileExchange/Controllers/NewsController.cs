@@ -29,30 +29,19 @@ namespace FileExchange.Controllers
         [HttpGet]
         public virtual ActionResult GetLastNews()
         {
-            try
+            var model = new LastNewsModel();
+            if (User.Identity.IsAuthenticated)
             {
-                var model = new LastNewsModel();
-                if (User.Identity.IsAuthenticated)
+                if (User.IsInRole(UserRoleNames.Admin) || User.IsInRole(UserRoleNames.Moderator))
                 {
-                    if (User.IsInRole(UserRoleNames.Admin) || User.IsInRole(UserRoleNames.Moderator))
-                    {
-                        model.AllowEdit = true;
-                    }
+                    model.AllowEdit = true;
                 }
-                var news = _newsService.GetLastNews(10);
-                model.News = AutoMapper.Mapper.Map<List<FileExchange.Models.EditNewsModel>>(news);
-                model.News = model.News ?? new List<EditNewsModel>();
+            }
+            var news = _newsService.GetLastNews(10);
+            model.News = AutoMapper.Mapper.Map<List<FileExchange.Models.EditNewsModel>>(news);
+            model.News = model.News ?? new List<EditNewsModel>();
 
-                return PartialView(MVC.News.Views.ViewNames._lastNews, model);
-            }
-            catch (Exception exc)
-            {
-                throw;
-            }
-            finally
-            {
-                _unitOfWork.Dispose();
-            }
+            return PartialView(MVC.News.Views.ViewNames._lastNews, model);
         }
 
         [HttpGet]

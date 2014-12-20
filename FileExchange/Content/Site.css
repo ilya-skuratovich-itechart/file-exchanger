@@ -479,3 +479,15 @@ input[type="checkbox"].input-validation-error {
 .add_usr_file .bootstrap-tagsinput {
     min-width: 200px !important;
 }
+.bootstrap-tagsinput-disabled {
+      cursor: not-allowed;
+    background-color: #EEE;
+    color: #9E9999;
+}
+li.ui-state-default {
+    background: #fff0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    padding-bottom: 10px;
+}

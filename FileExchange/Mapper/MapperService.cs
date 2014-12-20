@@ -26,7 +26,12 @@ namespace FileExchange.Mapper
 
             AutoMapper.Mapper.CreateMap<News, ViewNewsViewModel>()
                 .ForMember(m => m.ImagePath, e => e.ResolveUsing(n =>
-                    string.Format("/{0}", Path.Combine(ConfigHelper.FilesFolder, n.UniqImageName).Replace(@"\", "/")))); ;
+                    string.Format("/{0}", Path.Combine(ConfigHelper.FilesFolder, n.UniqImageName).Replace(@"\", "/"))));
+
+            AutoMapper.Mapper.CreateMap<ExchangeFile, ViewExchangeFileViewModel>();
+
+            AutoMapper.Mapper.CreateMap<FileComments, FileCommentsViewModel>()
+                .ForMember(s => s.UserName, m => m.MapFrom(c => c.File.User.UserName));
         }
 
     }

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<FileExchange.Models.FileCommentsViewModel>
+<div class="col-lg-4 col-sm-6 text-center">
+    <div class="well">
+        <h4></h4>
+        <hr>
+        <ul class="list-unstyled ui-sortable">
+            @foreach (var comment in Model)
+            {
+                <strong class="pull-left primary-font">@comment.UserName</strong>
+                <small class="pull-right text-muted">
+                    <span class="glyphicon glyphicon-time"></span>@comment.CreateDate.ToShortDateString()
+                </small>
+                <br />
+                <li class="ui-state-default">@comment.Comment</li>
+                <br />
+                <div class="col-lg-4"></div>
+            }
+        </ul>
+    </div>
+</div>

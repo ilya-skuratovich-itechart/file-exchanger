@@ -88,8 +88,52 @@ namespace FileExchange
                         controller = MVC.News.Name,
                         action = MVC.News.ActionNames.ViewNews,
                         page = UrlParameter.Optional,
-                        pageSize=UrlParameter.Optional
+                        pageSize = UrlParameter.Optional
                     });
+
+            routes.MapRoute(
+                name: "DownloadFileExchange",
+                url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.DownloadFile),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.DownloadFile,
+                        fileId = UrlParameter.Optional
+                    });
+
+            routes.MapRoute(
+                name: "ViewFile",
+                url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.ViewFile),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.ViewFile,
+                        fileId = UrlParameter.Optional
+                    });
+
+            routes.MapRoute(
+                name: "ViewFileComments",
+                url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.ViewFileComments),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.ViewFileComments,
+                        fileId = UrlParameter.Optional
+                    });
+
+            routes.MapRoute(
+                name: "AddFileComment",
+                url: string.Format("{0}/{1}", MVC.File.Name, MVC.File.ActionNames.AddComment),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.AddComment
+                    });
+
 
             routes.MapRoute(
                 name: "Default",

@@ -10,7 +10,7 @@ namespace FileExchange.AutofacModules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
-            builder.RegisterType<ExchangeFileService>().As<IExchangeFileService>()
+            builder.RegisterType<FileCommentService>().As<IFileCommentService>()
                 .UsingConstructor(typeof (IUnitOfWork))
                 .InstancePerHttpRequest();
 
@@ -18,7 +18,7 @@ namespace FileExchange.AutofacModules
                 .UsingConstructor(typeof (IUnitOfWork))
                 .InstancePerHttpRequest();
 
-            builder.RegisterType<FileCommentService>().As<IFileCommentService>()
+            builder.RegisterType<ExchangeFileService>().As<IExchangeFileService>()
                 .UsingConstructor(typeof (IUnitOfWork))
                 .InstancePerHttpRequest();
 

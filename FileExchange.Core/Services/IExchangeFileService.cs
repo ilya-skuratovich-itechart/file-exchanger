@@ -16,7 +16,7 @@ namespace FileExchange.Core.Services
 
         IEnumerable<ExchangeFile> GetCategoryFiles(int fileCategoryId, bool isAuthorizedUser);
 
-        ExchangeFile GetFilteredFile(int fileCategoryId, bool isAuthorizedUser);
+        ExchangeFile GetFilteredFile(int fileId, bool isAuthorizedUser);
 
         IEnumerable<ExchangeFile> GetFilteredCategoryFilesPaged(int fileCategoryId,bool isAuthorizedUser, int startRecNum, int pageLenght, out int totalRecords);
 

@@ -1,0 +1,12 @@
+﻿@model FileExchange.Models.CreateCommentViewModel
+@using (Html.BeginForm(MVC.File.AddComment(), FormMethod.Post, new { @class = "form-horizontal", id = "addCommentForm", role = "form" }))
+{
+    @Html.ValidationMessage("comment")
+    @Html.Hidden("fileId", (object)ViewData["FileId"])
+    <div class="input-group">
+        @Html.TextBoxFor(c => c.Comment, new { @class = "form-control input-sm", placeholder = "Write your message here..." })
+        <span class="input-group-btn" onclick=" exchangeFile.addComment();">
+            <a href="#" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-comment"></span> Add Comment</a>
+        </span>
+    </div>
+}

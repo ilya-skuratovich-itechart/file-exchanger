@@ -6,7 +6,7 @@
 
 @section scripts{
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#userFiles').dataTable(
             {
                 "oLanguage": {
@@ -18,8 +18,8 @@
                 "ajax": {
                     "type": "POST",
                     "url": '@Url.Action(MVC.File.ActionNames.ViewCategoryFilesTableFilter, MVC.File.Name)',
-                    "data": function(d) {
-                        d.id = $("#fileCategoryId").val();
+                    "data": function (d) {
+                        d.id = $("#fileId").val();
                     }
                 },
                 "aoColumns": [
@@ -34,8 +34,8 @@
                         "bSearchable": false,
                         "bSortable": false,
                         "visible": true,
-                        "mRender": function(data, type, oObj) {
-                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.File.ActionNames.EditUserFile, MVC.File.Name)/' +
+                        "mRender": function (data, type, oObj) {
+                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.File.ActionNames.ViewFile, MVC.File.Name)/' +
                                 oObj[0] + '"></a>';
                         }
                     },
@@ -53,8 +53,8 @@
                         "sName": "DownloadFile",
                         "bSearchable": false,
                         "bSortable": false,
-                        "mRender": function(data, type, oObj) {
-                            return ' <a class="glyphicon glyphicon-download" href=\"@Url.Action(MVC.File.ActionNames.EditUserFile, MVC.File.Name)/' +
+                        "mRender": function (data, type, oObj) {
+                            return ' <a class="glyphicon glyphicon-download" href=\"@Url.Action(MVC.File.ActionNames.DownloadFile, MVC.File.Name)/' +
                                 oObj[0] + '"></a>';
                         }
                     },
@@ -79,7 +79,7 @@
     @Scripts.Render("~/bundles/datatable")
 
 }
-@Html.Hidden("fileCategoryId",Model)
+@Html.Hidden("fileId", Model)
 <div class="col-lg-12">
     <h1 class="page-header">Category files</h1>
 </div>

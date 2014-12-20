@@ -74,6 +74,30 @@ namespace FileExchange.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ViewFile()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewFile);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ViewFileComments()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewFileComments);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult AddComment()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddComment);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual FileExchange.ActionResults.BandwidthThrottlingFileResult DownloadFile()
+        {
+            return new T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.JsonResult ViewCategoryFilesTableFilter()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ViewCategoryFilesTableFilter);
@@ -106,6 +130,10 @@ namespace FileExchange.Controllers
             public readonly string EditUserFile = "EditUserFile";
             public readonly string DeleteUserFile = "DeleteUserFile";
             public readonly string ViewCategoryFiles = "ViewCategoryFiles";
+            public readonly string ViewFile = "ViewFile";
+            public readonly string ViewFileComments = "ViewFileComments";
+            public readonly string AddComment = "AddComment";
+            public readonly string DownloadFile = "DownloadFile";
             public readonly string ViewCategoryFilesTableFilter = "ViewCategoryFilesTableFilter";
             public readonly string UserFilesTableFilter = "UserFilesTableFilter";
         }
@@ -119,6 +147,10 @@ namespace FileExchange.Controllers
             public const string EditUserFile = "EditUserFile";
             public const string DeleteUserFile = "DeleteUserFile";
             public const string ViewCategoryFiles = "ViewCategoryFiles";
+            public const string ViewFile = "ViewFile";
+            public const string ViewFileComments = "ViewFileComments";
+            public const string AddComment = "AddComment";
+            public const string DownloadFile = "DownloadFile";
             public const string ViewCategoryFilesTableFilter = "ViewCategoryFilesTableFilter";
             public const string UserFilesTableFilter = "UserFilesTableFilter";
         }
@@ -157,6 +189,39 @@ namespace FileExchange.Controllers
         {
             public readonly string categoryId = "categoryId";
         }
+        static readonly ActionParamsClass_ViewFile s_params_ViewFile = new ActionParamsClass_ViewFile();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ViewFile ViewFileParams { get { return s_params_ViewFile; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ViewFile
+        {
+            public readonly string fileId = "fileId";
+        }
+        static readonly ActionParamsClass_ViewFileComments s_params_ViewFileComments = new ActionParamsClass_ViewFileComments();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ViewFileComments ViewFileCommentsParams { get { return s_params_ViewFileComments; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ViewFileComments
+        {
+            public readonly string fileId = "fileId";
+        }
+        static readonly ActionParamsClass_AddComment s_params_AddComment = new ActionParamsClass_AddComment();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddComment AddCommentParams { get { return s_params_AddComment; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddComment
+        {
+            public readonly string fileId = "fileId";
+            public readonly string commentModel = "commentModel";
+        }
+        static readonly ActionParamsClass_DownloadFile s_params_DownloadFile = new ActionParamsClass_DownloadFile();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DownloadFile DownloadFileParams { get { return s_params_DownloadFile; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DownloadFile
+        {
+            public readonly string fileId = "fileId";
+        }
         static readonly ActionParamsClass_ViewCategoryFilesTableFilter s_params_ViewCategoryFilesTableFilter = new ActionParamsClass_ViewCategoryFilesTableFilter();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_ViewCategoryFilesTableFilter ViewCategoryFilesTableFilterParams { get { return s_params_ViewCategoryFilesTableFilter; } }
@@ -183,17 +248,25 @@ namespace FileExchange.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _CreateComment = "_CreateComment";
+                public readonly string _fileSubscribe = "_fileSubscribe";
+                public readonly string _ViewFileComments = "_ViewFileComments";
                 public readonly string AddUserFile = "AddUserFile";
                 public readonly string EditUserFile = "EditUserFile";
                 public readonly string FileSections = "FileSections";
                 public readonly string UserFiles = "UserFiles";
                 public readonly string ViewCategoryFiles = "ViewCategoryFiles";
+                public readonly string ViewFile = "ViewFile";
             }
+            public readonly string _CreateComment = "~/Views/File/_CreateComment.cshtml";
+            public readonly string _fileSubscribe = "~/Views/File/_fileSubscribe.cshtml";
+            public readonly string _ViewFileComments = "~/Views/File/_ViewFileComments.cshtml";
             public readonly string AddUserFile = "~/Views/File/AddUserFile.cshtml";
             public readonly string EditUserFile = "~/Views/File/EditUserFile.cshtml";
             public readonly string FileSections = "~/Views/File/FileSections.cshtml";
             public readonly string UserFiles = "~/Views/File/UserFiles.cshtml";
             public readonly string ViewCategoryFiles = "~/Views/File/ViewCategoryFiles.cshtml";
+            public readonly string ViewFile = "~/Views/File/ViewFile.cshtml";
         }
     }
 
@@ -292,6 +365,66 @@ namespace FileExchange.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewCategoryFiles);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
             ViewCategoryFilesOverride(callInfo, categoryId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ViewFileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int fileId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ViewFile(int fileId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewFile);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
+            ViewFileOverride(callInfo, fileId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ViewFileCommentsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int fileId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ViewFileComments(int fileId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewFileComments);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
+            ViewFileCommentsOverride(callInfo, fileId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int fileId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AddComment(int fileId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddComment);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
+            AddCommentOverride(callInfo, fileId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.CreateCommentViewModel commentModel);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AddComment(FileExchange.Models.CreateCommentViewModel commentModel)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddComment);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "commentModel", commentModel);
+            AddCommentOverride(callInfo, commentModel);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DownloadFileOverride(T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult callInfo, int fileId);
+
+        [NonAction]
+        public override FileExchange.ActionResults.BandwidthThrottlingFileResult DownloadFile(int fileId)
+        {
+            var callInfo = new T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
+            DownloadFileOverride(callInfo, fileId);
             return callInfo;
         }
 

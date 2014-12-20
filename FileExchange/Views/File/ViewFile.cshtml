@@ -1,0 +1,66 @@
+﻿@model FileExchange.Models.ViewExchangeFileViewModel
+@{
+    ViewBag.Title = "ViewFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/ExchangeFile")
+    <script type="text/javascript">
+        $(function() {
+            exchangeFile.initObject('@Url.Action(MVC.File.ActionNames.AddComment, MVC.File.Name, null, Request.Url.Scheme)', @Model.FileId, "Comment", "commentSection");
+        });
+    </script>
+
+}
+<div class="col-lg-12">
+    <h1 class="page-header">File info</h1>
+</div>
+<div class="grid">
+    <div class="row">
+        <div class="col-md-2 vcenter">File name: </div>
+        <div class="col-md-6 vcenter">@Model.OrigFileName</div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-2">Description:</div>
+        <div class="col-md-6 vcenter">@Model.Description</div>
+    </div>
+    <br />
+</div>
+
+<div class="col-lg-12">
+    <p class="lead">
+        <i class="fa fa-user"></i> Uploaded by <u>@Model.Owner</u>
+    </p>
+    <hr>
+    <p>
+        <i class="fa fa-calendar"></i> Uploaded on @Model.CreateDate.ToShortDateString()
+    </p>
+    <p>
+        <i class="fa fa-tags"></i> Tags:
+        @foreach (string tag in Model.Tags.Split(','))
+        {
+            <span class="badge badge-info">tag</span>
+        }
+</div>
+<div class="col-lg-12">
+    <h1 class="page-header">Subscribtion</h1>
+</div>
+@if (User.Identity.IsAuthenticated)
+{
+    {
+        Html.RenderPartial(MVC.File.Views._fileSubscribe,Model.HasSubscription);
+    }
+}
+<div class="col-lg-12">
+    <h1 class="page-header">Comments</h1>
+</div>
+@{ Html.RenderAction(MVC.File.ActionNames.AddComment, new { fileId = Model.FileId });}
+<div id="commentSection">
+    @{ Html.RenderAction(MVC.File.ActionNames.ViewFileComments);}
+</div>
+<span class="input-group-btn" onclick=" exchangeFile.addComment();">
+    <a href="#" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-ok"></span> Subscribe</a>
+</span>

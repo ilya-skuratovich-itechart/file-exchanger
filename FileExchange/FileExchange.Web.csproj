@@ -207,6 +207,7 @@
     <Compile Include="AccountController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ActionResults\BandwidthThrottlingFileResult.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -228,6 +229,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helplers\ConfigHelper.cs" />
+    <Compile Include="Helplers\FileHelper.cs" />
     <Compile Include="Helplers\HtmlExtensions.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -244,9 +246,12 @@
     <Compile Include="Models\EditExchangeFileModel.cs" />
     <Compile Include="Models\EditNewsModel.cs" />
     <Compile Include="Models\FileCategoryModel.cs" />
+    <Compile Include="Models\CreateCommentViewModel.cs" />
+    <Compile Include="Models\FileCommentsViewModel.cs" />
     <Compile Include="Models\JQueryDataTablesModel.cs" />
     <Compile Include="Models\LastNewsModel.cs" />
     <Compile Include="Models\CreateNewsModel.cs" />
+    <Compile Include="Models\ViewExchangeFileViewModel.cs" />
     <Compile Include="Models\ViewNewsViewModel.cs" />
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -361,6 +366,7 @@
     <Content Include="Scripts\DataTables-1.10.4\dataTables.tableTools.min.js" />
     <Content Include="Scripts\DataTables-1.10.4\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables-1.10.4\jquery.dataTables.min.js" />
+    <Content Include="Scripts\ExchangeFile.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -575,9 +581,12 @@
     <Content Include="Views\File\EditUserFile.cshtml" />
     <Content Include="Views\File\ViewCategoryFiles.cshtml" />
     <Content Include="Views\News\ViewNews.cshtml" />
+    <Content Include="Views\File\ViewFile.cshtml" />
+    <Content Include="Views\File\_ViewFileComments.cshtml" />
+    <Content Include="Views\File\_CreateComment.cshtml" />
+    <Content Include="Views\File\_fileSubscribe.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ActionResults\" />
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
   </ItemGroup>

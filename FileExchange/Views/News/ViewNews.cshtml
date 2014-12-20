@@ -22,8 +22,10 @@
         <h1 class="page-header"></h1>
     </div>
 }
-<div class="col-sm-10">
-    <div class="center">
-        @Html.PagedListPager(Model, page => Url.Action(MVC.News.ActionNames.ViewNews, new { page, PageSize = Model.PageSize }))
+<div id="unobtrusive">
+    <div class="col-sm-10">
+        <div class="center">
+            @Html.PagedListPager(Model, page => Url.Action(MVC.News.ActionNames.ViewNews, new { page, PageSize = Model.PageSize }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "unobtrusive" }))
+        </div>
     </div>
 </div>

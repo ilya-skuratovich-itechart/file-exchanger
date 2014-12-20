@@ -58,9 +58,9 @@ namespace FileExchange.Core.Services
                 .ToList();
         }
 
-        public ExchangeFile GetFilteredFile(int fileCategoryId, bool isAuthorizedUser)
+        public ExchangeFile GetFilteredFile(int fileId, bool isAuthorizedUser)
         {
-            Expression<Func<ExchangeFile, bool>> findExpression = f => f.FileCategoryId == fileCategoryId
+            Expression<Func<ExchangeFile, bool>> findExpression = f => f.FileId == fileId
                                                          && f.AccessDenied == false
                                                          && (f.AllowViewAnonymousUsers || isAuthorizedUser);
             return _exchangeFileRepository
