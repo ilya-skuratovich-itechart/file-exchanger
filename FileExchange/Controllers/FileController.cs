@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Autofac;
 using FileExchange.ActionResults;
 using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DTO;
+using FileExchange.Core.FileNotification;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
+using FileExchange.EmailSender;
 using FileExchange.Helplers;
 using FileExchange.ModelBinders;
 using FileExchange.Models;
@@ -76,25 +82,21 @@ namespace FileExchange.Controllers
                     userFile.FileCategories = fileCategoriesListItems;
                     return View(userFile);
                 }
-
-                using (_unitOfWork.BeginTransaction())
+                int userId = (int) WebSecurity.CurrentUserId;
+                string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(userFile.File.FileName);
+                using (var transaction = _unitOfWork.BeginTransaction())
                 {
-                    int userId = (int)WebSecurity.CurrentUserId;
-                    string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(userFile.File.FileName);
-                    using (var transaction = _unitOfWork.BeginTransaction())
-                    {
-                        ExchangeFile ExchangeFile = _fileExchangeService.Add(userId, userFile.SelectedFileCategoryId,
-                            userFile.Description, uniqFileName,
-                            userFile.File.FileName, userFile.Tags, userFile.DenyAll,
-                            userFile.AllowViewAnonymousUsers);
+                    ExchangeFile ExchangeFile = _fileExchangeService.Add(userId, userFile.SelectedFileCategoryId,
+                        userFile.Description, uniqFileName,
+                        userFile.File.FileName, userFile.Tags, userFile.DenyAll,
+                        userFile.AllowViewAnonymousUsers);
 
-                        var path =
-                            System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
-                                Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
-                        userFile.File.SaveAs(path);
-                        _unitOfWork.SaveChanges();
-                        transaction.Complete();
-                    }
+                    var path =
+                        System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
+                            Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
+                    userFile.File.SaveAs(path);
+                    _unitOfWork.SaveChanges();
+                    transaction.Complete();
                 }
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
             }
@@ -121,14 +123,84 @@ namespace FileExchange.Controllers
 
         [Authorize]
         [HttpPost]
-        public virtual ActionResult EditUserFile(EditExchangeFileModel userFile)
+        public virtual async Task<ActionResult> EditUserFile(EditExchangeFileModel userFile)
         {
             int userId = WebSecurity.CurrentUserId;
             if (ModelState.IsValid)
             {
-                _fileExchangeService.Update(userId, userFile.FileId, userFile.SelectedFileCategoryId,
-                    userFile.Description, userFile.Tags, userFile.DenyAll, userFile.AllowViewAnonymousUsers);
-                _unitOfWork.SaveChanges();
+                ExchangeFile exchangeFile = _fileExchangeService.GetUserFile(userFile.FileId, userId);
+              var oldExchangeFile=  AutoMapper.Mapper.Map<ExchangeFile>(exchangeFile); 
+                using (var transaction = _unitOfWork.BeginTransaction())
+                {
+                    ExchangeFile newExchangeFile = _fileExchangeService.Update(userId, userFile.FileId,
+                        userFile.SelectedFileCategoryId,
+                        userFile.Description, userFile.Tags, userFile.DenyAll, userFile.AllowViewAnonymousUsers);
+
+                    var fileNotificationTracker = new FileNotificationTracker(_fileFileNotificationSubscriberService);
+                    var notificationUsers = fileNotificationTracker.GetNotoficationUsersByChanges(oldExchangeFile,
+                        newExchangeFile);
+
+                    Action<object> sendFunc = (o) =>
+                    {
+                        try
+                        {
+
+
+                            List<FileUserNotification> notificUsers = (o) as List<FileUserNotification>;
+                            if (notificUsers != null)
+                            {
+                                IMailer mailer = AutofacConfig.ApplicationContainer.Container.Resolve<IMailer>();
+                                var templateModel = new BaseFileTemplateViewModel();
+                                templateModel.FileName = userFile.OrigFileName;
+                                templateModel.FileId = userFile.FileId;
+                                foreach (var notificationUser in notificUsers)
+                                {
+                                    string templateText = string.Empty;
+                                    templateModel.UserName = notificationUser.UserName;
+                                    string subject = string.Empty;
+                                    switch (notificationUser.NotificationType)
+                                    {
+
+                                        case NotificationType.accessDienied:
+                                        {
+
+                                            templateText = RenderViewHelper.RenderPartialToString(
+                                                MVC.DisplayEmailTemplates.Views.FileAccessDeniedTemplate,
+                                                templateModel);
+                                            subject = "Access to file denied";
+                                            break;
+                                        }
+                                        case NotificationType.descriptionChanged:
+                                        templateText = RenderViewHelper.RenderPartialToString(
+                                                MVC.DisplayEmailTemplates.Views.FileChangedTemplate,
+                                                templateModel);
+                                            subject = "file desctiption is changed";
+                                            break;
+                                        case NotificationType.fileDelited:
+                                            templateText = RenderViewHelper.RenderPartialToString(
+                                                MVC.DisplayEmailTemplates.Views.FileDeletedTemplate,
+                                                templateModel);
+                                            subject = "File is deleted";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    mailer.SendEmailTo(notificationUser.Email, subject, templateText);
+                                }
+                            }
+                        } 
+                        catch (Exception exc )
+                        {
+                            
+                            throw exc;
+                        }
+
+                    };
+
+                    Task.Factory.StartNew(sendFunc, notificationUsers);
+                    _unitOfWork.SaveChanges();
+                    transaction.Complete();
+                }
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
             }
 
@@ -136,8 +208,9 @@ namespace FileExchange.Controllers
                 AutoMapper.Mapper.Map<IEnumerable<System.Web.Mvc.SelectListItem>>(_fileCategoriesService.GetAll());
             userFile.FileCategories = fileCategoriesListItems;
             return View(userFile);
-
         }
+
+
 
         [Authorize]
         public virtual ActionResult DeleteUserFile(int fileId)
@@ -226,6 +299,68 @@ namespace FileExchange.Controllers
             string filePath = FileHelper.GetFullfilecommentsPath(file.UniqFileName);
             return new BandwidthThrottlingFileResult(filePath, file.OrigFileName,
                 FileHelper.GetMimeTypeByFileName(file.UniqFileName), 20);
+        }
+
+        [Authorize]
+        public virtual JsonResult SubscribeFileNotification(int fileId)
+        {
+            try
+            {
+                object result = null;
+                using (var transaciton = _unitOfWork.BeginTransaction())
+                {
+                    if (_fileFileNotificationSubscriberService.UserIsSubscibed(WebSecurity.CurrentUserId, fileId))
+                    {
+                        result = new {Error = "Current user has a subscription", Success = false};
+                    }
+                    else
+                    {
+                        _fileFileNotificationSubscriberService.Add(WebSecurity.CurrentUserId, fileId);
+                        _unitOfWork.SaveChanges();
+                        transaciton.Complete();
+                        result = new
+                        {
+                            Html = this.RenderViewToString(MVC.File.Views._fileSubscribe, true),
+                            Success = true
+                        };
+                    }
+                }
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (DbEntityValidationException exc)
+            {
+
+                throw exc;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+        }
+
+        [Authorize]
+        public virtual JsonResult UnscribeFileNotification(int fileId)
+        {
+            object result = null;
+            using (var transaciton = _unitOfWork.BeginTransaction())
+            {
+                if (!_fileFileNotificationSubscriberService.UserIsSubscibed(WebSecurity.CurrentUserId, fileId))
+                {
+                    result = new { Error = "Current user has not a subscription", Success = false };
+                }
+                else
+                {
+                    _fileFileNotificationSubscriberService.RemoveFromUser(fileId, WebSecurity.CurrentUserId);
+                    _unitOfWork.SaveChanges();
+                    transaciton.Complete();
+                    result = new
+                    {
+                        Html = this.RenderViewToString(MVC.File.Views._fileSubscribe, false),
+                        Success = true
+                    };
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

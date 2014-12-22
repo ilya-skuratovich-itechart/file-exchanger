@@ -98,6 +98,18 @@ namespace FileExchange.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult SubscribeFileNotification()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.SubscribeFileNotification);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult UnscribeFileNotification()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.UnscribeFileNotification);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.JsonResult ViewCategoryFilesTableFilter()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ViewCategoryFilesTableFilter);
@@ -134,6 +146,8 @@ namespace FileExchange.Controllers
             public readonly string ViewFileComments = "ViewFileComments";
             public readonly string AddComment = "AddComment";
             public readonly string DownloadFile = "DownloadFile";
+            public readonly string SubscribeFileNotification = "SubscribeFileNotification";
+            public readonly string UnscribeFileNotification = "UnscribeFileNotification";
             public readonly string ViewCategoryFilesTableFilter = "ViewCategoryFilesTableFilter";
             public readonly string UserFilesTableFilter = "UserFilesTableFilter";
         }
@@ -151,6 +165,8 @@ namespace FileExchange.Controllers
             public const string ViewFileComments = "ViewFileComments";
             public const string AddComment = "AddComment";
             public const string DownloadFile = "DownloadFile";
+            public const string SubscribeFileNotification = "SubscribeFileNotification";
+            public const string UnscribeFileNotification = "UnscribeFileNotification";
             public const string ViewCategoryFilesTableFilter = "ViewCategoryFilesTableFilter";
             public const string UserFilesTableFilter = "UserFilesTableFilter";
         }
@@ -219,6 +235,22 @@ namespace FileExchange.Controllers
         public ActionParamsClass_DownloadFile DownloadFileParams { get { return s_params_DownloadFile; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_DownloadFile
+        {
+            public readonly string fileId = "fileId";
+        }
+        static readonly ActionParamsClass_SubscribeFileNotification s_params_SubscribeFileNotification = new ActionParamsClass_SubscribeFileNotification();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_SubscribeFileNotification SubscribeFileNotificationParams { get { return s_params_SubscribeFileNotification; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_SubscribeFileNotification
+        {
+            public readonly string fileId = "fileId";
+        }
+        static readonly ActionParamsClass_UnscribeFileNotification s_params_UnscribeFileNotification = new ActionParamsClass_UnscribeFileNotification();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UnscribeFileNotification UnscribeFileNotificationParams { get { return s_params_UnscribeFileNotification; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UnscribeFileNotification
         {
             public readonly string fileId = "fileId";
         }
@@ -336,12 +368,12 @@ namespace FileExchange.Controllers
         partial void EditUserFileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.EditExchangeFileModel userFile);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult EditUserFile(FileExchange.Models.EditExchangeFileModel userFile)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> EditUserFile(FileExchange.Models.EditExchangeFileModel userFile)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditUserFile);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userFile", userFile);
             EditUserFileOverride(callInfo, userFile);
-            return callInfo;
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
         [NonAction]
@@ -425,6 +457,30 @@ namespace FileExchange.Controllers
             var callInfo = new T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
             DownloadFileOverride(callInfo, fileId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SubscribeFileNotificationOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, int fileId);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult SubscribeFileNotification(int fileId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.SubscribeFileNotification);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
+            SubscribeFileNotificationOverride(callInfo, fileId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UnscribeFileNotificationOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, int fileId);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult UnscribeFileNotification(int fileId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.UnscribeFileNotification);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
+            UnscribeFileNotificationOverride(callInfo, fileId);
             return callInfo;
         }
 

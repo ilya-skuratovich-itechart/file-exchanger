@@ -11,6 +11,8 @@ namespace FileExchange.Core.Services
     {
         FileNotificationSubscribers Add(int userId, int fileId);
 
+        IEnumerable<FileNotificationSubscribers> GetFileNotificationSubscriberses(int fileId); 
+
         bool UserIsSubscibed(int userId, int fileId);
 
         void RemoveAll(int fileId);

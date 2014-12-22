@@ -1,0 +1,18 @@
+﻿@model FileExchange.Models.BaseFileTemplateViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FileAccessDeniedTemplate</title>
+</head>
+<body>
+    <div>
+        Dear @Model.UserName , access to file @Model.FileName is denied.
+    </div>
+</body>
+</html>

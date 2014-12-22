@@ -1,0 +1,4 @@
+D:\projects\file manager\FileExchanger\FileExchange.EmailSender\bin\Debug\FileExchange.EmailSender.dll
+D:\projects\file manager\FileExchanger\FileExchange.EmailSender\bin\Debug\FileExchange.EmailSender.pdb
+D:\projects\file manager\FileExchanger\FileExchange.EmailSender\obj\Debug\FileExchange.EmailSender.dll
+D:\projects\file manager\FileExchanger\FileExchange.EmailSender\obj\Debug\FileExchange.EmailSender.pdb

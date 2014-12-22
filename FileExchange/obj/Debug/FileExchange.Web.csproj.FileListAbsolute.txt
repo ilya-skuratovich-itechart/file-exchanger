@@ -26,7 +26,6 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Helpers.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Http.OData.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Mvc.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Optimization.dll
-D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.Deployment.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.Razor.dll
@@ -44,7 +43,6 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\EntityFramework.SqlServe
 D:\projects\file manager\FileExchanger\FileExchange\bin\Newtonsoft.Json.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Helpers.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Mvc.xml
-D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.Deployment.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.Razor.xml
@@ -96,3 +94,10 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.Mvc.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.Mvc.xml
+D:\projects\file manager\FileExchanger\FileExchange\bin\FileExchange.EmailSender.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\FileExchange.EmailSender.pdb
+D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\Xipton.Razor.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\RazorTemplates.Core.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\RazorTemplates.Core.xml
+D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.xml

@@ -29,6 +29,7 @@ public static partial class MVC
     public static FileExchange.Controllers.FileController File = new FileExchange.Controllers.T4MVC_FileController();
     public static FileExchange.Controllers.HomeController Home = new FileExchange.Controllers.T4MVC_HomeController();
     public static FileExchange.Controllers.NewsController News = new FileExchange.Controllers.T4MVC_NewsController();
+    public static T4MVC.DisplayEmailTemplatesController DisplayEmailTemplates = new T4MVC.DisplayEmailTemplatesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

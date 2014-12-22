@@ -14,6 +14,7 @@ namespace FileExchange.Core.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
        

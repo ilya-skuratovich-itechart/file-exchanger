@@ -9,10 +9,12 @@
     @Scripts.Render("~/bundles/ExchangeFile")
     <script type="text/javascript">
         $(function() {
-            exchangeFile.initObject('@Url.Action(MVC.File.ActionNames.AddComment, MVC.File.Name, null, Request.Url.Scheme)', @Model.FileId, "Comment", "commentSection");
+            exchangeFile.initObject('@Url.Action(MVC.File.ActionNames.AddComment, MVC.File.Name, null, Request.Url.Scheme)', @Model.FileId, "Comment", "commentSection",
+                '@Url.Action(MVC.File.ActionNames.SubscribeFileNotification, MVC.File.Name, new {fileId = Model.FileId})',
+                '@Url.Action(MVC.File.ActionNames.UnscribeFileNotification, MVC.File.Name, new {fileId = Model.FileId})',
+                'subscribeBlock');
         });
     </script>
-
 }
 <div class="col-lg-12">
     <h1 class="page-header">File info</h1>
@@ -48,12 +50,14 @@
 <div class="col-lg-12">
     <h1 class="page-header">Subscribtion</h1>
 </div>
-@if (User.Identity.IsAuthenticated)
-{
+<div id="subscribeBlock">
+    @if (User.Identity.IsAuthenticated)
     {
-        Html.RenderPartial(MVC.File.Views._fileSubscribe,Model.HasSubscription);
+        {
+            Html.RenderPartial(MVC.File.Views._fileSubscribe, Model.HasSubscription);
+        }
     }
-}
+</div>
 <div class="col-lg-12">
     <h1 class="page-header">Comments</h1>
 </div>
@@ -61,6 +65,4 @@
 <div id="commentSection">
     @{ Html.RenderAction(MVC.File.ActionNames.ViewFileComments);}
 </div>
-<span class="input-group-btn" onclick=" exchangeFile.addComment();">
-    <a href="#" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-ok"></span> Subscribe</a>
-</span>
+

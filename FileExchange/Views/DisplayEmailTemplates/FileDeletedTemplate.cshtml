@@ -1,0 +1,17 @@
+﻿@model FileExchange.Models.BaseFileTemplateViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>FileDeletedTemplate</title>
+</head>
+<body>
+    <div>
+        Dear @Model.UserName , the file @Html.ActionLink(@Model.FileName, MVC.File.ActionNames.ViewFile, MVC.File.Name, new { fileId = Model.FileId })  has been deleted.
+    </div>
+</body>
+</html>

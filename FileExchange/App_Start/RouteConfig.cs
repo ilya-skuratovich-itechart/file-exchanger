@@ -136,6 +136,29 @@ namespace FileExchange
 
 
             routes.MapRoute(
+                name: "SubscribeFileNotification",
+                url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.SubscribeFileNotification),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.SubscribeFileNotification,
+                        fileId = UrlParameter.Optional
+                    });
+
+            routes.MapRoute(
+                name: "UnscribeFileNotification",
+                url: string.Format("{0}/{1}/{{fileId}}", MVC.File.Name, MVC.File.ActionNames.UnscribeFileNotification),
+                defaults:
+                    new
+                    {
+                        controller = MVC.File.Name,
+                        action = MVC.File.ActionNames.UnscribeFileNotification,
+                        fileId = UrlParameter.Optional
+                    });
+
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new {controller = "Home", action = "Index", id = UrlParameter.Optional});

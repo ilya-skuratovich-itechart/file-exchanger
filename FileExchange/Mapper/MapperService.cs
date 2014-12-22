@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using AutoMapper;
 using FileExchange.Core.BusinessObjects;
+using FileExchange.EmailSender;
 using FileExchange.Helplers;
 using FileExchange.Models;
 
@@ -15,8 +17,10 @@ namespace FileExchange.Mapper
                 .ForMember(m => m.ImagePath, e => e.ResolveUsing(n =>
                     string.Format("/{0}", Path.Combine(ConfigHelper.FilesFolder, n.UniqImageName).Replace(@"\", "/"))));
 
-            AutoMapper.Mapper.CreateMap<FileCategories, FileCategoryModel>();
+            AutoMapper.Mapper.CreateMap<ExchangeFile, ExchangeFile>();
 
+            AutoMapper.Mapper.CreateMap<FileCategories, FileCategoryModel>();
+             
             AutoMapper.Mapper.CreateMap<FileCategories, System.Web.Mvc.SelectListItem>()
                 .ForMember(s => s.Value, m => m.MapFrom(f => f.CategoryId))
                 .ForMember(s => s.Text, m => m.MapFrom(f => f.CategoryName));

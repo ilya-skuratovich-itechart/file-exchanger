@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Repositories;
@@ -23,10 +24,13 @@ namespace FileExchange.Core.Services
                 {
                     UserId = userId,
                     FileId = fileId
-
                 });
         }
 
+        public IEnumerable<FileNotificationSubscribers> GetFileNotificationSubscriberses(int fileId)
+        {
+            return _repository.FindBy(s => s.FileId == fileId);
+        }
         public bool UserIsSubscibed(int userId, int fileId)
         {
             return _repository

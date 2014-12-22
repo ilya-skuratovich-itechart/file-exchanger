@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExchange.Core", "FileEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExchange.Test", "FileExchange.Test\FileExchange.Test.csproj", "{7CD371A7-F440-497B-B33C-252FA869D355}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExchange.EmailSender", "FileExchange.EmailSender\FileExchange.EmailSender.csproj", "{534DF959-4B72-4A60-B854-CB734C4E2F79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7CD371A7-F440-497B-B33C-252FA869D355}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CD371A7-F440-497B-B33C-252FA869D355}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CD371A7-F440-497B-B33C-252FA869D355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{534DF959-4B72-4A60-B854-CB734C4E2F79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{534DF959-4B72-4A60-B854-CB734C4E2F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{534DF959-4B72-4A60-B854-CB734C4E2F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{534DF959-4B72-4A60-B854-CB734C4E2F79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
@@ -35,7 +36,7 @@ namespace FileExchange.Test
                     .UsingConstructor(typeof (IUnitOfWork));
                 var container = builder.Build();
 
-
+                
                 var unitOfWork = container.Resolve<IUnitOfWork>();
                 var exhcangeFileService = container.Resolve<IExchangeFileService>();
                 exhcangeFileService.GetAll();

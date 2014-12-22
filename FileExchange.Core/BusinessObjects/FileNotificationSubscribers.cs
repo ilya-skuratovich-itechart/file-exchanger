@@ -7,7 +7,7 @@ namespace FileExchange.Core.BusinessObjects
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Subscriberid { get; set; }
+        public int Subscriberid { get; set; }
 
         [ForeignKey("File")]
         [Required]
@@ -17,10 +17,9 @@ namespace FileExchange.Core.BusinessObjects
         [Required]
         public int UserId { get; set; }
 
-        [Required]
-        public ExchangeFile File { get; set; }
-
         public UserProfile User { get; set; }
+
+        public ExchangeFile File { get; set; }
 
 
     }

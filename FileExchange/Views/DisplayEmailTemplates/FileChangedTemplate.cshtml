@@ -1,0 +1,19 @@
+﻿@model FileExchange.Models.BaseFileTemplateViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FileChangedTemplate</title>
+</head>
+<body>
+    <div>
+        Dear @Model.UserName , the file @Html.ActionLink(@Model.FileName, MVC.File.ActionNames.ViewFile, MVC.File.Name, new { fileId = Model.FileId })  description has been changed.
+      
+    </div>
+</body>
+</html>

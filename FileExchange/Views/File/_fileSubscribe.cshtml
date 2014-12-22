@@ -1,13 +1,13 @@
 ﻿@model bool
 @if (!Model)
 {
-    <span class="input-group-btn" onclick=" exchangeFile.Subscribe(); ">
+    <span class="input-group-btn" id="subcribeBtn" onclick=" exchangeFile.subscribeFileNotification(); ">
         <a href="#" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-ok"></span> Subscribe</a>
     </span>
 }
 else
 {
-    <span class="input-group-btn" onclick=" exchangeFile.Unscribe(); ">
+    <span class="input-group-btn" id="unscribeBtn" onclick="exchangeFile.unsubscribeFileNotification(); ">
         <a href="#" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-minus"></span> Unscribe</a>
     </span>
 }
