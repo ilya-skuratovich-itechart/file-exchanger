@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "ViewUsers";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#usersProfiles').dataTable(
+            {
+                "oLanguage": {
+                    "sEmptyTable": "No users found."
+                },
+                "bProcessing": true,
+                "bFilter": false,
+                "bServerSide": true,
+                "ajax": {
+                    "type": "POST",
+                    "url": '@Url.Action(MVC.Admin.Users.ActionNames.ViewUserDataTableFilter, MVC.Admin.Users.Name, new {area = MVC.Admin.Name})',
+                    "data": function(d) {
+                        d.id = $("#fileId").val();
+                    }
+                },
+                "aoColumns": [
+                    {
+                        "sName": "UserId",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": false
+                    },
+                    {
+                        "sName": "btn_editUser",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": true,
+                        "mRender": function(data, type, oObj) {
+                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.Admin.Users.ActionNames.EditUser, MVC.Admin.Users.Name, new { area = MVC.Admin.Name })/' +
+                                oObj[0] + '"></a>';
+                        }
+                    },
+                    {
+                        "sName": "UserName",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "UserEmail",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "RolesNames",
+                        "bSearchable": false,
+                        "bSortable": false
+                    }
+                ]
+            });
+            $('#userFiles')
+                .removeClass('display')
+                .addClass('table table-striped table-bordered');
+        });
+    </script>
+
+    @Styles.Render("~/Content/datatable")
+    @Scripts.Render("~/bundles/datatable")
+
+}
+<div class="col-lg-12">
+    <h1 class="page-header">Users</h1>
+</div>
+<table cellpadding="0" cellspacing="0" border="0" id="usersProfiles">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>User name</th>
+            <th>Email</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+</table>

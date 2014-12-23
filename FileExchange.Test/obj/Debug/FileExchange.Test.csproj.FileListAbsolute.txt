@@ -5,12 +5,12 @@ D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\Autofac.dll
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\EntityFramework.dll
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\EntityFramework.SqlServer.dll
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\FileExchange.Core.dll
-D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\EntityFramework.Extended.dll
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\FileExchange.Core.pdb
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\Autofac.xml
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\EntityFramework.xml
 D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\EntityFramework.SqlServer.xml
-D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\EntityFramework.Extended.xml
 D:\projects\file manager\FileExchanger\FileExchange.Test\obj\Debug\FileExchange.Test.csprojResolveAssemblyReference.cache
 D:\projects\file manager\FileExchanger\FileExchange.Test\obj\Debug\FileExchange.Test.exe
 D:\projects\file manager\FileExchanger\FileExchange.Test\obj\Debug\FileExchange.Test.pdb
+D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\System.Web.Razor.dll
+D:\projects\file manager\FileExchanger\FileExchange.Test\bin\Debug\Xipton.Razor.dll

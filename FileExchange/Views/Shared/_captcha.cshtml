@@ -1,0 +1,9 @@
+﻿@model  FileExchange.Models.Captcha
+<div class="editor-label">
+    @Html.LabelFor(model => model.CaptchaValue)
+</div>
+<div class="editor-field">
+    <img src='@Url.Action(MVC.Captcha.ActionNames.Show,MVC.Captcha.Name)'  alt="" />
+    @Html.TextBoxFor(m => m.CaptchaValue, new { @class = "captcha_input" })
+    @*  @Html.ValidationMessageFor(model => model.CaptchaValue)*@
+</div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -12,6 +13,7 @@ using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Repositories;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
+using Xipton.Razor;
 
 namespace FileExchange.Test
 {
@@ -21,6 +23,16 @@ namespace FileExchange.Test
         {
             try
             {
+
+                RazorMachine rm = new RazorMachine();
+                var content =
+                    File.ReadAllText(
+                        @"d:\projects\file manager\FileExchanger\FileExchange\Views\DisplayEmailTemplates\FileChangedTemplate.cshtml");
+                ITemplate template = rm.ExecuteContent(content,
+                  new { UserName = "John" });
+                Console.WriteLine(template.Result);
+
+                Console.ReadKey();
                 var builder = new ContainerBuilder();
                 builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 

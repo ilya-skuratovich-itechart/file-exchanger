@@ -32,7 +32,9 @@ namespace FileExchange.Core.BusinessObjects
 
     public enum UserRoleTypes
     {
-        Admin = 1,
-        Moderator = 2
+        
+        Admin=1,
+        Moderator=2, 
+        ActiveUser=3
     }
 }

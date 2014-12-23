@@ -1,0 +1,47 @@
+﻿@using MvcCheckBoxList.Model
+@model FileExchange.Areas.Admin.Models.EditUserViewModel
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm(MVC.Admin.Users.EditUser(), FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(u => u.UserName)
+    @Html.HiddenFor(u => u.UserEmail)
+    @Html.HiddenFor(u=>u.UserId)
+    @Html.ValidationSummary(true)
+    <div class="col-md-9 personal-info">
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(u => u.FileMaxSizeKbps)</label>
+            <div class="col-lg-8">
+                @Html.TextBoxFor(u => u.FileMaxSizeKbps, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">@Html.LabelFor(u => u.MaxDonwloadSpeedKbps)</label>
+            <div class="col-lg-8">
+                @Html.TextBoxFor(u => u.FileMaxSizeKbps, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">User Roles:</label>
+            <div class="col-lg-8">
+                @Html.CheckBoxListFor(u => u.RolesIds,
+                                      u => u.UserRoles,
+                                      r => r.RoleId,
+                                      r => r.RoleName,
+                                      u => u.SelectedUserRoles,
+                                      Position.Horizontal)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-lg-8">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", MVC.Admin.Users.ActionNames.ViewUsers, MVC.Admin.Users.Name, null, new { area = MVC.Admin, @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}

@@ -22,6 +22,7 @@ using FileExchange.Helplers;
 using FileExchange.ModelBinders;
 using FileExchange.Models;
 using FileExchange.Models.DataTable;
+using FileExchange.Notifications.FileNotification;
 using WebMatrix.WebData;
 
 namespace FileExchange.Controllers
@@ -94,8 +95,8 @@ namespace FileExchange.Controllers
                     var path =
                         System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
                             Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
-                    userFile.File.SaveAs(path);
                     _unitOfWork.SaveChanges();
+                    userFile.File.SaveAs(path);
                     transaction.Complete();
                 }
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
@@ -128,10 +129,12 @@ namespace FileExchange.Controllers
             int userId = WebSecurity.CurrentUserId;
             if (ModelState.IsValid)
             {
-                ExchangeFile exchangeFile = _fileExchangeService.GetUserFile(userFile.FileId, userId);
-              var oldExchangeFile=  AutoMapper.Mapper.Map<ExchangeFile>(exchangeFile); 
+               
                 using (var transaction = _unitOfWork.BeginTransaction())
                 {
+                    var oldExchangeFile =
+                   AutoMapper.Mapper.Map<ExchangeFile>(_fileExchangeService.GetUserFile(userFile.FileId, userId));
+
                     ExchangeFile newExchangeFile = _fileExchangeService.Update(userId, userFile.FileId,
                         userFile.SelectedFileCategoryId,
                         userFile.Description, userFile.Tags, userFile.DenyAll, userFile.AllowViewAnonymousUsers);
@@ -139,67 +142,17 @@ namespace FileExchange.Controllers
                     var fileNotificationTracker = new FileNotificationTracker(_fileFileNotificationSubscriberService);
                     var notificationUsers = fileNotificationTracker.GetNotoficationUsersByChanges(oldExchangeFile,
                         newExchangeFile);
-
-                    Action<object> sendFunc = (o) =>
+                    string fileUrl = Url.Action(MVC.File.ActionNames.ViewFile, MVC.File.Name, new { fileId = oldExchangeFile.FileId }, Request.Url.Scheme);
+                    FileNotificationModel fileNotificationModel = new FileNotificationModel()
                     {
-                        try
-                        {
-
-
-                            List<FileUserNotification> notificUsers = (o) as List<FileUserNotification>;
-                            if (notificUsers != null)
-                            {
-                                IMailer mailer = AutofacConfig.ApplicationContainer.Container.Resolve<IMailer>();
-                                var templateModel = new BaseFileTemplateViewModel();
-                                templateModel.FileName = userFile.OrigFileName;
-                                templateModel.FileId = userFile.FileId;
-                                foreach (var notificationUser in notificUsers)
-                                {
-                                    string templateText = string.Empty;
-                                    templateModel.UserName = notificationUser.UserName;
-                                    string subject = string.Empty;
-                                    switch (notificationUser.NotificationType)
-                                    {
-
-                                        case NotificationType.accessDienied:
-                                        {
-
-                                            templateText = RenderViewHelper.RenderPartialToString(
-                                                MVC.DisplayEmailTemplates.Views.FileAccessDeniedTemplate,
-                                                templateModel);
-                                            subject = "Access to file denied";
-                                            break;
-                                        }
-                                        case NotificationType.descriptionChanged:
-                                        templateText = RenderViewHelper.RenderPartialToString(
-                                                MVC.DisplayEmailTemplates.Views.FileChangedTemplate,
-                                                templateModel);
-                                            subject = "file desctiption is changed";
-                                            break;
-                                        case NotificationType.fileDelited:
-                                            templateText = RenderViewHelper.RenderPartialToString(
-                                                MVC.DisplayEmailTemplates.Views.FileDeletedTemplate,
-                                                templateModel);
-                                            subject = "File is deleted";
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    mailer.SendEmailTo(notificationUser.Email, subject, templateText);
-                                }
-                            }
-                        } 
-                        catch (Exception exc )
-                        {
-                            
-                            throw exc;
-                        }
-
+                        FileId = oldExchangeFile.FileId,
+                        FileUrl = fileUrl,
+                        OriginalFileName = oldExchangeFile.OrigFileName,
+                        FileUserNotifications = notificationUsers
                     };
-
-                    Task.Factory.StartNew(sendFunc, notificationUsers);
                     _unitOfWork.SaveChanges();
                     transaction.Complete();
+                    Task.Factory.StartNew(FileNotification.SendChangeFileNotification, fileNotificationModel);
                 }
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
             }
@@ -210,7 +163,7 @@ namespace FileExchange.Controllers
             return View(userFile);
         }
 
-
+      
 
         [Authorize]
         public virtual ActionResult DeleteUserFile(int fileId)
@@ -220,16 +173,33 @@ namespace FileExchange.Controllers
                 using (var transaction = _unitOfWork.BeginTransaction())
                 {
                     int userId = (int)WebSecurity.CurrentUserId;
+                    string fileUrl = Url.Action(MVC.File.ActionNames.ViewFile, MVC.File.Name, new { fileId = fileId }, Request.Url.Scheme);
                     ExchangeFile userFile = _fileExchangeService.GetUserFile(fileId, userId);
                     if (userFile == null)
-                        throw new ArgumentException("");
+                        throw new ArgumentException("file not exists. FileId:" +fileId.ToString());
+                    var oldExchangeFile =
+                       AutoMapper.Mapper.Map<ExchangeFile>(userFile);
+                    var fileNotificationTracker = new FileNotificationTracker(_fileFileNotificationSubscriberService);
+                    var notificationUsers = fileNotificationTracker.GetNotoficationUsersByChanges(oldExchangeFile,
+                        null);
+                  
+                    FileNotificationModel fileNotificationModel = new FileNotificationModel()
+                    {
+                        FileId = oldExchangeFile.FileId,
+                        FileUrl = fileUrl,
+                        OriginalFileName = oldExchangeFile.OrigFileName,
+                        FileUserNotifications = notificationUsers
+                    };
+                    _fileCommentService.RemoveAll(fileId);
+                    _fileFileNotificationSubscriberService.RemoveAll(fileId);
                     _fileExchangeService.RemoveUserFile(userId, fileId);
                     var filePath =
                         System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
                             Path.Combine(ConfigHelper.FilesFolder, userFile.UniqFileName)));
-                    System.IO.File.Delete(filePath);
                     _unitOfWork.SaveChanges();
+                    System.IO.File.Delete(filePath);
                     transaction.Complete();
+                    Task.Factory.StartNew(FileNotification.SendChangeFileNotification, fileNotificationModel);
                 }
                 return View(MVC.File.ActionNames.UserFiles);
             }

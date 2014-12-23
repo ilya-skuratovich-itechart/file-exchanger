@@ -33,7 +33,6 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\T4MVCExtensions.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\WebGrease.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\WebMatrix.Data.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\WebMatrix.WebData.dll
-D:\projects\file manager\FileExchanger\FileExchange\bin\EntityFramework.Extended.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\FileExchange.Core.pdb
 D:\projects\file manager\FileExchanger\FileExchange\bin\Autofac.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\Autofac.Integration.Mvc.xml
@@ -59,7 +58,6 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Http.OData.xm
 D:\projects\file manager\FileExchanger\FileExchange\bin\Microsoft.Data.Edm.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\Microsoft.Data.OData.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Spatial.xml
-D:\projects\file manager\FileExchanger\FileExchange\bin\EntityFramework.Extended.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\de\Microsoft.Data.Edm.resources.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\es\Microsoft.Data.Edm.resources.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\fr\Microsoft.Data.Edm.resources.dll
@@ -101,3 +99,4 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\Xipton.Razor.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\RazorTemplates.Core.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\RazorTemplates.Core.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.xml
+D:\projects\file manager\FileExchanger\FileExchange\bin\MvcCheckBoxList.dll

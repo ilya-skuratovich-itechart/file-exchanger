@@ -109,6 +109,7 @@ namespace FileExchange.Controllers
         public class ActionParamsClass_Register
         {
             public readonly string model = "model";
+            public readonly string captchaValue = "captchaValue";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -189,14 +190,15 @@ namespace FileExchange.Controllers
         }
 
         [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.RegisterModel model);
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.RegisterModel model, string captchaValue);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Register(FileExchange.Models.RegisterModel model)
+        public override System.Web.Mvc.ActionResult Register(FileExchange.Models.RegisterModel model, string captchaValue)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            RegisterOverride(callInfo, model);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "captchaValue", captchaValue);
+            RegisterOverride(callInfo, model, captchaValue);
             return callInfo;
         }
 

@@ -95,7 +95,8 @@ namespace FileExchange.Core.Repositories
 
         public void RemoveBy(Expression<Func<T, bool>> predicate)
         {
-            _dbset.Where(predicate).Delete();
+            foreach (var item in _dbset.Where(predicate))
+                _dbset.Remove(item);
         }
 
         public virtual T Add(T entity)

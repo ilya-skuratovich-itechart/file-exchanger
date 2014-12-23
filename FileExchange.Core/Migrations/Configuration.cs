@@ -21,7 +21,9 @@ namespace FileExchange.Core.Migrations
 
         protected override void Seed(FileExchange.Core.FileExchangeDbContext context)
         {
+            
 
+         
             context.UserRoles.AddOrUpdate(
                 new UserRoles()
                 {
@@ -35,6 +37,14 @@ namespace FileExchange.Core.Migrations
                     RoleId = (int)UserRoleTypes.Moderator,
                     RoleName = UserRoleNames.Moderator
                 });
+
+            context.UserRoles.AddOrUpdate(
+               new UserRoles()
+               {
+                   RoleId = (int)UserRoleTypes.ActiveUser,
+                   RoleName = UserRoleNames.ActiveUser
+               });
+
 
             context.FielCategories.AddOrUpdate(new FileCategories()
             {

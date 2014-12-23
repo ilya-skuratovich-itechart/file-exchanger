@@ -56,7 +56,6 @@ header .content-wrapper {
 
 footer {
     clear: both;
-
     font-size: .8em;
     height: 100px;
 }
@@ -452,9 +451,11 @@ input[type="checkbox"].input-validation-error {
         line-height: 29px;
         text-align: center;
     }
-    .img-view-news {
-        width: 100px; height: 100px;
-    }
+
+.img-view-news {
+    width: 100px;
+    height: 100px;
+}
 
 .edit_topblock {
     position: relative;
@@ -479,15 +480,31 @@ input[type="checkbox"].input-validation-error {
 .add_usr_file .bootstrap-tagsinput {
     min-width: 200px !important;
 }
+
 .bootstrap-tagsinput-disabled {
-      cursor: not-allowed;
+    cursor: not-allowed;
     background-color: #EEE;
     color: #9E9999;
 }
+
 li.ui-state-default {
     background: #fff0;
     border: none;
     border-bottom: 1px solid #ddd;
     text-align: left;
     padding-bottom: 10px;
+}
+
+.captcha_input {
+    position: relative;
+    height: 30px;
+    font-size: 16px !important;
+    height: 24px !important;
+    text-align: center;
+    width: 70px !important;
+    text-transform: uppercase;
+}
+
+.captcha-img {
+    margin-top: -6px;
 }

@@ -19,6 +19,6 @@ namespace FileExchange.Core.BusinessObjects
         public string PasswordSalt { get; set; }
         public string PasswordVerificationToken { get; set; }
         public Nullable<System.DateTime> PasswordVerificationTokenExpirationDate { get; set; }
-        public UserProfile UserProfile { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

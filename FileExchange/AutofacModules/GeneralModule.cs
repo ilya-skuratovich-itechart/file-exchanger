@@ -21,6 +21,18 @@ namespace FileExchange.AutofacModules
               .InstancePerHttpRequest();
 
 
+            builder.RegisterType<UserRolesService>().As<IUserRolesService>()
+              .UsingConstructor(typeof(IUnitOfWork))
+              .InstancePerHttpRequest();
+
+            builder.RegisterType<UserInRolesService>().As<IUserInRolesService>()
+                .UsingConstructor(typeof (IUnitOfWork))
+                .InstancePerHttpRequest();
+
+            builder.RegisterType<UserProfileService>().As<IUserProfileService>()
+              .UsingConstructor(typeof(IUnitOfWork))
+              .InstancePerHttpRequest();
+
             builder.RegisterType<FileCommentService>().As<IFileCommentService>()
                 .UsingConstructor(typeof (IUnitOfWork))
                 .InstancePerHttpRequest();

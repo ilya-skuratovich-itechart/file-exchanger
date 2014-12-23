@@ -14,13 +14,21 @@ namespace FileExchange.Helplers
     {
         private static Dictionary<string, dynamic> _templatesCache = new Dictionary<string, dynamic>();
      
-        public  static string RenderPartialToString(string viewPath, object model)
+        public  static string RenderPartialToString(string viewPath,string layoutPath, object model)
         {
-            var rm = new RazorMachine();
+            
+              string content = File.ReadAllText(MapPath(viewPath));
+              string layout = File.ReadAllText(MapPath(layoutPath));
+              var rm = new RazorMachine();
+              rm.RegisterTemplate("~/shared/_layout.cshtml", layout);
 
+              var renderedContent =
+                  rm.ExecuteContent(string.Format("{0}{1}", "@{Layout=\"_layout\";}", content), model);
+              var result = renderedContent.Result;
+            return result;
             if (!_templatesCache.ContainsKey(viewPath))
             {
-                string content = File.ReadAllText(MapPath(viewPath));
+            
                 var compiledTemplate = Template.Compile(content);
                 _templatesCache.Add(viewPath, compiledTemplate);
             }

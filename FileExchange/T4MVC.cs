@@ -25,7 +25,10 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    static readonly AdminClass s_Admin = new AdminClass();
+    public static AdminClass Admin { get { return s_Admin; } }
     public static FileExchange.Controllers.AccountController Account = new FileExchange.Controllers.T4MVC_AccountController();
+    public static FileExchange.Controllers.CaptchaController Captcha = new FileExchange.Controllers.T4MVC_CaptchaController();
     public static FileExchange.Controllers.FileController File = new FileExchange.Controllers.T4MVC_FileController();
     public static FileExchange.Controllers.HomeController Home = new FileExchange.Controllers.T4MVC_HomeController();
     public static FileExchange.Controllers.NewsController News = new FileExchange.Controllers.T4MVC_NewsController();
@@ -35,6 +38,13 @@ public static partial class MVC
 
 namespace T4MVC
 {
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public class AdminClass
+    {
+        public readonly string Name = "Admin";
+        public FileExchange.Areas.Admin.Controllers.UsersController Users = new FileExchange.Areas.Admin.Controllers.T4MVC_UsersController();
+        public T4MVC.Admin.SharedController Shared = new T4MVC.Admin.SharedController();
+    }
 }
 
 namespace T4MVC

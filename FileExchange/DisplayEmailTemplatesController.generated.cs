@@ -36,10 +36,12 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _layout = "_layout";
                 public readonly string FileAccessDeniedTemplate = "FileAccessDeniedTemplate";
                 public readonly string FileChangedTemplate = "FileChangedTemplate";
                 public readonly string FileDeletedTemplate = "FileDeletedTemplate";
             }
+            public readonly string _layout = "~/Views/DisplayEmailTemplates/_layout.cshtml";
             public readonly string FileAccessDeniedTemplate = "~/Views/DisplayEmailTemplates/FileAccessDeniedTemplate.cshtml";
             public readonly string FileChangedTemplate = "~/Views/DisplayEmailTemplates/FileChangedTemplate.cshtml";
             public readonly string FileDeletedTemplate = "~/Views/DisplayEmailTemplates/FileDeletedTemplate.cshtml";

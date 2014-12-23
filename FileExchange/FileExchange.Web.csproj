@@ -67,6 +67,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="MvcCheckBoxList">
+      <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -214,6 +217,12 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ActionResults\BandwidthThrottlingFileResult.cs" />
+    <Compile Include="Admin.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.UsersController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -221,8 +230,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\DataBaseInitialazer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\EditUserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserRolesModel.cs" />
     <Compile Include="AutofacModules\GeneralModule.cs" />
+    <Compile Include="CaptchaController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -249,6 +266,7 @@
     <Compile Include="ModelBinders\DataTablesBinder.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseFileTemplateViewModel.cs" />
+    <Compile Include="Models\Captcha.cs" />
     <Compile Include="Models\CategoryFilesViewModel.cs" />
     <Compile Include="Models\CreateExchangeFileModel.cs" />
     <Compile Include="Models\DataTable\Column.cs" />
@@ -268,6 +286,8 @@
     <Compile Include="NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Notifications\FileNotification\FileNotification.cs" />
+    <Compile Include="Notifications\FileNotification\FileNotificationModel.cs" />
     <Compile Include="PageList\PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedController.generated.cs">
@@ -355,6 +375,10 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\DataTables-1.10.4\css\dataTables.responsive.scss" />
     <Content Include="Content\DataTables-1.10.4\css\dataTables.jqueryui.scss" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\ViewUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\EditUser.cshtml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\DataTables-1.10.4\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables-1.10.4\dataTables.autoFill.min.js" />
@@ -601,6 +625,8 @@
     <Content Include="Views\DisplayEmailTemplates\FileDeletedTemplate.cshtml" />
     <Content Include="Views\DisplayEmailTemplates\FileChangedTemplate.cshtml" />
     <Content Include="Views\DisplayEmailTemplates\FileAccessDeniedTemplate.cshtml" />
+    <Content Include="Views\DisplayEmailTemplates\_layout.cshtml" />
+    <Content Include="Views\Shared\_captcha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

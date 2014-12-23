@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +15,11 @@ namespace FileExchange.Core.BusinessObjects
         public string UserName { get; set; }
         
         public string UserEmail { get; set; }
+
+        public int MaxDonwloadSpeedKbps { get;set; }
+
+        public int FileMaxSizeKbps { get; set; }
       
-        public ICollection<UserRoles> Roles { get; set; }
+        public virtual ICollection<UserInRoles> Roles { get; set; }
     }
 }

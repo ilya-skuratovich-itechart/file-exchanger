@@ -82,7 +82,13 @@
     <Compile Include="Services\IFileCommentsService.cs" />
     <Compile Include="Services\IFileNotificationSubscriberService.cs" />
     <Compile Include="Services\INewsService.cs" />
+    <Compile Include="Services\IUserInRolesService.cs" />
+    <Compile Include="Services\IUserRolesService.cs" />
+    <Compile Include="Services\IUserProfileService.cs" />
     <Compile Include="Services\NewsService.cs" />
+    <Compile Include="Services\UserInRolesService.cs" />
+    <Compile Include="Services\UserProfileService.cs" />
+    <Compile Include="Services\UserRolesService.cs" />
     <Compile Include="UOW\IUnitOfWork.cs" />
     <Compile Include="UOW\UnitOfWork.cs" />
     <Compile Include="UsersContext.cs" />

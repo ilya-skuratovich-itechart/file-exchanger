@@ -1,19 +1,2 @@
-﻿@model FileExchange.Models.BaseFileTemplateViewModel
-@{
-    Layout = null;
-}
+﻿Dear @Model.UserName , the file <a href="@Model.FileUrl">@Model.FileName </a> description has been changed.
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>FileChangedTemplate</title>
-</head>
-<body>
-    <div>
-        Dear @Model.UserName , the file @Html.ActionLink(@Model.FileName, MVC.File.ActionNames.ViewFile, MVC.File.Name, new { fileId = Model.FileId })  description has been changed.
-      
-    </div>
-</body>
-</html>

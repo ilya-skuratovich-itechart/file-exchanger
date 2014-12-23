@@ -11,12 +11,10 @@ namespace FileExchange.Core.Services
 {
     public class ExchangeFileService : IExchangeFileService
     {
-        private IUnitOfWork _unitOfWork;
         private IGenericRepository<ExchangeFile> _exchangeFileRepository;
 
         public ExchangeFileService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
             _exchangeFileRepository = BootStrap.Container.Resolve<IGenericRepository<ExchangeFile>>();
             _exchangeFileRepository.InitializeDbContext(unitOfWork.DbContext);
         }

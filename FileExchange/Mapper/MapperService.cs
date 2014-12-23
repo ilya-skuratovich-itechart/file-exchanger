@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using AutoMapper;
+using FileExchange.Areas.Admin.Models;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.EmailSender;
 using FileExchange.Helplers;
@@ -33,6 +34,19 @@ namespace FileExchange.Mapper
                     string.Format("/{0}", Path.Combine(ConfigHelper.FilesFolder, n.UniqImageName).Replace(@"\", "/"))));
 
             AutoMapper.Mapper.CreateMap<ExchangeFile, ViewExchangeFileViewModel>();
+
+
+            AutoMapper.Mapper.CreateMap<UserRoles, UserRolesModel>()
+                .ForMember(r => r.RoleId, r => r.MapFrom(s => s.RoleId))
+                .ForMember(r => r.RoleName, r => r.MapFrom(s => s.RoleName));
+
+            AutoMapper.Mapper.CreateMap<UserInRoles, UserRolesModel>()
+               .ForMember(r => r.RoleId, r => r.MapFrom(s => s.RoleId))
+               .ForMember(r => r.RoleName, r => r.MapFrom(s => s.Role.RoleName));
+
+            AutoMapper.Mapper.CreateMap<UserProfile, EditUserViewModel>()
+                .ForMember(u => u.SelectedUserRoles, u => u.MapFrom(s => s.Roles));
+           
 
             AutoMapper.Mapper.CreateMap<FileComments, FileCommentsViewModel>()
                 .ForMember(s => s.UserName, m => m.MapFrom(c => c.File.User.UserName));

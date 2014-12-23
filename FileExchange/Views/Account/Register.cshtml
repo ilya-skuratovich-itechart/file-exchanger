@@ -29,8 +29,18 @@
         <div class="control-group">
             @Html.LabelFor(m => m.ConfirmPassword)
             <div class="controls">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input-xlarge" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "input-xlarge"})
             </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(m => m.Email)
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Email, new {@class = "input-xlarge"})
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.Partial(MVC.Shared.Views._captcha, new FileExchange.Models.Captcha())
         </div>
         <input type="submit" class="btn btn-success" value="Register" />
     </fieldset>
