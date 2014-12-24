@@ -18,7 +18,7 @@ namespace FileExchange
         public static void Initializate()
         {
 
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<FileExchangeDbContext, FileExchange.Core.Migrations.Configuration>("FileExchangeDbConnectionString"));
+         //   Database.SetInitializer(new MigrateDatabaseToLatestVersion<FileExchangeDbContext, FileExchange.Core.Migrations.Configuration>("FileExchangeDbConnectionString"));
           
             WebSecurity.InitializeDatabaseConnection("FileExchangeDbConnectionString", "UserProfile", "UserId",
                   "UserName", autoCreateTables: false);

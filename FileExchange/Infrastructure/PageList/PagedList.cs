@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using PagedList;
 
-namespace FileExchange.PageList
+namespace FileExchange.Infrastructure.PageList
 {
     public class PagedList<T>:BasePagedList<T>
     {

@@ -5,7 +5,7 @@ using FileExchange.EmailSender;
 using FileExchange.Helplers;
 using FileExchange.Models;
 
-namespace FileExchange.Notifications.FileNotification
+namespace FileExchange.Infrastructure.Notifications.FileNotification
 {
     public static class FileNotification
     {

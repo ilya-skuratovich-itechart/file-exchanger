@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FileExchange.Core.DTO;
 
-namespace FileExchange.Notifications.FileNotification
+namespace FileExchange.Infrastructure.Notifications.FileNotification
 {
     public class FileNotificationModel
     {

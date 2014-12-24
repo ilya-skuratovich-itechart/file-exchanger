@@ -2,13 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Web;
 using System.Web.Mvc;
+using Autofac;
 using FileExchange.Areas.Admin.Models;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
-using FileExchange.ModelBinders;
+using FileExchange.EmailSender;
+using FileExchange.Helplers;
+using FileExchange.Infrastructure.ModelBinders;
 using FileExchange.Models.DataTable;
 using WebMatrix.WebData;
 
@@ -53,7 +57,7 @@ namespace FileExchange.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditUser(EditUserViewModel userModel)
+        public virtual ActionResult EditUser(EditUserViewModel userModel)
         {
 
             if (!ModelState.IsValid)
@@ -79,6 +83,39 @@ namespace FileExchange.Areas.Admin.Controllers
             }
             return RedirectToAction(MVC.Admin.Users.ActionNames.ViewUsers);
 
+        }
+
+        public virtual JsonResult ChangeUserPassword(int userId)
+        {
+            try
+            {
+                using (var transaction = _unitOfWork.BeginTransaction())
+                {
+                    var user = _userProfileService.GetUserById(userId);
+                    if (user == null)
+                        throw new Exception(string.Format("User not exists. UserId: {0}", userId));
+
+                    string resetToken = WebSecurity.GeneratePasswordResetToken(user.UserName, 5);
+                    string newPassword = System.Web.Security.Membership.GeneratePassword(10, 2);
+                    WebSecurity.ResetPassword(resetToken, newPassword);
+                    IMailer mailer = AutofacConfig.ApplicationContainer.Container.Resolve<IMailer>();
+
+                    string templateText = RenderViewHelper.RenderPartialToString(
+                        MVC.Admin.EmailTemplates.Views.PasswordChanged,
+                        MVC.Admin.EmailTemplates.Views._layout,
+                        new {UserName = user.UserName, Password = newPassword});
+                    mailer.SendEmailTo(user.UserEmail, "Password has been changed", templateText);
+                    transaction.Complete();
+
+                }
+
+                return Json(new {Success = true},JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exc)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
 
         [HttpPost]

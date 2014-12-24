@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "ViewSettings";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#globalSettings').dataTable(
+            {
+                "oLanguage": {
+                    "sEmptyTable": "No settings found."
+                },
+                "bProcessing": true,
+                "bFilter": false,
+                "bServerSide": true,
+                "ajax": {
+                    "type": "POST",
+                    "url": '@Url.Action(MVC.Admin.GlobalSettings.ActionNames.ViewSettingsTableFilter, MVC.Admin.GlobalSettings.Name, new {area = MVC.Admin.Name})',
+                    "data": function(d) {
+                        d.id = $("#fileId").val();
+                    }
+                },
+                "aoColumns": [
+                    {
+                        "sName": "SettingId",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": false
+                    },
+                    {
+                        "sName": "btn_editSetting",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "visible": true,
+                        "mRender": function(data, type, oObj) {
+                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.Admin.Users.ActionNames.EditUser, MVC.Admin.Users.Name, new { area = MVC.Admin.Name })/' +
+                                oObj[0] + '"></a>';
+                        }
+                    },
+                    {
+                        "sName": "SettingName",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "SettingValue",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "Regex",
+                        "bSearchable": false,
+                        "bSortable": false
+                    },
+                    {
+                        "sName": "Description",
+                        "bSearchable": false,
+                        "bSortable": false
+                    }
+                ]
+            });
+            $('#userFiles')
+                .removeClass('display')
+                .addClass('table table-striped table-bordered');
+        });
+    </script>
+
+    @Styles.Render("~/Content/datatable")
+    @Scripts.Render("~/bundles/datatable")
+
+}
+<div class="col-lg-12">
+    <h1 class="page-header">Users</h1>
+</div>
+<table cellpadding="0" cellspacing="0" border="0" id="globalSettings">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Setting name</th>
+            <th>Setting value</th>
+            <th>Regex</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+</table>
+

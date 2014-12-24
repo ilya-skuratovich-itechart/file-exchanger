@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using FileExchange.Models.DataTable;
 
-namespace FileExchange.ModelBinders
+namespace FileExchange.Infrastructure.ModelBinders
 {
     public class DataTablesBinder : IModelBinder
     {

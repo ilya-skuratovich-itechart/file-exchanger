@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Web.Mvc;
 
-namespace FileExchange.ActionResults
+namespace FileExchange.Infrastructure.ActionResults
 {
     public class BandwidthThrottlingFileResult : FilePathResult
     {

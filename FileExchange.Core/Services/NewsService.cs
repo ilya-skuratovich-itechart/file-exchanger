@@ -73,7 +73,7 @@ namespace FileExchange.Core.Services
             news.Text = text;
             news.UniqImageName = uniqueImageName;
             news.OrigImageName = origImageName;
-            _repository.Edit(news);
+            _repository.Update(news);
             return news;
         }
 

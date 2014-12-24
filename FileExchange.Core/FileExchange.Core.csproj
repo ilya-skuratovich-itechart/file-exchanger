@@ -59,6 +59,7 @@
     <Compile Include="BusinessObjects\ExchangeFile.cs" />
     <Compile Include="BusinessObjects\FileCategories.cs" />
     <Compile Include="BusinessObjects\FileNotificationSubscribers.cs" />
+    <Compile Include="BusinessObjects\GlobalSetting.cs" />
     <Compile Include="BusinessObjects\MemberShip.cs" />
     <Compile Include="BusinessObjects\News.cs" />
     <Compile Include="BusinessObjects\UserInRoles.cs" />
@@ -77,10 +78,12 @@
     <Compile Include="Services\FileCategoriesService.cs" />
     <Compile Include="Services\FileCommentService.cs" />
     <Compile Include="Services\FileNotificationSubscriberService.cs" />
+    <Compile Include="Services\GlobalSettingService.cs" />
     <Compile Include="Services\IExchangeFileService.cs" />
     <Compile Include="Services\IFileCategoriesService.cs" />
     <Compile Include="Services\IFileCommentsService.cs" />
     <Compile Include="Services\IFileNotificationSubscriberService.cs" />
+    <Compile Include="Services\IGlobalSettingService.cs" />
     <Compile Include="Services\INewsService.cs" />
     <Compile Include="Services\IUserInRolesService.cs" />
     <Compile Include="Services\IUserRolesService.cs" />

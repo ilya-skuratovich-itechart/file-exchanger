@@ -14,10 +14,10 @@ namespace FileExchange.Areas.Admin.Models
         public string UserEmail { get; set; }
 
 
-        [Display(Name = "Max download speed kbps:")]
+        [Display(Name = "Max download speed kbps (0 unlimited):")]
         public int MaxDonwloadSpeedKbps { get; set; }
 
-        [Display(Name = "Max upload file size kbps:")]
+        [Display(Name = "Max upload file size kbps (0 unlimited):")]
         public int FileMaxSizeKbps { get; set; }
 
         /// <summary>

@@ -10,7 +10,7 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Helplers;
 using FileExchange.Models;
-using FileExchange.PageList;
+using FileExchange.Infrastructure.PageList;
 
 namespace FileExchange.Controllers
 {
@@ -89,7 +89,7 @@ namespace FileExchange.Controllers
         {
             int totalItemsCount;
             IEnumerable<ViewNewsViewModel> news = AutoMapper.Mapper.Map<IEnumerable<ViewNewsViewModel>>(_newsService.GetPaged(page, pageSize,out totalItemsCount));
-            FileExchange.PageList.PagedList<ViewNewsViewModel> pageList = new PagedList<ViewNewsViewModel>(news, page,
+            Infrastructure.PageList.PagedList<ViewNewsViewModel> pageList = new PagedList<ViewNewsViewModel>(news, page,
                 pageSize, totalItemsCount);
             return View(pageList);
         }

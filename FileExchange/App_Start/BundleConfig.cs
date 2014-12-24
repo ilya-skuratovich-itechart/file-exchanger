@@ -39,7 +39,12 @@ namespace FileExchange
                 "~/Scripts/sb-admin-2.js"));
 
             bundles.Add(new ScriptBundle("~/admin/metisMenu-js").Include(
-               "~/Scripts/plugins/metisMenu/metisMenu"));
+               "~/Scripts/plugins/metisMenu/metisMenu.js"));
+
+                bundles.Add(new ScriptBundle("~/bundles/jqueryconfirm").Include(
+               "~/Scripts/jquery.confirm.js"));
+
+           
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

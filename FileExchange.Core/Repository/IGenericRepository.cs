@@ -23,7 +23,7 @@ namespace FileExchange.Core.Repositories
         void RemoveBy(Expression<Func<T, bool>> predicate);
         T Add(T entity);
         T Delete(T entity);
-        void Edit(T entity);
+        void Update(T entity);
         void Save();
     }
 }

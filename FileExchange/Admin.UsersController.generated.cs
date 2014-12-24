@@ -62,6 +62,12 @@ namespace FileExchange.Areas.Admin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult ChangeUserPassword()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ChangeUserPassword);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.JsonResult ViewUserDataTableFilter()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ViewUserDataTableFilter);
@@ -84,6 +90,7 @@ namespace FileExchange.Areas.Admin.Controllers
         {
             public readonly string ViewUsers = "ViewUsers";
             public readonly string EditUser = "EditUser";
+            public readonly string ChangeUserPassword = "ChangeUserPassword";
             public readonly string ViewUserDataTableFilter = "ViewUserDataTableFilter";
         }
 
@@ -92,6 +99,7 @@ namespace FileExchange.Areas.Admin.Controllers
         {
             public const string ViewUsers = "ViewUsers";
             public const string EditUser = "EditUser";
+            public const string ChangeUserPassword = "ChangeUserPassword";
             public const string ViewUserDataTableFilter = "ViewUserDataTableFilter";
         }
 
@@ -101,6 +109,15 @@ namespace FileExchange.Areas.Admin.Controllers
         public ActionParamsClass_EditUser EditUserParams { get { return s_params_EditUser; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_EditUser
+        {
+            public readonly string userId = "userId";
+            public readonly string userModel = "userModel";
+        }
+        static readonly ActionParamsClass_ChangeUserPassword s_params_ChangeUserPassword = new ActionParamsClass_ChangeUserPassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangeUserPassword ChangeUserPasswordParams { get { return s_params_ChangeUserPassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangeUserPassword
         {
             public readonly string userId = "userId";
         }
@@ -155,6 +172,30 @@ namespace FileExchange.Areas.Admin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditUser);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
             EditUserOverride(callInfo, userId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditUserOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Areas.Admin.Models.EditUserViewModel userModel);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditUser(FileExchange.Areas.Admin.Models.EditUserViewModel userModel)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditUser);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userModel", userModel);
+            EditUserOverride(callInfo, userModel);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangeUserPasswordOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, int userId);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult ChangeUserPassword(int userId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ChangeUserPassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            ChangeUserPasswordOverride(callInfo, userId);
             return callInfo;
         }
 

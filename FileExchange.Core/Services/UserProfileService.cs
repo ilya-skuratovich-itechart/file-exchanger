@@ -40,7 +40,7 @@ namespace FileExchange.Core.Services
 
         public void Update(UserProfile userProfile)
         {
-            _userProfileRepository.Edit(userProfile);
+            _userProfileRepository.Update(userProfile);
         }
     }
 }

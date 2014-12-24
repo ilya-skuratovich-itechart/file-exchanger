@@ -59,7 +59,7 @@ namespace FileExchange.Core.Repositories
                     query = query.Include(include);
             }
             pageCount = query.Count();
-
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
             query = query
                 .OrderBy(sortExpression);
             query = pageNumber == 1
@@ -109,7 +109,7 @@ namespace FileExchange.Core.Repositories
             return _dbset.Remove(entity);
         }
 
-        public virtual void Edit(T entity)
+        public virtual void Update(T entity)
         {
             _entities.Entry(entity).State = System.Data.Entity.EntityState.Modified;
         }

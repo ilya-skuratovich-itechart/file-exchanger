@@ -6,7 +6,7 @@ using FileExchange.EmailSender;
 using FileExchange.Helplers;
 using FileExchange.Models;
 
-namespace FileExchange.Mapper
+namespace FileExchange.Infrastructure.Mapper
 {
     public class MapperService
     {
@@ -50,6 +50,8 @@ namespace FileExchange.Mapper
 
             AutoMapper.Mapper.CreateMap<FileComments, FileCommentsViewModel>()
                 .ForMember(s => s.UserName, m => m.MapFrom(c => c.File.User.UserName));
+
+            AutoMapper.Mapper.CreateMap<GlobalSetting, GlobalSettingViewModel>();
         }
 
     }

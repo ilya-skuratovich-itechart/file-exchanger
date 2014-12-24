@@ -42,7 +42,9 @@ namespace T4MVC
     public class AdminClass
     {
         public readonly string Name = "Admin";
+        public FileExchange.Areas.Admin.Controllers.GlobalSettingsController GlobalSettings = new FileExchange.Areas.Admin.Controllers.T4MVC_GlobalSettingsController();
         public FileExchange.Areas.Admin.Controllers.UsersController Users = new FileExchange.Areas.Admin.Controllers.T4MVC_UsersController();
+        public T4MVC.Admin.EmailTemplatesController EmailTemplates = new T4MVC.Admin.EmailTemplatesController();
         public T4MVC.Admin.SharedController Shared = new T4MVC.Admin.SharedController();
     }
 }
@@ -73,9 +75,9 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult : FileExchange.ActionResults.BandwidthThrottlingFileResult, IT4MVCActionResult
+internal partial class T4MVC_FileExchange_Infrastructure_ActionResults_BandwidthThrottlingFileResult : FileExchange.Infrastructure.ActionResults.BandwidthThrottlingFileResult, IT4MVCActionResult
 {
-    public T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult(string area, string controller, string action, string protocol = null): base(" ", " ", " ", default(int))
+    public T4MVC_FileExchange_Infrastructure_ActionResults_BandwidthThrottlingFileResult(string area, string controller, string action, string protocol = null): base(" ", " ", " ", default(int))
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }

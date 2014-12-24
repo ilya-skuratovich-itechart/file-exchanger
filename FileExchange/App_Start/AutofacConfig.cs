@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using FileExchange.AutofacModules;
+using FileExchange.Infrastructure.AutofacModules;
 
 namespace FileExchange
 {

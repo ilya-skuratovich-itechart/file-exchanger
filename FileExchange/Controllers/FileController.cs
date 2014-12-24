@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Autofac;
-using FileExchange.ActionResults;
+using FileExchange.Infrastructure.ActionResults;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.DTO;
 using FileExchange.Core.FileNotification;
@@ -19,10 +19,10 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Helplers;
-using FileExchange.ModelBinders;
+using FileExchange.Infrastructure.ModelBinders;
 using FileExchange.Models;
 using FileExchange.Models.DataTable;
-using FileExchange.Notifications.FileNotification;
+using FileExchange.Infrastructure.Notifications.FileNotification;
 using WebMatrix.WebData;
 
 namespace FileExchange.Controllers

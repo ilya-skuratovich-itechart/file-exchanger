@@ -5,7 +5,7 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 
-namespace FileExchange.AutofacModules
+namespace FileExchange.Infrastructure.AutofacModules
 {
     public class GeneralModule : Module
     {
@@ -48,6 +48,11 @@ namespace FileExchange.AutofacModules
             builder.RegisterType<NewsService>().As<INewsService>()
                 .UsingConstructor(typeof (IUnitOfWork))
                 .InstancePerHttpRequest();
+
+
+            builder.RegisterType<GlobalSettingService>().As<IGlobalSettingService>()
+            .UsingConstructor(typeof(IUnitOfWork))
+            .InstancePerHttpRequest();
 
             base.Load(builder);
         }

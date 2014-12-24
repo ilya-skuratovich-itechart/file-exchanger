@@ -21,6 +21,8 @@ namespace FileExchange.Core
 
         public DbSet<FileNotificationSubscribers> FileNotificationSubscribers { get; set; }
 
+        public DbSet<GlobalSetting> GlobalSettings { get; set; }
+
         public DbSet<News> News { get; set; }
 
         public DbSet<MemberShip> Membership { get; set; }

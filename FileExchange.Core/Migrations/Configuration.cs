@@ -70,6 +70,15 @@ namespace FileExchange.Core.Migrations
                 CategoryId = 4,
                 CategoryName = "tEST"
             });
+
+            context.GlobalSettings.Add(new GlobalSetting()
+            {
+                SettingId = (int) GlobalSettingTypes.MaxDownloadSpeedKbps,
+                SettingName = "MaxDownloadSpeedKbps",
+                SettingValue = "0",
+                VaidationRegexMask = "^[0-9]*$"
+            });
+
             context.SaveChanges();
         }
     }

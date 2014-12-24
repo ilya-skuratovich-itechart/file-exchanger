@@ -92,9 +92,9 @@ namespace FileExchange.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual FileExchange.ActionResults.BandwidthThrottlingFileResult DownloadFile()
+        public virtual FileExchange.Infrastructure.ActionResults.BandwidthThrottlingFileResult DownloadFile()
         {
-            return new T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
+            return new T4MVC_FileExchange_Infrastructure_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -449,12 +449,12 @@ namespace FileExchange.Controllers
         }
 
         [NonAction]
-        partial void DownloadFileOverride(T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult callInfo, int fileId);
+        partial void DownloadFileOverride(T4MVC_FileExchange_Infrastructure_ActionResults_BandwidthThrottlingFileResult callInfo, int fileId);
 
         [NonAction]
-        public override FileExchange.ActionResults.BandwidthThrottlingFileResult DownloadFile(int fileId)
+        public override FileExchange.Infrastructure.ActionResults.BandwidthThrottlingFileResult DownloadFile(int fileId)
         {
-            var callInfo = new T4MVC_FileExchange_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
+            var callInfo = new T4MVC_FileExchange_Infrastructure_ActionResults_BandwidthThrottlingFileResult(Area, Name, ActionNames.DownloadFile);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "fileId", fileId);
             DownloadFileOverride(callInfo, fileId);
             return callInfo;
