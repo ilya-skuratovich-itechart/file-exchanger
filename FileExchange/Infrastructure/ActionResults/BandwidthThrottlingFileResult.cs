@@ -10,6 +10,13 @@ namespace FileExchange.Infrastructure.ActionResults
         private int _limitSpeedKbps { get; set; }
         private string _originalFileName { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="originalFileName"></param>
+        /// <param name="contentType"></param>
+        /// <param name="limitSpeedKbps">0 - speed is unlimited</param>
         public BandwidthThrottlingFileResult(string filePath, string originalFileName, string contentType,
             int limitSpeedKbps)
             : base(filePath, contentType)
@@ -20,8 +27,15 @@ namespace FileExchange.Infrastructure.ActionResults
 
         protected override void WriteFile(System.Web.HttpResponseBase response)
         {
-            int bufferSize = 1024 * _limitSpeedKbps;
-            byte[] buffer = new byte[bufferSize];
+            byte[] buffer;
+            int bufferSize;
+            if (_limitSpeedKbps == 0)
+                bufferSize = 16*1024;
+            else
+            {
+                bufferSize = 1024*_limitSpeedKbps;
+            }
+            buffer = new byte[bufferSize];
             Stream outputStream = response.OutputStream;
             using (var stream = File.OpenRead(FileName))
             {
@@ -38,10 +52,10 @@ namespace FileExchange.Infrastructure.ActionResults
 
                     if (bytesRead == 0)
                         break;
-
                     outputStream.Write(buffer, 0, bytesRead);
                     response.Flush();
-                    Thread.Sleep(1000);
+                    if (_limitSpeedKbps != 0)
+                        Thread.Sleep(1000);
                 }
             }
         }

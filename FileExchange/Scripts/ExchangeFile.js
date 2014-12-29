@@ -28,6 +28,7 @@
                 type: 'POST',
                 data: { fileId: _fileId, comment: comment},
                 success: function (data) {
+                    $('#' + _commentInputId).val("");
                     $('#' + _commentContainerId).html(data);
                 },
                 error: function (xhr, status, error) {

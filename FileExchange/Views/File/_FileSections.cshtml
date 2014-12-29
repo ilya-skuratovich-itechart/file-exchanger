@@ -1,0 +1,19 @@
+﻿@model List<FileExchange.Models.FileCategoryModel>
+
+<div class="col-lg-8">
+    <h1 class="page-header">Category files</h1>
+</div>
+<div class="category-items"></div>
+@foreach (var fileCategory in Model)
+{
+    <div class="col-lg-2 col-md-2 col-xs-2">
+        <div>
+            <a href="@Url.Action(MVC.File.ActionNames.ViewCategoryFiles, MVC.File.Name, new {categoryId = fileCategory.CategoryId})">
+                @fileCategory.CategoryName
+                
+            </a>
+        </div>
+        <img class="folderCategory" />
+    </div>
+
+}

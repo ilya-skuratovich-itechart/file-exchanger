@@ -5,12 +5,12 @@ D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\Autofac.dll
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.dll
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.Extended.dll
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.SqlServer.dll
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.EmailSender.dll
+D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.EmailSender.pdb
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\Autofac.xml
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.xml
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.Extended.xml
 D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\EntityFramework.SqlServer.xml
+D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csprojResolveAssemblyReference.cache
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.dll
 D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.pdb
-D:\projects\file manager\FileExchanger\FileExchange.Core\obj\Debug\FileExchange.Core.csprojResolveAssemblyReference.cache
-D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.EmailSender.dll
-D:\projects\file manager\FileExchanger\FileExchange.Core\bin\Debug\FileExchange.EmailSender.pdb

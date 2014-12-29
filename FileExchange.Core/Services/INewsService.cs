@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ServiceModel.Syndication;
 using FileExchange.Core.BusinessObjects;
 
 namespace FileExchange.Core.Services

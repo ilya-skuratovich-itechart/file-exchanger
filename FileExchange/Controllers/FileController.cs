@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Autofac;
+using FileExchange.Core.BandwidthThrottling;
 using FileExchange.Infrastructure.ActionResults;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.DTO;
@@ -34,24 +35,27 @@ namespace FileExchange.Controllers
         private IFileCategoriesService _fileCategoriesService { get; set; }
         private IExchangeFileService _fileExchangeService { get; set; }
         private IFileCommentService _fileCommentService { get; set; }
+        private IBandwidthThrottlingSettings _bandwidthThrottlingSettings { get; set; }
 
         public FileController(IUnitOfWork unitOfWork, IFileCategoriesService fileCategoriesService,
             IFileNotificationSubscriberService fileFileNotificationSubscriberService,
             IExchangeFileService fileExchangeService,
-            IFileCommentService fileCommentService)
+            IFileCommentService fileCommentService,
+            IBandwidthThrottlingSettings bandwidthThrottlingSettings)
         {
             _unitOfWork = unitOfWork;
             _fileCategoriesService = fileCategoriesService;
             _fileExchangeService = fileExchangeService;
             _fileCommentService = fileCommentService;
             _fileFileNotificationSubscriberService = fileFileNotificationSubscriberService;
+            _bandwidthThrottlingSettings = bandwidthThrottlingSettings;
 
         }
         public virtual ActionResult FileSections()
         {
             List<FileCategoryModel> fileCategories =
                 AutoMapper.Mapper.Map<List<FileCategoryModel>>(_fileCategoriesService.GetAll());
-            return View(fileCategories);
+            return PartialView(MVC.File.Views._FileSections,fileCategories);
         }
 
         [Authorize]
@@ -87,7 +91,7 @@ namespace FileExchange.Controllers
                 string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(userFile.File.FileName);
                 using (var transaction = _unitOfWork.BeginTransaction())
                 {
-                    ExchangeFile ExchangeFile = _fileExchangeService.Add(userId, userFile.SelectedFileCategoryId,
+                    ExchangeFile exchangeFile = _fileExchangeService.Add(userId, userFile.SelectedFileCategoryId,
                         userFile.Description, uniqFileName,
                         userFile.File.FileName, userFile.Tags, userFile.DenyAll,
                         userFile.AllowViewAnonymousUsers);
@@ -263,12 +267,16 @@ namespace FileExchange.Controllers
 
         public virtual BandwidthThrottlingFileResult DownloadFile(int fileId)
         {
+            int? userId = null;
             ExchangeFile file = _fileExchangeService.GetFilteredFile(fileId, WebSecurity.IsAuthenticated);
             if (file == null)
                 throw new Exception(string.Format("File not exists or access denied. FileId = {0}", fileId));
+            if (WebSecurity.IsAuthenticated)
+                userId = WebSecurity.CurrentUserId;
+            int maxDownloadSpeed = _bandwidthThrottlingSettings.GetMaxDownloadSpeedKbps(userId);
             string filePath = FileHelper.GetFullfilecommentsPath(file.UniqFileName);
             return new BandwidthThrottlingFileResult(filePath, file.OrigFileName,
-                FileHelper.GetMimeTypeByFileName(file.UniqFileName), 20);
+                FileHelper.GetMimeTypeByFileName(file.UniqFileName), maxDownloadSpeed);
         }
 
         [Authorize]

@@ -1,6 +1,40 @@
-﻿@{
+﻿@model FileExchange.Areas.Admin.Models.GlobalSettingViewModel
+@{
     ViewBag.Title = "UpdateSetting";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-<h2>UpdateSetting</h2>
+@using (Html.BeginForm(MVC.Admin.GlobalSettings.UpdateSetting(), FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(u => u.SettingId)
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(s=>s.SettingName)
+    @Html.HiddenFor(s=>s.Description)
+    <div class="col-md-12 personal-info">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">@Html.LabelFor(u => u.SettingName)</label>
+            <div class="col-lg-4">
+                @Html.Label(Model.SettingName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">@Html.LabelFor(u => u.SettingValue)</label>
+            <div class="col-lg-2">
+                @Html.ValidationMessageFor(u=>u.SettingValue)
+                @Html.TextBoxFor(u => u.SettingValue, new {@class = "form-control input-sm"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">@Html.LabelFor(u => u.Description)</label>
+            <div class="col-lg-6">
+                @Html.Label(Model.Description , new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-lg-8">
+                <input type="submit" value="Update" class="btn btn-primary"/>
+                @Html.ActionLink("Cancel", MVC.Admin.GlobalSettings.ActionNames.ViewSettings, MVC.Admin.GlobalSettings.Name, null, new { area = MVC.Admin, @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}

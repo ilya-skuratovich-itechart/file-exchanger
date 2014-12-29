@@ -23,14 +23,12 @@ namespace FileExchange.Core.Services
             return _globalSettingsRepository.GetAll();
         }
 
-        public void Update(int settingId,string settingValue, string vaidationRegexMask,string description)
+        public void Update(int settingId,string settingValue)
         {
             var globalSetting = GetById(settingId);
             if (globalSetting==null)
                 throw  new ArgumentException(string.Format("setting not exists. SettingId:{0}",settingId));
             globalSetting.SettingValue = settingValue;
-            globalSetting.VaidationRegexMask = vaidationRegexMask;
-            globalSetting.Description = description;
             _globalSettingsRepository.Update(globalSetting);
         }
 

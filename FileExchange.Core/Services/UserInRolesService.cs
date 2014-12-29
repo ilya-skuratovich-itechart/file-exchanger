@@ -41,5 +41,15 @@ namespace FileExchange.Core.Services
                 }
             }
         }
+
+        public UserInRoles AddUserToRole(int userId, UserRoleTypes userRoleType)
+        {
+            return _userInRolesRepository.Add(new UserInRoles()
+            {
+                RoleId = (int) userRoleType,
+                UserId = userId
+            });
+        }
+
     }
 }

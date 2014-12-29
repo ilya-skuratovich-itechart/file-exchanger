@@ -47,6 +47,9 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.3.1.0\lib\net40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
@@ -82,6 +85,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -221,6 +225,7 @@
     </Compile>
     <Compile Include="Areas\Admin\Controllers\GlobalSettingsController.cs" />
     <Compile Include="Areas\Admin\Models\GlobalSettingViewModel.cs" />
+    <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Infrastructure\ActionResults\BandwidthThrottlingFileResult.cs" />
     <Compile Include="Admin.EmailTemplatesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -271,8 +276,11 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CustomHttpContent\JsonHttpContent.cs" />
     <Compile Include="Infrastructure\Mapper\MapperService.cs" />
     <Compile Include="Infrastructure\ModelBinders\DataTablesBinder.cs" />
+    <Compile Include="Infrastructure\NetHelperExtension\NameOf.cs" />
+    <Compile Include="Infrastructure\Rss\RssService.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseFileTemplateViewModel.cs" />
     <Compile Include="Models\Captcha.cs" />
@@ -625,7 +633,7 @@
     <Content Include="Views\News\_lastNews.cshtml" />
     <Content Include="Views\News\AddNews.cshtml" />
     <Content Include="Views\News\EditNews.cshtml" />
-    <Content Include="Views\File\FileSections.cshtml" />
+    <Content Include="Views\File\_FileSections.cshtml" />
     <Content Include="Views\File\UserFiles.cshtml" />
     <Content Include="Views\File\AddUserFile.cshtml" />
     <Content Include="Views\File\EditUserFile.cshtml" />

@@ -1,7 +1,9 @@
-﻿using System.Web.Http;
+﻿using System.Reflection;
+using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using FileExchange.Infrastructure.AutofacModules;
 
 namespace FileExchange
@@ -18,6 +20,8 @@ namespace FileExchange
 
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
             builder.RegisterFilterProvider();
 
             builder.RegisterSource(new ViewRegistrationSource());
@@ -27,6 +31,8 @@ namespace FileExchange
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+          
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             ApplicationContainer.Container = container;
         } 

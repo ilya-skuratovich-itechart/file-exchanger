@@ -56,6 +56,12 @@ namespace FileExchange.Areas.Admin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult UpdateSetting()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateSetting);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.JsonResult ViewSettingsTableFilter()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.ViewSettingsTableFilter);
@@ -77,6 +83,7 @@ namespace FileExchange.Areas.Admin.Controllers
         public class ActionNamesClass
         {
             public readonly string ViewSettings = "ViewSettings";
+            public readonly string UpdateSetting = "UpdateSetting";
             public readonly string ViewSettingsTableFilter = "ViewSettingsTableFilter";
         }
 
@@ -84,10 +91,20 @@ namespace FileExchange.Areas.Admin.Controllers
         public class ActionNameConstants
         {
             public const string ViewSettings = "ViewSettings";
+            public const string UpdateSetting = "UpdateSetting";
             public const string ViewSettingsTableFilter = "ViewSettingsTableFilter";
         }
 
 
+        static readonly ActionParamsClass_UpdateSetting s_params_UpdateSetting = new ActionParamsClass_UpdateSetting();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateSetting UpdateSettingParams { get { return s_params_UpdateSetting; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateSetting
+        {
+            public readonly string settingId = "settingId";
+            public readonly string settingModel = "settingModel";
+        }
         static readonly ActionParamsClass_ViewSettingsTableFilter s_params_ViewSettingsTableFilter = new ActionParamsClass_ViewSettingsTableFilter();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_ViewSettingsTableFilter ViewSettingsTableFilterParams { get { return s_params_ViewSettingsTableFilter; } }
@@ -106,8 +123,10 @@ namespace FileExchange.Areas.Admin.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string UpdateSetting = "UpdateSetting";
                 public readonly string ViewSettings = "ViewSettings";
             }
+            public readonly string UpdateSetting = "~/Areas/Admin/Views/GlobalSettings/UpdateSetting.cshtml";
             public readonly string ViewSettings = "~/Areas/Admin/Views/GlobalSettings/ViewSettings.cshtml";
         }
     }
@@ -125,6 +144,30 @@ namespace FileExchange.Areas.Admin.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ViewSettings);
             ViewSettingsOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UpdateSettingOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int settingId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UpdateSetting(int settingId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateSetting);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settingId", settingId);
+            UpdateSettingOverride(callInfo, settingId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UpdateSettingOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Areas.Admin.Models.GlobalSettingViewModel settingModel);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UpdateSetting(FileExchange.Areas.Admin.Models.GlobalSettingViewModel settingModel)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateSetting);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settingModel", settingModel);
+            UpdateSettingOverride(callInfo, settingModel);
             return callInfo;
         }
 

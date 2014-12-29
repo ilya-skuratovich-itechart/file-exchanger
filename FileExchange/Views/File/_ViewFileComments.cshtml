@@ -6,7 +6,7 @@
         <ul class="list-unstyled ui-sortable">
             @foreach (var comment in Model)
             {
-                <strong class="pull-left primary-font">@comment.UserName</strong>
+
                 <small class="pull-right text-muted">
                     <span class="glyphicon glyphicon-time"></span>@comment.CreateDate.ToShortDateString()
                 </small>

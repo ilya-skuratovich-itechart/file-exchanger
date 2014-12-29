@@ -1,9 +1,14 @@
 ﻿using System.IO;
+using System.Reflection;
+using System.Web.Http;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
+using FileExchange.Core.BandwidthThrottling;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
+using Module = Autofac.Module;
 
 namespace FileExchange.Infrastructure.AutofacModules
 {
@@ -17,21 +22,21 @@ namespace FileExchange.Infrastructure.AutofacModules
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
 
             builder.RegisterType<ExchangeFileService>().As<IExchangeFileService>()
-              .UsingConstructor(typeof(IUnitOfWork))
-              .InstancePerHttpRequest();
+                .UsingConstructor(typeof (IUnitOfWork))
+                .InstancePerHttpRequest();
 
 
             builder.RegisterType<UserRolesService>().As<IUserRolesService>()
-              .UsingConstructor(typeof(IUnitOfWork))
-              .InstancePerHttpRequest();
+                .UsingConstructor(typeof (IUnitOfWork))
+                .InstancePerHttpRequest();
 
             builder.RegisterType<UserInRolesService>().As<IUserInRolesService>()
                 .UsingConstructor(typeof (IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<UserProfileService>().As<IUserProfileService>()
-              .UsingConstructor(typeof(IUnitOfWork))
-              .InstancePerHttpRequest();
+                .UsingConstructor(typeof (IUnitOfWork))
+                .InstancePerHttpRequest();
 
             builder.RegisterType<FileCommentService>().As<IFileCommentService>()
                 .UsingConstructor(typeof (IUnitOfWork))
@@ -51,8 +56,12 @@ namespace FileExchange.Infrastructure.AutofacModules
 
 
             builder.RegisterType<GlobalSettingService>().As<IGlobalSettingService>()
-            .UsingConstructor(typeof(IUnitOfWork))
-            .InstancePerHttpRequest();
+                .UsingConstructor(typeof (IUnitOfWork))
+                .InstancePerHttpRequest();
+
+            builder.RegisterType<BandwidthThrottlingSettings>().As<IBandwidthThrottlingSettings>()
+                .UsingConstructor(typeof (IGlobalSettingService), typeof (IUserProfileService))
+                .InstancePerHttpRequest();
 
             base.Load(builder);
         }

@@ -1,7 +1,12 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div class="news_sidebar">
-@{ Html.RenderAction(MVC.News.ActionNames.GetLastNews, MVC.News.Name); }
+<div class="col-lg-4">
+    <div class="news_sidebar">
+        @{ Html.RenderAction(MVC.News.ActionNames.GetLastNews, MVC.News.Name); }
+    </div>
+</div>
+<div >
+    @{ Html.RenderAction(MVC.File.ActionNames.FileSections, MVC.File.Name); }
 </div>
 

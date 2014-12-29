@@ -10,6 +10,7 @@ using FileExchange.Core;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Data;
 using FileExchange.Core.Services;
+using FileExchange.Core.UOW;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using FileExchange.Filters;
@@ -21,9 +22,13 @@ namespace FileExchange.Controllers
     public partial class AccountController : Controller
     {
         private IUserProfileService _userProfileService { get; set; }
-        public AccountController(IUserProfileService userProfileService)
+        private IUserInRolesService _userInRolesService { get; set; }
+        private IUnitOfWork _unitOfWork { get; set; }
+        public AccountController(IUnitOfWork unitOfWork, IUserProfileService userProfileService,IUserInRolesService userInRolesService)
         {
             _userProfileService = userProfileService;
+            _userInRolesService = userInRolesService;
+            _unitOfWork = unitOfWork;
         }
         [AllowAnonymous]
         public virtual ActionResult Login(string returnUrl)
@@ -79,20 +84,23 @@ namespace FileExchange.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Register(RegisterModel model, string captchaValue)
         {
+
             if (!CaptchaController.IsValidCaptchaValue(captchaValue))
-                ModelState.AddModelError("","Incorrect captcha");
+                ModelState.AddModelError("", "Incorrect captcha");
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password,
-                         propertyValues: new
-                         {
-                             UserName = model.UserName,
-                             UserEmail = model.Email
-                         });
-                    Roles.AddUserToRole(model.UserName,UserRoleNames.ActiveUser);
+                        propertyValues: new
+                        {
+                            UserName = model.UserName,
+                            UserEmail = model.Email
+                        });
+                    _userInRolesService.AddUserToRole(WebSecurity.GetUserId(model.UserName),
+                        UserRoleTypes.ActiveUser);
+                    _unitOfWork.SaveChanges();
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }

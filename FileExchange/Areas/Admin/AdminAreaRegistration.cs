@@ -104,7 +104,18 @@ namespace FileExchange.Areas.Admin
                         area = AreaName
                     });
 
-
+            context.MapRoute(
+             name: "UpdateGlobalSetting",
+             url:
+                 string.Format("admin/{0}/{1}/{2}/{{settingId}}", AreaName, MVC.Admin.GlobalSettings.Name,
+                     MVC.Admin.GlobalSettings.ActionNames.UpdateSetting),
+             defaults: new
+             {
+                 controller = MVC.Admin.GlobalSettings.Name,
+                 action = MVC.Admin.GlobalSettings.ActionNames.UpdateSetting,
+                 area = AreaName,
+                 settingId = UrlParameter.Optional
+             });
             #endregion
 
             context.MapRoute(

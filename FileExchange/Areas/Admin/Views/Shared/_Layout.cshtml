@@ -50,7 +50,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            }
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -62,8 +66,8 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                    <li>
-                        @Html.ActionLink(" Users",MVC.Admin.Users.ActionNames.ViewUsers, MVC.Admin.Users.Name, new { area = MVC.Admin.Name }, new { @class = "fa fa-user" })
+                        <li>
+                            @Html.ActionLink(" Users", MVC.Admin.Users.ActionNames.ViewUsers, MVC.Admin.Users.Name, new { area = MVC.Admin.Name }, new { @class = "fa fa-user" })
                         </li>
                         <li>
                             @Html.ActionLink(" Settings", MVC.Admin.GlobalSettings.ActionNames.ViewSettings, MVC.Admin.GlobalSettings.Name, new { area = MVC.Admin.Name }, new { @class = "fa fa-u" })
@@ -83,7 +87,7 @@
                         <div style="margin: 20px 10px 10px 10px">
                             @RenderBody()
                         </div>
-                        
+
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -94,7 +98,7 @@
         <!-- /#page-wrapper -->
 
     </div>
-   
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrapjs")

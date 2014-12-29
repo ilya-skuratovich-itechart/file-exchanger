@@ -45,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacModules\CoreModule.cs" />
+    <Compile Include="BandwidthThrottling\BandwidthThrottlingSettings.cs" />
+    <Compile Include="BandwidthThrottling\IBandwidthThrottlingSettings.cs" />
     <Compile Include="BootStrap.cs" />
     <Compile Include="BusinessObjects\FileComments.cs" />
     <Compile Include="BusinessObjects\ExchangeFile.cs" />

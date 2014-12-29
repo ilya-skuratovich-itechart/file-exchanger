@@ -7,6 +7,7 @@ using Autofac;
 using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Repositories;
 using FileExchange.Core.UOW;
+using System.ServiceModel.Syndication;
 
 namespace FileExchange.Core.Services
 {
@@ -77,6 +78,7 @@ namespace FileExchange.Core.Services
             return news;
         }
 
+     
         public void Remove(int newsId)
         {
             var news = _repository

@@ -10,7 +10,7 @@ namespace FileExchange.Core.Services
 
         List<GlobalSetting> GetPaged(int pageNumber, int pageLength, out int totalRecords);
 
-        void Update(int settingId, string settingValue, string vaidationRegexMask, string description);
+        void Update(int settingId, string settingValue);
 
         GlobalSetting GetById(int settingId);
     }

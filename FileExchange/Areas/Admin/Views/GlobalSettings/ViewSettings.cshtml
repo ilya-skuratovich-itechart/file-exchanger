@@ -33,7 +33,7 @@
                         "bSortable": false,
                         "visible": true,
                         "mRender": function(data, type, oObj) {
-                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.Admin.Users.ActionNames.EditUser, MVC.Admin.Users.Name, new { area = MVC.Admin.Name })/' +
+                            return ' <a class="glyphicon glyphicon-pencil" href=\"@Url.Action(MVC.Admin.GlobalSettings.ActionNames.UpdateSetting, MVC.Admin.GlobalSettings.Name, new { area = MVC.Admin.Name })/' +
                                 oObj[0] + '"></a>';
                         }
                     },

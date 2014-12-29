@@ -281,21 +281,21 @@ namespace FileExchange.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _CreateComment = "_CreateComment";
+                public readonly string _FileSections = "_FileSections";
                 public readonly string _fileSubscribe = "_fileSubscribe";
                 public readonly string _ViewFileComments = "_ViewFileComments";
                 public readonly string AddUserFile = "AddUserFile";
                 public readonly string EditUserFile = "EditUserFile";
-                public readonly string FileSections = "FileSections";
                 public readonly string UserFiles = "UserFiles";
                 public readonly string ViewCategoryFiles = "ViewCategoryFiles";
                 public readonly string ViewFile = "ViewFile";
             }
             public readonly string _CreateComment = "~/Views/File/_CreateComment.cshtml";
+            public readonly string _FileSections = "~/Views/File/_FileSections.cshtml";
             public readonly string _fileSubscribe = "~/Views/File/_fileSubscribe.cshtml";
             public readonly string _ViewFileComments = "~/Views/File/_ViewFileComments.cshtml";
             public readonly string AddUserFile = "~/Views/File/AddUserFile.cshtml";
             public readonly string EditUserFile = "~/Views/File/EditUserFile.cshtml";
-            public readonly string FileSections = "~/Views/File/FileSections.cshtml";
             public readonly string UserFiles = "~/Views/File/UserFiles.cshtml";
             public readonly string ViewCategoryFiles = "~/Views/File/ViewCategoryFiles.cshtml";
             public readonly string ViewFile = "~/Views/File/ViewFile.cshtml";

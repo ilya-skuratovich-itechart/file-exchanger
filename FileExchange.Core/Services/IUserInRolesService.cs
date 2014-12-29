@@ -12,5 +12,7 @@ namespace FileExchange.Core.Services
         /// </summary>
         /// <param name="userInRolesIds"></param>
         void UpdateUserInRoles(int userId, List<int> userInRolesIds);
+
+        UserInRoles AddUserToRole(int userId, UserRoleTypes userRoleType);
     }
 }

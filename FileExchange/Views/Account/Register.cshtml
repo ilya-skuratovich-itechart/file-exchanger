@@ -7,7 +7,7 @@
     <h2>Create a new account.</h2>
 </hgroup>
 
-@using (Html.BeginForm(new { @class = "form-horizontal" }))
+@using (Html.BeginForm(MVC.Account.Register(),FormMethod.Post,new { @class = "form-horizontal" }))
 {
     <fieldset>
         @Html.AntiForgeryToken()
