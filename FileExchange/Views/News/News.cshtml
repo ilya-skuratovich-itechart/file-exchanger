@@ -1,0 +1,18 @@
+﻿@model FileExchange.Models.ViewNewsViewModel
+@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="media">
+    <a class="media-left media-middle" href="#">
+        <img src="@Model.ImagePath" alt="@Model.OrigImageName" class="img-view-news">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">@Model.Header</h4>
+        @Html.Raw(@Model.Text)
+    </div>
+</div>
+<div class="col-lg-12">
+    <h1 class="page-header"></h1>
+</div>

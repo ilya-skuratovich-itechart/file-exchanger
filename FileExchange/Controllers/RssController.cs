@@ -27,10 +27,11 @@ namespace FileExchange.Controllers
             _newsService = newsService;
         }
 
+
         public HttpResponseMessage Get()
         {
-            string host = string.Format("http://www.{0}",System.Web.HttpContext.Current.Request.Url.Host.ToLower());
-            string newsUrl =string.Format("{0}/{1}/{2}",host,MVC.News.Name,MVC.News.ActionNames.ViewNews);
+            string host = string.Format("http://www.{0}", System.Web.HttpContext.Current.Request.Url.Host.ToLower());
+            string newsUrl = string.Format("{0}/{1}/{2}", host, MVC.News.Name, MVC.News.ActionNames.ViewNews);
 
             Rss20FeedFormatter rss20FeedFormatter = RssService.GetRssNews(_newsService.GetAll(), newsUrl, host);
             var output = new StringBuilder();
@@ -38,7 +39,7 @@ namespace FileExchange.Controllers
             {
                 rss20FeedFormatter.WriteTo(writer);
                 writer.Flush();
-               
+
             }
             var doc = new XmlDocument();
             doc.LoadXml(output.ToString());

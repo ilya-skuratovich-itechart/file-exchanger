@@ -36,12 +36,14 @@ namespace FileExchange.Controllers
         private IExchangeFileService _fileExchangeService { get; set; }
         private IFileCommentService _fileCommentService { get; set; }
         private IBandwidthThrottlingSettings _bandwidthThrottlingSettings { get; set; }
+        private IUserProfileService _userProfileService { get; set; }
 
         public FileController(IUnitOfWork unitOfWork, IFileCategoriesService fileCategoriesService,
             IFileNotificationSubscriberService fileFileNotificationSubscriberService,
             IExchangeFileService fileExchangeService,
             IFileCommentService fileCommentService,
-            IBandwidthThrottlingSettings bandwidthThrottlingSettings)
+            IBandwidthThrottlingSettings bandwidthThrottlingSettings,
+            IUserProfileService userProfileService)
         {
             _unitOfWork = unitOfWork;
             _fileCategoriesService = fileCategoriesService;
@@ -49,6 +51,7 @@ namespace FileExchange.Controllers
             _fileCommentService = fileCommentService;
             _fileFileNotificationSubscriberService = fileFileNotificationSubscriberService;
             _bandwidthThrottlingSettings = bandwidthThrottlingSettings;
+            _userProfileService = userProfileService;
 
         }
         public virtual ActionResult FileSections()
@@ -79,6 +82,12 @@ namespace FileExchange.Controllers
         {
             try
             {
+                UserProfile userProfile = _userProfileService.GetUserById(WebSecurity.CurrentUserId);
+                if (userProfile.FileMaxSizeKbps != 0)
+                {
+                   if (userFile.File.ContentLength/1024>=userProfile.FileMaxSizeKbps)
+                       ModelState.AddModelError(string.Empty,string.Format("You can't upload this file. Max file size is {0} kbps.",userProfile.FileMaxSizeKbps));
+                }
                 if (!ModelState.IsValid)
                 {
                     IEnumerable<System.Web.Mvc.SelectListItem> fileCategoriesListItems =
@@ -87,11 +96,10 @@ namespace FileExchange.Controllers
                     userFile.FileCategories = fileCategoriesListItems;
                     return View(userFile);
                 }
-                int userId = (int) WebSecurity.CurrentUserId;
                 string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(userFile.File.FileName);
                 using (var transaction = _unitOfWork.BeginTransaction())
                 {
-                    ExchangeFile exchangeFile = _fileExchangeService.Add(userId, userFile.SelectedFileCategoryId,
+                    _fileExchangeService.Add(WebSecurity.CurrentUserId, userFile.SelectedFileCategoryId,
                         userFile.Description, uniqFileName,
                         userFile.File.FileName, userFile.Tags, userFile.DenyAll,
                         userFile.AllowViewAnonymousUsers);

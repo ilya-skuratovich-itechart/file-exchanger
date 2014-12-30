@@ -24,6 +24,17 @@ namespace FileExchange
                         newsId = UrlParameter.Optional
                     });
 
+
+            routes.MapRoute(
+                name: "News",
+                url: string.Format("{0}/{1}/{{newsId}}", MVC.News.Name, MVC.News.ActionNames.News),
+                defaults:
+                    new
+                    {
+                        controller = MVC.News.Name,
+                        action = MVC.News.ActionNames.News
+                    });
+
             routes.MapRoute(
                 name: "ViewFileCategories",
                 url: string.Format("{0}/{1}", MVC.File.Name, MVC.File.ActionNames.FileSections),

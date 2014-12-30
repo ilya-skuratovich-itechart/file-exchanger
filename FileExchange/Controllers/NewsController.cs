@@ -94,6 +94,12 @@ namespace FileExchange.Controllers
             return View(pageList);
         }
 
+        public virtual ActionResult News(int newsId)
+        {
+            ViewNewsViewModel news = AutoMapper.Mapper.Map<ViewNewsViewModel>(_newsService.GetById(newsId));
+            return View(news);
+        }
+
 
         [HttpGet]
         [Authorize(Roles = UserRoleNames.EditNewsAllowRoles)]

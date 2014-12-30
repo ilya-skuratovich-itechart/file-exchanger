@@ -1,4 +1,4 @@
-﻿@using FileExchange.Core.BusinessObjects
+﻿@using FileExchange.Infrastructure.CustomHtmlHelpers
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,42 +11,51 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
-            </div>
-            <div class="float-right">
-                <section id="login">
-                    @Html.Partial("_LoginPartial")
-                </section>
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Home", MVC.Home.ActionNames.Index,MVC.Home.Name )</li>
-                        <li>@Html.ActionLink("News", MVC.News.ActionNames.ViewNews, MVC.News.Name)</li>
-                        @if (Request.IsAuthenticated)
-                        {
-                            <li>@Html.ActionLink("My file", MVC.File.ActionNames.UserFiles, MVC.File.Name)</li>
-                        }    
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-    <div id="body">
-        <section class="content-wrapper main-content clear-fix">
-            @RenderBody()
-        </section>
-    </div>
-    <footer>
-        <div class="content-wrapper">
-            <div class="float-left">
 
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)">File Exchanger</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse col-md-10">
+                <ul class="nav navbar-nav">
+                    <li class="@Html.IsActive(MVC.Home.ActionNames.Index, MVC.Home.Name)"><a href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)">Home</a></li>
+                    <li class="@Html.IsActive(MVC.News.ActionNames.ViewNews, MVC.News.Name)"><a href="@Url.Action(MVC.News.ActionNames.ViewNews, MVC.News.Name)">News</a></li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="@Html.IsActive(MVC.File.ActionNames.UserFiles, MVC.File.Name)"><a href="@Url.Action(MVC.File.ActionNames.UserFiles, MVC.File.Name)">My files</a></li>
+                    }
+
+                </ul>
+            </div><!-- /.nav-collapse -->
+            <div class="col-md-2 login">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div><!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-xs-12 col-sm-14">
+                @RenderBody()
             </div>
         </div>
-    </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrapjs")
-    @RenderSection("scripts", required: false)
+        <hr>
+        <footer>
+            <p>© Company 2014</p>
+            <p><a href="/api/rss/get" type="submit" target="_blank" class="rss-link"></a></p>
+        </footer>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrapjs")
+        @RenderSection("scripts", required: false)
+    </div>
+
 </body>
 </html>

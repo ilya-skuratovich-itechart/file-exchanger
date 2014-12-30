@@ -8,6 +8,7 @@ using FileExchange.Core.BandwidthThrottling;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
+using FileExchange.Infrastructure.LoggerManager;
 using Module = Autofac.Module;
 
 namespace FileExchange.Infrastructure.AutofacModules
@@ -18,6 +19,9 @@ namespace FileExchange.Infrastructure.AutofacModules
         {
             builder.Register(c => new
                 Mailer("fileExchange@localhost", "test", "localhost", 25)).As<IMailer>();
+
+            builder.Register(c => new
+               LoggerManager.LoggerManager()).As<ILogger>();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
 

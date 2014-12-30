@@ -56,6 +56,12 @@ namespace FileExchange.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult News()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.News);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult EditNews()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditNews);
@@ -79,6 +85,7 @@ namespace FileExchange.Controllers
             public readonly string GetLastNews = "GetLastNews";
             public readonly string AddNews = "AddNews";
             public readonly string ViewNews = "ViewNews";
+            public readonly string News = "News";
             public readonly string EditNews = "EditNews";
         }
 
@@ -88,6 +95,7 @@ namespace FileExchange.Controllers
             public const string GetLastNews = "GetLastNews";
             public const string AddNews = "AddNews";
             public const string ViewNews = "ViewNews";
+            public const string News = "News";
             public const string EditNews = "EditNews";
         }
 
@@ -108,6 +116,14 @@ namespace FileExchange.Controllers
         {
             public readonly string page = "page";
             public readonly string pageSize = "pageSize";
+        }
+        static readonly ActionParamsClass_News s_params_News = new ActionParamsClass_News();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_News NewsParams { get { return s_params_News; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_News
+        {
+            public readonly string newsId = "newsId";
         }
         static readonly ActionParamsClass_EditNews s_params_EditNews = new ActionParamsClass_EditNews();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -131,11 +147,13 @@ namespace FileExchange.Controllers
                 public readonly string _lastNews = "_lastNews";
                 public readonly string AddNews = "AddNews";
                 public readonly string EditNews = "EditNews";
+                public readonly string News = "News";
                 public readonly string ViewNews = "ViewNews";
             }
             public readonly string _lastNews = "~/Views/News/_lastNews.cshtml";
             public readonly string AddNews = "~/Views/News/AddNews.cshtml";
             public readonly string EditNews = "~/Views/News/EditNews.cshtml";
+            public readonly string News = "~/Views/News/News.cshtml";
             public readonly string ViewNews = "~/Views/News/ViewNews.cshtml";
         }
     }
@@ -189,6 +207,18 @@ namespace FileExchange.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSize", pageSize);
             ViewNewsOverride(callInfo, page, pageSize);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void NewsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int newsId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult News(int newsId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.News);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "newsId", newsId);
+            NewsOverride(callInfo, newsId);
             return callInfo;
         }
 

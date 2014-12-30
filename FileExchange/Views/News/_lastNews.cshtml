@@ -15,7 +15,7 @@
             @Html.ActionLink(" ", MVC.News.ActionNames.EditNews, MVC.News.Name, new { newsId = news.NewsId }, new { @class = "glyphicon glyphicon-pencil" })
         </div>
         <div class="news_date">@news.CreateDate.ToString("dd.MM")</div>
-        <a href='@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)'>@(news.Header.Length > 30 ? news.Header.Remove(30) : news.Header) </a><br>
+        <a href='@Url.Action(MVC.News.ActionNames.News, MVC.News.Name, new { newsId = news.NewsId })'>@(news.Header.Length > 30 ? news.Header.Remove(30) : news.Header) </a><br>
         <p>
             @Html.RemoveHtmlTags(news.Text, 40)
         </p>

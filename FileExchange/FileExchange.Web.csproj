@@ -73,6 +73,9 @@
     <Reference Include="MvcCheckBoxList">
       <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -226,6 +229,9 @@
     <Compile Include="Areas\Admin\Controllers\GlobalSettingsController.cs" />
     <Compile Include="Areas\Admin\Models\GlobalSettingViewModel.cs" />
     <Compile Include="Controllers\RssController.cs" />
+    <Compile Include="ErrorController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\ActionResults\BandwidthThrottlingFileResult.cs" />
     <Compile Include="Admin.EmailTemplatesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -257,7 +263,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UserInRoles.cs" />
-    <Compile Include="Infrastructure\CustomAttirbutes\GeneralSettingValidationAttribute.cs" />
     <Compile Include="DisplayEmailTemplatesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -276,7 +281,13 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CustomAttirbutes\GlobalHandleErrorAttribute.cs" />
+    <Compile Include="Infrastructure\CustomAttirbutes\WebApiGlobalExceptionFilter.cs" />
+    <Compile Include="Infrastructure\CustomHtmlHelpers\MenuHelpers.cs" />
     <Compile Include="Infrastructure\CustomHttpContent\JsonHttpContent.cs" />
+    <Compile Include="Infrastructure\LoggerManager\ILogger.cs" />
+    <Compile Include="Infrastructure\LoggerManager\LoggerConfiguration.cs" />
+    <Compile Include="Infrastructure\LoggerManager\LoggerManager.cs" />
     <Compile Include="Infrastructure\Mapper\MapperService.cs" />
     <Compile Include="Infrastructure\ModelBinders\DataTablesBinder.cs" />
     <Compile Include="Infrastructure\NetHelperExtension\NameOf.cs" />
@@ -386,6 +397,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Images\folder.png" />
+    <Content Include="Images\news_date.gif" />
+    <Content Include="Images\rss_chicklet.jpg" />
+    <Content Include="Images\side_fon1.gif" />
     <Content Include="razormachine.readme.txt" />
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -400,6 +415,12 @@
     <Content Include="Areas\Admin\Views\EmailTemplates\_layout.cshtml" />
     <Content Include="Areas\Admin\Views\GlobalSettings\ViewSettings.cshtml" />
     <Content Include="Areas\Admin\Views\GlobalSettings\UpdateSetting.cshtml" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\DataTables-1.10.4\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables-1.10.4\dataTables.autoFill.min.js" />
@@ -648,10 +669,11 @@
     <Content Include="Views\DisplayEmailTemplates\FileAccessDeniedTemplate.cshtml" />
     <Content Include="Views\DisplayEmailTemplates\_layout.cshtml" />
     <Content Include="Views\Shared\_captcha.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\News\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
