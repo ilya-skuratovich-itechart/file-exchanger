@@ -1,17 +1,20 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FileExchange.Areas.Admin.Models;
 using FileExchange.Core.BusinessObjects;
-using FileExchange.EmailSender;
 using FileExchange.Helplers;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Models;
 
-namespace FileExchange.Infrastructure.Mapper
+namespace FileExchange.Web.UnitTests.Mappers
 {
     public class MapperService
     {
-        public static void RegisterMapping()
+         public static void  RegisterMap()
         {
             AutoMapper.Mapper.CreateMap<News, CreateNewsModel>();
 
@@ -22,7 +25,7 @@ namespace FileExchange.Infrastructure.Mapper
             AutoMapper.Mapper.CreateMap<ExchangeFile, ExchangeFile>();
 
             AutoMapper.Mapper.CreateMap<FileCategories, FileCategoryModel>();
-             
+
             AutoMapper.Mapper.CreateMap<FileCategories, System.Web.Mvc.SelectListItem>()
                 .ForMember(s => s.Value, m => m.MapFrom(f => f.CategoryId))
                 .ForMember(s => s.Text, m => m.MapFrom(f => f.CategoryName));
@@ -47,7 +50,7 @@ namespace FileExchange.Infrastructure.Mapper
 
             AutoMapper.Mapper.CreateMap<UserProfile, EditUserViewModel>()
                 .ForMember(u => u.SelectedUserRoles, u => u.MapFrom(s => s.Roles));
-           
+
 
             AutoMapper.Mapper.CreateMap<FileComments, FileCommentsViewModel>()
                 .ForMember(s => s.UserName, m => m.MapFrom(c => c.File.User.UserName));

@@ -18,7 +18,7 @@ namespace FileExchange.Infrastructure.Notifications.FileNotification
                 if (fileNotificationModel != null && fileNotificationModel.FileUserNotifications != null)
                 {
 
-                    IMailer mailer = AutofacConfig.ApplicationContainer.Container.Resolve<IMailer>();
+                    IMailer mailer = fileNotificationModel.Mailer;
                     var templateModel = new BaseFileTemplateViewModel();
                     templateModel.FileName = fileNotificationModel.OriginalFileName;
                     templateModel.FileId = fileNotificationModel.FileId;

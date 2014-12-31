@@ -7,10 +7,10 @@ namespace FileExchange.Infrastructure.CustomHtmlHelpers
         public static string IsActive(this HtmlHelper htmlHelper, string menuActionName, string menuControllerName)
         {
             string controllerName =
-                (string)htmlHelper.ViewContext.RouteData.GetRequiredString("controller");
+                (string) htmlHelper.ViewContext.RouteData.GetRequiredString("controller");
 
             string actionName =
-                (string)htmlHelper.ViewContext.RouteData.GetRequiredString("action");
+                (string) htmlHelper.ViewContext.RouteData.GetRequiredString("action");
             string result = string.Empty;
             if (MVC.File.Name == controllerName && controllerName == menuControllerName)
             {

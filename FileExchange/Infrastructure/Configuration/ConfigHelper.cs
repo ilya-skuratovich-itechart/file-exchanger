@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using FileExchange.Core.Migrations;
 
-namespace FileExchange.Helplers
+namespace FileExchange.Infrastructure.Configuration
 {
     public static class ConfigHelper
     {

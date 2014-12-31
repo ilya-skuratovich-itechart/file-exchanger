@@ -273,8 +273,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helplers\ConfigHelper.cs" />
-    <Compile Include="Helplers\FileHelper.cs" />
+    <Compile Include="Infrastructure\Configuration\ConfigHelper.cs" />
+    <Compile Include="Infrastructure\FileHelpers\FileHelper.cs" />
     <Compile Include="Helplers\HtmlExtensions.cs" />
     <Compile Include="Helplers\RenderViewHelper.cs" />
     <Compile Include="Helplers\ViewsHelper.cs" />
@@ -285,6 +285,8 @@
     <Compile Include="Infrastructure\CustomAttirbutes\WebApiGlobalExceptionFilter.cs" />
     <Compile Include="Infrastructure\CustomHtmlHelpers\MenuHelpers.cs" />
     <Compile Include="Infrastructure\CustomHttpContent\JsonHttpContent.cs" />
+    <Compile Include="Infrastructure\FileHelpers\FileProvider.cs" />
+    <Compile Include="Infrastructure\FileHelpers\IFileProvider.cs" />
     <Compile Include="Infrastructure\LoggerManager\ILogger.cs" />
     <Compile Include="Infrastructure\LoggerManager\LoggerConfiguration.cs" />
     <Compile Include="Infrastructure\LoggerManager\LoggerManager.cs" />

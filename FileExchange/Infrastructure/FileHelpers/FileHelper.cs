@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
+using FileExchange.Infrastructure.Configuration;
 
-namespace FileExchange.Helplers
+namespace FileExchange.Infrastructure.FileHelpers
 {
     public static class FileHelper
     {
-        public static string GetFullfilecommentsPath(string fileName)
+        public static string GetFullFileFolderPath(string fileName)
         {
             return HttpContext.Current.Server.MapPath(string.Format("~/{0}", Path.Combine(ConfigHelper.FilesFolder, fileName).Replace(@"\", "/"))); ;
         }

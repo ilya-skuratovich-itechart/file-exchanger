@@ -12,6 +12,7 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Helplers;
+using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
 using FileExchange.Models.DataTable;
 using WebMatrix.WebData;
@@ -27,16 +28,23 @@ namespace FileExchange.Areas.Admin.Controllers
 
         private IUserInRolesService _userInRolesService { get; set; }
 
+        private IMailer _mailer { get; set; }
+
+        private IFileProvider _fileProvider { get; set; }
 
         public UsersController(IUnitOfWork unitOfWork,
             IUserProfileService userProfileService,
             IUserRolesService userRolesService,
-            IUserInRolesService userInRolesService)
+            IUserInRolesService userInRolesService,
+             IMailer mailer,
+            IFileProvider fileProvider)
         {
             _unitOfWork = unitOfWork;
             _userProfileService = userProfileService;
             _userRolesService = userRolesService;
             _userInRolesService = userInRolesService;
+            _mailer = mailer;
+            _fileProvider = fileProvider;
         }
 
         //
@@ -98,13 +106,12 @@ namespace FileExchange.Areas.Admin.Controllers
                     string resetToken = WebSecurity.GeneratePasswordResetToken(user.UserName, 5);
                     string newPassword = System.Web.Security.Membership.GeneratePassword(10, 2);
                     WebSecurity.ResetPassword(resetToken, newPassword);
-                    IMailer mailer = AutofacConfig.ApplicationContainer.Container.Resolve<IMailer>();
 
                     string templateText = RenderViewHelper.RenderPartialToString(
                         MVC.Admin.EmailTemplates.Views.PasswordChanged,
                         MVC.Admin.EmailTemplates.Views._layout,
                         new {UserName = user.UserName, Password = newPassword});
-                    mailer.SendEmailTo(user.UserEmail, "Password has been changed", templateText);
+                    _mailer.SendEmailTo(user.UserEmail, "Password has been changed", templateText);
                     transaction.Complete();
 
                 }

@@ -20,6 +20,8 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Helplers;
+using FileExchange.Infrastructure.Configuration;
+using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
 using FileExchange.Models;
 using FileExchange.Models.DataTable;
@@ -37,13 +39,18 @@ namespace FileExchange.Controllers
         private IFileCommentService _fileCommentService { get; set; }
         private IBandwidthThrottlingSettings _bandwidthThrottlingSettings { get; set; }
         private IUserProfileService _userProfileService { get; set; }
+        private IMailer _mailer { get; set; }
+
+        private IFileProvider _fileProvider { get; set; }
 
         public FileController(IUnitOfWork unitOfWork, IFileCategoriesService fileCategoriesService,
             IFileNotificationSubscriberService fileFileNotificationSubscriberService,
             IExchangeFileService fileExchangeService,
             IFileCommentService fileCommentService,
             IBandwidthThrottlingSettings bandwidthThrottlingSettings,
-            IUserProfileService userProfileService)
+            IUserProfileService userProfileService,
+             IMailer mailer,
+            IFileProvider fileProvider)
         {
             _unitOfWork = unitOfWork;
             _fileCategoriesService = fileCategoriesService;
@@ -52,6 +59,8 @@ namespace FileExchange.Controllers
             _fileFileNotificationSubscriberService = fileFileNotificationSubscriberService;
             _bandwidthThrottlingSettings = bandwidthThrottlingSettings;
             _userProfileService = userProfileService;
+            _mailer = mailer;
+            _fileProvider = fileProvider;
 
         }
         public virtual ActionResult FileSections()
@@ -108,7 +117,7 @@ namespace FileExchange.Controllers
                         System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
                             Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
                     _unitOfWork.SaveChanges();
-                    userFile.File.SaveAs(path);
+                   _fileProvider.SaveAs(userFile.File,path);
                     transaction.Complete();
                 }
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
@@ -160,7 +169,8 @@ namespace FileExchange.Controllers
                         FileId = oldExchangeFile.FileId,
                         FileUrl = fileUrl,
                         OriginalFileName = oldExchangeFile.OrigFileName,
-                        FileUserNotifications = notificationUsers
+                        FileUserNotifications = notificationUsers,
+                        Mailer = _mailer
                     };
                     _unitOfWork.SaveChanges();
                     transaction.Complete();
@@ -200,7 +210,8 @@ namespace FileExchange.Controllers
                         FileId = oldExchangeFile.FileId,
                         FileUrl = fileUrl,
                         OriginalFileName = oldExchangeFile.OrigFileName,
-                        FileUserNotifications = notificationUsers
+                        FileUserNotifications = notificationUsers,
+                        Mailer = _mailer
                     };
                     _fileCommentService.RemoveAll(fileId);
                     _fileFileNotificationSubscriberService.RemoveAll(fileId);
@@ -209,7 +220,7 @@ namespace FileExchange.Controllers
                         System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
                             Path.Combine(ConfigHelper.FilesFolder, userFile.UniqFileName)));
                     _unitOfWork.SaveChanges();
-                    System.IO.File.Delete(filePath);
+                    _fileProvider.Delete(filePath);
                     transaction.Complete();
                     Task.Factory.StartNew(FileNotification.SendChangeFileNotification, fileNotificationModel);
                 }
@@ -282,7 +293,7 @@ namespace FileExchange.Controllers
             if (WebSecurity.IsAuthenticated)
                 userId = WebSecurity.CurrentUserId;
             int maxDownloadSpeed = _bandwidthThrottlingSettings.GetMaxDownloadSpeedKbps(userId);
-            string filePath = FileHelper.GetFullfilecommentsPath(file.UniqFileName);
+            string filePath = FileHelper.GetFullFileFolderPath(file.UniqFileName);
             return new BandwidthThrottlingFileResult(filePath, file.OrigFileName,
                 FileHelper.GetMimeTypeByFileName(file.UniqFileName), maxDownloadSpeed);
         }

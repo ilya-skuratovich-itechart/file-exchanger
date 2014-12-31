@@ -9,6 +9,7 @@ using FileExchange.Core.Data;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Helplers;
+using FileExchange.Infrastructure.Configuration;
 using FileExchange.Models;
 using FileExchange.Infrastructure.PageList;
 
