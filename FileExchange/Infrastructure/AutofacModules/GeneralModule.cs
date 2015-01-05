@@ -10,6 +10,7 @@ using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.LoggerManager;
+using FileExchange.Infrastructure.UserSecurity;
 using Module = Autofac.Module;
 
 namespace FileExchange.Infrastructure.AutofacModules
@@ -21,6 +22,8 @@ namespace FileExchange.Infrastructure.AutofacModules
             builder.Register(c => new
                 Mailer("fileExchange@localhost", "test", "localhost", 25)).As<IMailer>();
 
+            builder.Register(c => new WebSecurityWrapper()).As<IWebSecurity>();
+
             builder.Register(c => new
                 FileProvider()).As<IFileProvider>();
 
@@ -30,45 +33,45 @@ namespace FileExchange.Infrastructure.AutofacModules
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
 
             builder.RegisterType<ExchangeFileService>().As<IExchangeFileService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
 
             builder.RegisterType<UserRolesService>().As<IUserRolesService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<UserInRolesService>().As<IUserInRolesService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<UserProfileService>().As<IUserProfileService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<FileCommentService>().As<IFileCommentService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<FileCategoriesService>().As<IFileCategoriesService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<FileNotificationSubscriberService>().As<IFileNotificationSubscriberService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<NewsService>().As<INewsService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
 
             builder.RegisterType<GlobalSettingService>().As<IGlobalSettingService>()
-                .UsingConstructor(typeof (IUnitOfWork))
+                .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
             builder.RegisterType<BandwidthThrottlingSettings>().As<IBandwidthThrottlingSettings>()
-                .UsingConstructor(typeof (IGlobalSettingService), typeof (IUserProfileService))
+                .UsingConstructor(typeof(IGlobalSettingService), typeof(IUserProfileService))
                 .InstancePerHttpRequest();
 
             base.Load(builder);

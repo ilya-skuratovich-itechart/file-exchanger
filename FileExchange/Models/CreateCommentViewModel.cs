@@ -7,14 +7,9 @@ namespace FileExchange.Models
     {
         [Required]
         public int FileId { get; set; }
-        
+
         [Required]
         public string Comment { get; set; }
-
-
-        public CreateCommentViewModel()
-        {
-            
-        }
     }
+
 }

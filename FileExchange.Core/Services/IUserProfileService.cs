@@ -12,5 +12,7 @@ namespace FileExchange.Core.Services
         void Update(UserProfile userProfile);
 
         UserProfile GetUserById(int userId);
+
+        UserProfile GetUserByName(string userName);
     }
 }

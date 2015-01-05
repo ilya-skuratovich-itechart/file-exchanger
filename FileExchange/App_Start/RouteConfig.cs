@@ -14,6 +14,11 @@ namespace FileExchange
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+             name: "UserBanned",
+             url: string.Format("Account/UserBanned"),
+             defaults: new { controller =MVC.Account.Name, action =  MVC.Account.ActionNames.UserBanned });
+
+            routes.MapRoute(
                 name: "EditNews",
                 url: "News/EditNews/{newsId}",
                 defaults:

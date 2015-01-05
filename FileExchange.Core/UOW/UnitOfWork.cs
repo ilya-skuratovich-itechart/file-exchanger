@@ -22,10 +22,14 @@ namespace FileExchange.Core.UOW
             _fileExchangeContext = new FileExchangeDbContext();
         }
 
-        public TransactionScope BeginTransaction()
+        public void BeginTransaction()
         {
            _transactionScope= new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
-            return _transactionScope;
+        }
+
+        public void CommitTransaction()
+        {
+            _transactionScope.Complete();
         }
 
         public void SaveChanges()

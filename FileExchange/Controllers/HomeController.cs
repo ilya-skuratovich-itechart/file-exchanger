@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
+using FileExchange.Infrastructure.UserSecurity;
 
 namespace FileExchange.Controllers
 {
@@ -12,11 +13,13 @@ namespace FileExchange.Controllers
     {
         private INewsService _newsService;
         private IUnitOfWork _unitOfWork;
+        private IWebSecurity _webSecurity { get; set; }
 
-        public HomeController(IUnitOfWork unitOfWork, INewsService newsService)
+        public HomeController(IUnitOfWork unitOfWork, INewsService newsService, IWebSecurity webSecurity)
         {
             _unitOfWork = unitOfWork;
             _newsService = newsService;
+            _webSecurity = webSecurity;
         }
         public virtual ActionResult Index()
         {

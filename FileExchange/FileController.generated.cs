@@ -368,12 +368,12 @@ namespace FileExchange.Controllers
         partial void EditUserFileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FileExchange.Models.EditExchangeFileModel userFile);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> EditUserFile(FileExchange.Models.EditExchangeFileModel userFile)
+        public override System.Web.Mvc.ActionResult EditUserFile(FileExchange.Models.EditExchangeFileModel userFile)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditUserFile);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userFile", userFile);
             EditUserFileOverride(callInfo, userFile);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return callInfo;
         }
 
         [NonAction]

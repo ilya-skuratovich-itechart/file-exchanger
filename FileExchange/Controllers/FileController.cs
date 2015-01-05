@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Autofac;
+using FileExchange.Areas.Admin.Models;
 using FileExchange.Core.BandwidthThrottling;
 using FileExchange.Infrastructure.ActionResults;
 using FileExchange.Core.BusinessObjects;
@@ -23,9 +24,11 @@ using FileExchange.Helplers;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
+using FileExchange.Infrastructure.NetHelperExtension;
 using FileExchange.Models;
 using FileExchange.Models.DataTable;
 using FileExchange.Infrastructure.Notifications.FileNotification;
+using FileExchange.Infrastructure.UserSecurity;
 using WebMatrix.WebData;
 
 namespace FileExchange.Controllers
@@ -40,6 +43,7 @@ namespace FileExchange.Controllers
         private IBandwidthThrottlingSettings _bandwidthThrottlingSettings { get; set; }
         private IUserProfileService _userProfileService { get; set; }
         private IMailer _mailer { get; set; }
+        private IWebSecurity _webSecurity { get; set; }
 
         private IFileProvider _fileProvider { get; set; }
 
@@ -50,7 +54,8 @@ namespace FileExchange.Controllers
             IBandwidthThrottlingSettings bandwidthThrottlingSettings,
             IUserProfileService userProfileService,
              IMailer mailer,
-            IFileProvider fileProvider)
+            IFileProvider fileProvider,
+            IWebSecurity webSecurity)
         {
             _unitOfWork = unitOfWork;
             _fileCategoriesService = fileCategoriesService;
@@ -61,6 +66,7 @@ namespace FileExchange.Controllers
             _userProfileService = userProfileService;
             _mailer = mailer;
             _fileProvider = fileProvider;
+            _webSecurity = webSecurity;
 
         }
         public virtual ActionResult FileSections()
@@ -73,7 +79,7 @@ namespace FileExchange.Controllers
         [Authorize]
         public virtual ActionResult UserFiles()
         {
-            return View();
+            return View(MVC.File.Views.ViewNames.UserFiles);
         }
 
         [Authorize]
@@ -83,7 +89,7 @@ namespace FileExchange.Controllers
             IEnumerable<System.Web.Mvc.SelectListItem> fileCategoriesListItems =
                 AutoMapper.Mapper.Map<IEnumerable<System.Web.Mvc.SelectListItem>>(_fileCategoriesService.GetAll());
             var fileModel = new CreateExchangeFileModel(fileCategoriesListItems);
-            return View(fileModel);
+            return View(MVC.File.Views.ViewNames.AddUserFile,fileModel);
         }
 
         [Authorize]
@@ -91,35 +97,38 @@ namespace FileExchange.Controllers
         {
             try
             {
-                UserProfile userProfile = _userProfileService.GetUserById(WebSecurity.CurrentUserId);
+              
+                UserProfile userProfile = _userProfileService.GetUserById(_webSecurity.GetCurrentUserId());
                 if (userProfile.FileMaxSizeKbps != 0)
                 {
-                   if (userFile.File.ContentLength/1024>=userProfile.FileMaxSizeKbps)
-                       ModelState.AddModelError(string.Empty,string.Format("You can't upload this file. Max file size is {0} kbps.",userProfile.FileMaxSizeKbps));
+                    if (userFile.File.ContentLength/1024 >= userProfile.FileMaxSizeKbps)
+                        ModelState.AddModelError(string.Empty,
+                            string.Format("You can't upload this file. Max file size is {0} kbps.",
+                                userProfile.FileMaxSizeKbps));
                 }
+                if (userFile.File == null)
+                    ModelState.AddModelError(NameOf<CreateExchangeFileModel>.Property(s => s.File),
+                        "Need to add a file.");
                 if (!ModelState.IsValid)
                 {
                     IEnumerable<System.Web.Mvc.SelectListItem> fileCategoriesListItems =
                         AutoMapper.Mapper.Map<IEnumerable<System.Web.Mvc.SelectListItem>>(
                             _fileCategoriesService.GetAll());
                     userFile.FileCategories = fileCategoriesListItems;
-                    return View(userFile);
+                    return View(MVC.File.Views.ViewNames.AddUserFile, userFile);
                 }
                 string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(userFile.File.FileName);
-                using (var transaction = _unitOfWork.BeginTransaction())
-                {
-                    _fileExchangeService.Add(WebSecurity.CurrentUserId, userFile.SelectedFileCategoryId,
+                _unitOfWork.BeginTransaction();
+                    _fileExchangeService.Add(_webSecurity.GetCurrentUserId(), userFile.SelectedFileCategoryId,
                         userFile.Description, uniqFileName,
                         userFile.File.FileName, userFile.Tags, userFile.DenyAll,
                         userFile.AllowViewAnonymousUsers);
-
                     var path =
-                        System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
+                        this.HttpContext.Server.MapPath(string.Format("~/{0}",
                             Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
                     _unitOfWork.SaveChanges();
-                   _fileProvider.SaveAs(userFile.File,path);
-                    transaction.Complete();
-                }
+                    _fileProvider.SaveAs(userFile.File, path);
+                _unitOfWork.CommitTransaction();
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
             }
             catch (Exception)
@@ -133,26 +142,23 @@ namespace FileExchange.Controllers
         [HttpGet]
         public virtual ActionResult EditUserFile(int fileId)
         {
-            int userId = WebSecurity.CurrentUserId;
-
+            int userId = _webSecurity.GetCurrentUserId();
             IEnumerable<System.Web.Mvc.SelectListItem> fileCategoriesListItems =
                 AutoMapper.Mapper.Map<IEnumerable<System.Web.Mvc.SelectListItem>>(_fileCategoriesService.GetAll());
             EditExchangeFileModel userFile =
                 AutoMapper.Mapper.Map<EditExchangeFileModel>(_fileExchangeService.GetUserFile(fileId, userId));
             userFile.FileCategories = fileCategoriesListItems;
-            return View(userFile);
+            return View(MVC.File.Views.ViewNames.EditUserFile,userFile);
         }
 
         [Authorize]
         [HttpPost]
-        public virtual async Task<ActionResult> EditUserFile(EditExchangeFileModel userFile)
+        public virtual ActionResult EditUserFile(EditExchangeFileModel userFile)
         {
-            int userId = WebSecurity.CurrentUserId;
+            int userId = _webSecurity.GetCurrentUserId();
             if (ModelState.IsValid)
             {
-               
-                using (var transaction = _unitOfWork.BeginTransaction())
-                {
+               _unitOfWork.BeginTransaction();
                     var oldExchangeFile =
                    AutoMapper.Mapper.Map<ExchangeFile>(_fileExchangeService.GetUserFile(userFile.FileId, userId));
 
@@ -173,16 +179,15 @@ namespace FileExchange.Controllers
                         Mailer = _mailer
                     };
                     _unitOfWork.SaveChanges();
-                    transaction.Complete();
+                    _unitOfWork.CommitTransaction();
                     Task.Factory.StartNew(FileNotification.SendChangeFileNotification, fileNotificationModel);
-                }
                 return RedirectToAction(MVC.File.ActionNames.UserFiles);
             }
 
             IEnumerable<System.Web.Mvc.SelectListItem> fileCategoriesListItems =
                 AutoMapper.Mapper.Map<IEnumerable<System.Web.Mvc.SelectListItem>>(_fileCategoriesService.GetAll());
             userFile.FileCategories = fileCategoriesListItems;
-            return View(userFile);
+            return View(MVC.File.Views.ViewNames.EditUserFile,userFile);
         }
 
       
@@ -192,9 +197,8 @@ namespace FileExchange.Controllers
         {
             try
             {
-                using (var transaction = _unitOfWork.BeginTransaction())
-                {
-                    int userId = (int)WebSecurity.CurrentUserId;
+                _unitOfWork.BeginTransaction();
+                    int userId = (int)_webSecurity.GetCurrentUserId();
                     string fileUrl = Url.Action(MVC.File.ActionNames.ViewFile, MVC.File.Name, new { fileId = fileId }, Request.Url.Scheme);
                     ExchangeFile userFile = _fileExchangeService.GetUserFile(fileId, userId);
                     if (userFile == null)
@@ -217,13 +221,12 @@ namespace FileExchange.Controllers
                     _fileFileNotificationSubscriberService.RemoveAll(fileId);
                     _fileExchangeService.RemoveUserFile(userId, fileId);
                     var filePath =
-                        System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
+                        this.HttpContext.Server.MapPath(string.Format("~/{0}",
                             Path.Combine(ConfigHelper.FilesFolder, userFile.UniqFileName)));
                     _unitOfWork.SaveChanges();
                     _fileProvider.Delete(filePath);
-                    transaction.Complete();
+                   _unitOfWork.CommitTransaction();
                     Task.Factory.StartNew(FileNotification.SendChangeFileNotification, fileNotificationModel);
-                }
                 return View(MVC.File.ActionNames.UserFiles);
             }
             catch (Exception)
@@ -233,23 +236,21 @@ namespace FileExchange.Controllers
             }
         }
 
-
         public virtual ActionResult ViewCategoryFiles(int categoryId)
         {
-
-            return View(categoryId);
+            return View(MVC.File.Views.ViewNames.ViewCategoryFiles,categoryId);
         }
 
         public virtual ActionResult ViewFile(int fileId)
         {
-            ExchangeFile ExchangeFile= _fileExchangeService.GetFilteredFile(fileId, WebSecurity.IsAuthenticated);
+            ExchangeFile ExchangeFile= _fileExchangeService.GetFilteredFile(fileId, _webSecurity.IsAuthenticated());
             if (ExchangeFile == null)
                 throw new Exception(string.Format("File not exists or access denied. FileId = {0}", fileId));
             ViewExchangeFileViewModel exchangeFileViewModel = AutoMapper.Mapper.Map<ViewExchangeFileViewModel>(ExchangeFile);
             exchangeFileViewModel.Owner = ExchangeFile.User.UserName;
-            if (WebSecurity.IsAuthenticated)
+            if (_webSecurity.IsAuthenticated())
                 exchangeFileViewModel.HasSubscription =
-                    _fileFileNotificationSubscriberService.UserIsSubscibed(WebSecurity.CurrentUserId, fileId);
+                    _fileFileNotificationSubscriberService.UserIsSubscibed(_webSecurity.GetCurrentUserId(), fileId);
             return View(exchangeFileViewModel);
 
         }
@@ -287,11 +288,11 @@ namespace FileExchange.Controllers
         public virtual BandwidthThrottlingFileResult DownloadFile(int fileId)
         {
             int? userId = null;
-            ExchangeFile file = _fileExchangeService.GetFilteredFile(fileId, WebSecurity.IsAuthenticated);
+            ExchangeFile file = _fileExchangeService.GetFilteredFile(fileId, _webSecurity.IsAuthenticated());
             if (file == null)
                 throw new Exception(string.Format("File not exists or access denied. FileId = {0}", fileId));
-            if (WebSecurity.IsAuthenticated)
-                userId = WebSecurity.CurrentUserId;
+            if (_webSecurity.IsAuthenticated())
+                userId = _webSecurity.GetCurrentUserId();
             int maxDownloadSpeed = _bandwidthThrottlingSettings.GetMaxDownloadSpeedKbps(userId);
             string filePath = FileHelper.GetFullFileFolderPath(file.UniqFileName);
             return new BandwidthThrottlingFileResult(filePath, file.OrigFileName,
@@ -304,24 +305,22 @@ namespace FileExchange.Controllers
             try
             {
                 object result = null;
-                using (var transaciton = _unitOfWork.BeginTransaction())
-                {
-                    if (_fileFileNotificationSubscriberService.UserIsSubscibed(WebSecurity.CurrentUserId, fileId))
+                _unitOfWork.BeginTransaction();
+                    if (_fileFileNotificationSubscriberService.UserIsSubscibed(_webSecurity.GetCurrentUserId(), fileId))
                     {
                         result = new {Error = "Current user has a subscription", Success = false};
                     }
                     else
                     {
-                        _fileFileNotificationSubscriberService.Add(WebSecurity.CurrentUserId, fileId);
+                        _fileFileNotificationSubscriberService.Add(_webSecurity.GetCurrentUserId(), fileId);
                         _unitOfWork.SaveChanges();
-                        transaciton.Complete();
+                     _unitOfWork.CommitTransaction();
                         result = new
                         {
                             Html = this.RenderViewToString(MVC.File.Views._fileSubscribe, true),
                             Success = true
                         };
                     }
-                }
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (DbEntityValidationException exc)
@@ -339,24 +338,22 @@ namespace FileExchange.Controllers
         public virtual JsonResult UnscribeFileNotification(int fileId)
         {
             object result = null;
-            using (var transaciton = _unitOfWork.BeginTransaction())
-            {
-                if (!_fileFileNotificationSubscriberService.UserIsSubscibed(WebSecurity.CurrentUserId, fileId))
+            _unitOfWork.BeginTransaction();
+                if (!_fileFileNotificationSubscriberService.UserIsSubscibed(_webSecurity.GetCurrentUserId(), fileId))
                 {
                     result = new { Error = "Current user has not a subscription", Success = false };
                 }
                 else
                 {
-                    _fileFileNotificationSubscriberService.RemoveFromUser(fileId, WebSecurity.CurrentUserId);
+                    _fileFileNotificationSubscriberService.RemoveFromUser(fileId, _webSecurity.GetCurrentUserId());
                     _unitOfWork.SaveChanges();
-                    transaciton.Complete();
+                 _unitOfWork.CommitTransaction();
                     result = new
                     {
                         Html = this.RenderViewToString(MVC.File.Views._fileSubscribe, false),
                         Success = true
                     };
                 }
-            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -367,7 +364,7 @@ namespace FileExchange.Controllers
             { 
                 int totalRecords = 0;
                 IEnumerable<ExchangeFile> categoryFiles = _fileExchangeService.GetFilteredCategoryFilesPaged(param.Id,
-                    WebSecurity.IsAuthenticated, param.Start, param.Length, out totalRecords);
+                    _webSecurity.IsAuthenticated(), param.Start, param.Length, out totalRecords);
 
                 var resultUserFiles = from val in categoryFiles
                     select new[]
@@ -401,7 +398,7 @@ namespace FileExchange.Controllers
             try
             {
                 int totalRecords = 0;
-                int userId = (int)WebSecurity.CurrentUserId;
+                int userId = (int)_webSecurity.GetCurrentUserId();
 
                 List<ExchangeFile> userFiles = _fileExchangeService.GetUserFilesPaged(userId, param.iDisplayStart, param.iDisplayLength, out totalRecords);
                 var resultUserFiles = from val in userFiles

@@ -78,6 +78,7 @@ namespace FileExchange.Controllers
         {
             public readonly string Login = "Login";
             public readonly string LogOff = "LogOff";
+            public readonly string UserBanned = "UserBanned";
             public readonly string Register = "Register";
         }
 
@@ -86,6 +87,7 @@ namespace FileExchange.Controllers
         {
             public const string Login = "Login";
             public const string LogOff = "LogOff";
+            public const string UserBanned = "UserBanned";
             public const string Register = "Register";
         }
 
@@ -124,6 +126,7 @@ namespace FileExchange.Controllers
                 public readonly string Login = "Login";
                 public readonly string Manage = "Manage";
                 public readonly string Register = "Register";
+                public readonly string UserBanned = "UserBanned";
             }
             public readonly string _ChangePasswordPartial = "~/Views/Account/_ChangePasswordPartial.cshtml";
             public readonly string _SetPasswordPartial = "~/Views/Account/_SetPasswordPartial.cshtml";
@@ -131,6 +134,7 @@ namespace FileExchange.Controllers
             public readonly string Login = "~/Views/Account/Login.cshtml";
             public readonly string Manage = "~/Views/Account/Manage.cshtml";
             public readonly string Register = "~/Views/Account/Register.cshtml";
+            public readonly string UserBanned = "~/Views/Account/UserBanned.cshtml";
         }
     }
 
@@ -172,6 +176,17 @@ namespace FileExchange.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
             LogOffOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void UserBannedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult UserBanned()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UserBanned);
+            UserBannedOverride(callInfo);
             return callInfo;
         }
 

@@ -53,7 +53,7 @@ namespace FileExchange.Core.FileNotification
                 }
                 else
                 {
-                    if (oldExchangeFile.Description.ToLower() != newExchangeFile.Description)
+                    if (oldExchangeFile.Description != newExchangeFile.Description)
                     {
                         userNotifications.AddRange(
                             fileNotificationSubscriberses.Select(s => new FileUserNotification()

@@ -12,6 +12,7 @@ using FileExchange.Helplers;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Models;
 using FileExchange.Infrastructure.PageList;
+using FileExchange.Infrastructure.UserSecurity;
 
 namespace FileExchange.Controllers
 {
@@ -20,11 +21,13 @@ namespace FileExchange.Controllers
     {
         private IUnitOfWork _unitOfWork { get; set; }
         private INewsService _newsService { get; set; }
+        private IWebSecurity _webSecurity { get; set; }
 
-        public NewsController(IUnitOfWork unitOfWork, INewsService newsService)
+        public NewsController(IUnitOfWork unitOfWork, INewsService newsService, IWebSecurity webSecurity)
         {
             _unitOfWork = unitOfWork;
             _newsService = newsService;
+            _webSecurity = webSecurity;
         }
 
         [HttpGet]
@@ -62,17 +65,15 @@ namespace FileExchange.Controllers
                 if (ModelState.IsValid)
                 {
                     string uniqFileName = Guid.NewGuid().ToString() + Path.GetExtension(news.File.FileName);
-                    using (var transaction = _unitOfWork.BeginTransaction())
-                    {
+                   _unitOfWork.BeginTransaction();
                         _newsService.Add(news.Header, news.Text, uniqFileName, news.File.FileName);
                         var path =
-                            System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
+                            this.HttpContext.Server.MapPath(string.Format("~/{0}",
                                 Path.Combine(ConfigHelper.FilesFolder, uniqFileName)));
                         news.File.SaveAs(path);
                         _unitOfWork.SaveChanges();
-                        transaction.Complete();
+                       _unitOfWork.CommitTransaction();
                         _unitOfWork.Dispose();
-                    }
                     return RedirectToAction(MVC.Home.ActionNames.Index, MVC.Home.Name);
                 }
                 else
@@ -120,8 +121,7 @@ namespace FileExchange.Controllers
                 if (ModelState.IsValid)
                 {
                     string fileNameToDelete = string.Empty;
-                    using (var transaction = _unitOfWork.BeginTransaction())
-                    {
+                    _unitOfWork.BeginTransaction();
                         if (news.File.ContentLength > 0)
                         {
                             fileNameToDelete = news.UniqImageName;
@@ -131,19 +131,18 @@ namespace FileExchange.Controllers
                         if (news.File.ContentLength > 0)
                         {
                             var newFilePath =
-                                System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
+                                this.HttpContext.Server.MapPath(string.Format("~/{0}",
                                     Path.Combine(ConfigHelper.FilesFolder, news.UniqImageName)));
 
                             var oldFilePath =
-                                System.Web.HttpContext.Current.Server.MapPath(string.Format("~/{0}",
+                                this.HttpContext.Server.MapPath(string.Format("~/{0}",
                                     Path.Combine(ConfigHelper.FilesFolder, fileNameToDelete)));
 
                             news.File.SaveAs(newFilePath);
                             System.IO.File.Delete(oldFilePath);
                         }
                         _unitOfWork.SaveChanges();
-                        transaction.Complete();
-                    }
+                      _unitOfWork.CommitTransaction();
                     return RedirectToAction(MVC.Home.ActionNames.Index, MVC.Home.Name);
                 }
                 else

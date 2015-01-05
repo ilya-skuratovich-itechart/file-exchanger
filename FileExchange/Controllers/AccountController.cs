@@ -14,6 +14,7 @@ using FileExchange.Core.UOW;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using FileExchange.Filters;
+using FileExchange.Infrastructure.UserSecurity;
 using FileExchange.Models;
 
 namespace FileExchange.Controllers
@@ -24,11 +25,14 @@ namespace FileExchange.Controllers
         private IUserProfileService _userProfileService { get; set; }
         private IUserInRolesService _userInRolesService { get; set; }
         private IUnitOfWork _unitOfWork { get; set; }
-        public AccountController(IUnitOfWork unitOfWork, IUserProfileService userProfileService,IUserInRolesService userInRolesService)
+        private IWebSecurity _webSecurity { get; set; }
+
+        public AccountController(IUnitOfWork unitOfWork, IUserProfileService userProfileService, IUserInRolesService userInRolesService, IWebSecurity webSecurity)
         {
             _userProfileService = userProfileService;
             _userInRolesService = userInRolesService;
             _unitOfWork = unitOfWork;
+            _webSecurity = webSecurity;
         }
         [AllowAnonymous]
         public virtual ActionResult Login(string returnUrl)
@@ -45,12 +49,10 @@ namespace FileExchange.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && _webSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
-
-            // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
         }
@@ -62,18 +64,23 @@ namespace FileExchange.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult LogOff()
         {
-            WebSecurity.Logout();
-            return RedirectToAction("Index", "Home");
+            _webSecurity.Logout();
+            return RedirectToAction(MVC.Home.ActionNames.Index, MVC.Home.Name);
+        }
+
+        public virtual ActionResult UserBanned()
+        {
+            _webSecurity.Logout();
+            return View(MVC.Account.Views.ViewNames.UserBanned);
         }
 
         //
         // GET: /Account/Register
 
         [AllowAnonymous]
-       
         public virtual ActionResult Register()
         {
-            return View();
+            return View(MVC.Account.Views.ViewNames.Register);
         }
 
         //
@@ -92,16 +99,16 @@ namespace FileExchange.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password,
+                    _webSecurity.CreateUserAndAccount(model.UserName, model.Password,
                         propertyValues: new
                         {
                             UserName = model.UserName,
                             UserEmail = model.Email
                         });
-                    _userInRolesService.AddUserToRole(WebSecurity.GetUserId(model.UserName),
+                    _userInRolesService.AddUserToRole(_webSecurity.GetUserId(model.UserName),
                         UserRoleTypes.ActiveUser);
                     _unitOfWork.SaveChanges();
-                    WebSecurity.Login(model.UserName, model.Password);
+                    _webSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)

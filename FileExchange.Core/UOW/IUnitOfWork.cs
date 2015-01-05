@@ -6,7 +6,8 @@ namespace FileExchange.Core.UOW
     public interface IUnitOfWork : IDisposable
     {
         FileExchangeDbContext DbContext { get; }
-        TransactionScope BeginTransaction();
+        void BeginTransaction();
+        void CommitTransaction();
         void Rollback();
         void SaveChanges();
     }

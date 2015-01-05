@@ -37,3 +37,5 @@ D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Auto
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\RazorTemplates.Core.xml
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\obj\Debug\FileExchange.Web.UnitTests.dll
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\obj\Debug\FileExchange.Web.UnitTests.pdb
+D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\KellermanSoftware.Compare-NET-Objects.dll
+D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\KellermanSoftware.Compare-NET-Objects.xml

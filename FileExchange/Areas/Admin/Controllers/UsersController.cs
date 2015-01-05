@@ -14,6 +14,7 @@ using FileExchange.EmailSender;
 using FileExchange.Helplers;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
+using FileExchange.Infrastructure.UserSecurity;
 using FileExchange.Models.DataTable;
 using WebMatrix.WebData;
 
@@ -31,13 +32,15 @@ namespace FileExchange.Areas.Admin.Controllers
         private IMailer _mailer { get; set; }
 
         private IFileProvider _fileProvider { get; set; }
+        private IWebSecurity _webSecurity { get; set; }
 
         public UsersController(IUnitOfWork unitOfWork,
             IUserProfileService userProfileService,
             IUserRolesService userRolesService,
             IUserInRolesService userInRolesService,
              IMailer mailer,
-            IFileProvider fileProvider)
+            IFileProvider fileProvider,
+            IWebSecurity webSecurity)
         {
             _unitOfWork = unitOfWork;
             _userProfileService = userProfileService;
@@ -45,6 +48,7 @@ namespace FileExchange.Areas.Admin.Controllers
             _userInRolesService = userInRolesService;
             _mailer = mailer;
             _fileProvider = fileProvider;
+            _webSecurity = webSecurity;
         }
 
         //
@@ -72,23 +76,20 @@ namespace FileExchange.Areas.Admin.Controllers
             {
                 userModel.UserRoles = AutoMapper.Mapper.Map<IEnumerable<UserRolesModel>>(_userRolesService.GetAll());
                 userModel.SelectedUserRoles =
-                    AutoMapper.Mapper.Map<IEnumerable<UserRolesModel>>(_userInRolesService.GetUserInRoles(userModel.UserId));
+                    AutoMapper.Mapper.Map<IEnumerable<UserRolesModel>>(
+                        _userInRolesService.GetUserInRoles(userModel.UserId));
                 return View(userModel);
             }
-            using (var transaction = _unitOfWork.BeginTransaction())
-            {
-                UserProfile userProfile = _userProfileService.GetUserById(userModel.UserId);
-                if (userProfile==null)
-                    throw new Exception(string.Format("userProfile not exists. UserId:{0}",userModel.UserId));
-
-                userProfile.MaxDonwloadSpeedKbps = userModel.MaxDonwloadSpeedKbps;
-                userProfile.FileMaxSizeKbps = userModel.FileMaxSizeKbps;
-               
-                _userInRolesService.UpdateUserInRoles(userProfile.UserId, userModel.RolesIds.ToList());
-                _userProfileService.Update(userProfile);
-                _unitOfWork.SaveChanges();
-                transaction.Complete();
-            }
+            _unitOfWork.BeginTransaction();
+            UserProfile userProfile = _userProfileService.GetUserById(userModel.UserId);
+            if (userProfile == null)
+                throw new Exception(string.Format("userProfile not exists. UserId:{0}", userModel.UserId));
+            userProfile.MaxDonwloadSpeedKbps = userModel.MaxDonwloadSpeedKbps;
+            userProfile.FileMaxSizeKbps = userModel.FileMaxSizeKbps;
+            _userInRolesService.UpdateUserInRoles(userProfile.UserId, userModel.RolesIds.ToList());
+            _userProfileService.Update(userProfile);
+            _unitOfWork.SaveChanges();
+            _unitOfWork.CommitTransaction();
             return RedirectToAction(MVC.Admin.Users.ActionNames.ViewUsers);
 
         }
@@ -97,25 +98,21 @@ namespace FileExchange.Areas.Admin.Controllers
         {
             try
             {
-                using (var transaction = _unitOfWork.BeginTransaction())
-                {
+                _unitOfWork.BeginTransaction();
                     var user = _userProfileService.GetUserById(userId);
                     if (user == null)
                         throw new Exception(string.Format("User not exists. UserId: {0}", userId));
 
-                    string resetToken = WebSecurity.GeneratePasswordResetToken(user.UserName, 5);
+                    string resetToken = _webSecurity.GeneratePasswordResetToken(user.UserName, 5);
                     string newPassword = System.Web.Security.Membership.GeneratePassword(10, 2);
-                    WebSecurity.ResetPassword(resetToken, newPassword);
+                    _webSecurity.ResetPassword(resetToken, newPassword);
 
                     string templateText = RenderViewHelper.RenderPartialToString(
                         MVC.Admin.EmailTemplates.Views.PasswordChanged,
                         MVC.Admin.EmailTemplates.Views._layout,
                         new {UserName = user.UserName, Password = newPassword});
                     _mailer.SendEmailTo(user.UserEmail, "Password has been changed", templateText);
-                    transaction.Complete();
-
-                }
-
+                _unitOfWork.CommitTransaction();
                 return Json(new {Success = true},JsonRequestBehavior.AllowGet);
             }
             catch (Exception exc)

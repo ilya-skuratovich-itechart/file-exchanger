@@ -262,7 +262,6 @@
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Controllers\UserInRoles.cs" />
     <Compile Include="DisplayEmailTemplatesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -287,6 +286,7 @@
     <Compile Include="Infrastructure\CustomHttpContent\JsonHttpContent.cs" />
     <Compile Include="Infrastructure\FileHelpers\FileProvider.cs" />
     <Compile Include="Infrastructure\FileHelpers\IFileProvider.cs" />
+    <Compile Include="Infrastructure\Filtres\BannedUserFilter.cs" />
     <Compile Include="Infrastructure\LoggerManager\ILogger.cs" />
     <Compile Include="Infrastructure\LoggerManager\LoggerConfiguration.cs" />
     <Compile Include="Infrastructure\LoggerManager\LoggerManager.cs" />
@@ -294,6 +294,8 @@
     <Compile Include="Infrastructure\ModelBinders\DataTablesBinder.cs" />
     <Compile Include="Infrastructure\NetHelperExtension\NameOf.cs" />
     <Compile Include="Infrastructure\Rss\RssService.cs" />
+    <Compile Include="Infrastructure\UserSecurity\IWebSecurity.cs" />
+    <Compile Include="Infrastructure\UserSecurity\WebSecurityWrapper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseFileTemplateViewModel.cs" />
     <Compile Include="Models\Captcha.cs" />
@@ -673,6 +675,7 @@
     <Content Include="Views\Shared\_captcha.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\News\News.cshtml" />
+    <Content Include="Views\Account\UserBanned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
