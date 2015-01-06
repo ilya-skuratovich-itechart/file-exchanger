@@ -34,7 +34,7 @@ namespace FileExchange.Infrastructure.Notifications.FileNotification
                             case NotificationType.accessDienied:
                                 {
 
-                                    templateText = RenderViewHelper.RenderPartialToString(
+                                    templateText = fileNotificationModel.RenderViewHelper.RenderViewToString(
                                         MVC.DisplayEmailTemplates.Views.FileAccessDeniedTemplate,
                                         MVC.DisplayEmailTemplates.Views._layout,
                                         templateModel);
@@ -42,14 +42,14 @@ namespace FileExchange.Infrastructure.Notifications.FileNotification
                                     break;
                                 }
                             case NotificationType.descriptionChanged:
-                                templateText = RenderViewHelper.RenderPartialToString(
+                                templateText = fileNotificationModel.RenderViewHelper.RenderViewToString(
                                         MVC.DisplayEmailTemplates.Views.FileChangedTemplate,
                                         MVC.DisplayEmailTemplates.Views._layout,
                                         templateModel);
                                 subject = "file desctiption is changed";
                                 break;
                             case NotificationType.fileDelited:
-                                templateText = RenderViewHelper.RenderPartialToString(
+                                templateText = fileNotificationModel.RenderViewHelper.RenderViewToString(
                                     MVC.DisplayEmailTemplates.Views.FileDeletedTemplate,
                                     MVC.DisplayEmailTemplates.Views._layout,
                                     templateModel);

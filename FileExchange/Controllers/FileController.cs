@@ -29,6 +29,7 @@ using FileExchange.Models;
 using FileExchange.Models.DataTable;
 using FileExchange.Infrastructure.Notifications.FileNotification;
 using FileExchange.Infrastructure.UserSecurity;
+using FileExchange.Infrastructure.ViewsWrappers;
 using WebMatrix.WebData;
 
 namespace FileExchange.Controllers
@@ -44,8 +45,8 @@ namespace FileExchange.Controllers
         private IUserProfileService _userProfileService { get; set; }
         private IMailer _mailer { get; set; }
         private IWebSecurity _webSecurity { get; set; }
-
         private IFileProvider _fileProvider { get; set; }
+        private IViewRenderWrapper _viewRenderWrapper { get; set; }
 
         public FileController(IUnitOfWork unitOfWork, IFileCategoriesService fileCategoriesService,
             IFileNotificationSubscriberService fileFileNotificationSubscriberService,
@@ -55,7 +56,8 @@ namespace FileExchange.Controllers
             IUserProfileService userProfileService,
              IMailer mailer,
             IFileProvider fileProvider,
-            IWebSecurity webSecurity)
+            IWebSecurity webSecurity,
+            IViewRenderWrapper viewRenderWrapper)
         {
             _unitOfWork = unitOfWork;
             _fileCategoriesService = fileCategoriesService;
@@ -67,6 +69,7 @@ namespace FileExchange.Controllers
             _mailer = mailer;
             _fileProvider = fileProvider;
             _webSecurity = webSecurity;
+            _viewRenderWrapper = viewRenderWrapper;
 
         }
         public virtual ActionResult FileSections()
@@ -176,7 +179,8 @@ namespace FileExchange.Controllers
                         FileUrl = fileUrl,
                         OriginalFileName = oldExchangeFile.OrigFileName,
                         FileUserNotifications = notificationUsers,
-                        Mailer = _mailer
+                        Mailer = _mailer,
+                        RenderViewHelper = _viewRenderWrapper
                     };
                     _unitOfWork.SaveChanges();
                     _unitOfWork.CommitTransaction();
@@ -215,7 +219,8 @@ namespace FileExchange.Controllers
                         FileUrl = fileUrl,
                         OriginalFileName = oldExchangeFile.OrigFileName,
                         FileUserNotifications = notificationUsers,
-                        Mailer = _mailer
+                        Mailer = _mailer,
+                        RenderViewHelper = _viewRenderWrapper
                     };
                     _fileCommentService.RemoveAll(fileId);
                     _fileFileNotificationSubscriberService.RemoveAll(fileId);
@@ -294,7 +299,10 @@ namespace FileExchange.Controllers
             if (_webSecurity.IsAuthenticated())
                 userId = _webSecurity.GetCurrentUserId();
             int maxDownloadSpeed = _bandwidthThrottlingSettings.GetMaxDownloadSpeedKbps(userId);
-            string filePath = FileHelper.GetFullFileFolderPath(file.UniqFileName);
+            string filePath =
+                this.HttpContext.Server.MapPath(string.Format("~/{0}",
+                    Path.Combine(ConfigHelper.FilesFolder, file.UniqFileName).Replace(@"\", "/")));
+
             return new BandwidthThrottlingFileResult(filePath, file.OrigFileName,
                 FileHelper.GetMimeTypeByFileName(file.UniqFileName), maxDownloadSpeed);
         }
@@ -306,21 +314,21 @@ namespace FileExchange.Controllers
             {
                 object result = null;
                 _unitOfWork.BeginTransaction();
-                    if (_fileFileNotificationSubscriberService.UserIsSubscibed(_webSecurity.GetCurrentUserId(), fileId))
+                if (_fileFileNotificationSubscriberService.UserIsSubscibed(_webSecurity.GetCurrentUserId(), fileId))
+                {
+                    result = new {Error = "Current user has a subscription", Success = false};
+                }
+                else
+                {
+                    _fileFileNotificationSubscriberService.Add(_webSecurity.GetCurrentUserId(), fileId);
+                    _unitOfWork.SaveChanges();
+                    result = new
                     {
-                        result = new {Error = "Current user has a subscription", Success = false};
-                    }
-                    else
-                    {
-                        _fileFileNotificationSubscriberService.Add(_webSecurity.GetCurrentUserId(), fileId);
-                        _unitOfWork.SaveChanges();
-                     _unitOfWork.CommitTransaction();
-                        result = new
-                        {
-                            Html = this.RenderViewToString(MVC.File.Views._fileSubscribe, true),
-                            Success = true
-                        };
-                    }
+                        Html = _viewRenderWrapper.RenderViewToString(this,MVC.File.Views._fileSubscribe, true),
+                        Success = true
+                    };
+                }
+                _unitOfWork.CommitTransaction();
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (DbEntityValidationException exc)
@@ -350,7 +358,7 @@ namespace FileExchange.Controllers
                  _unitOfWork.CommitTransaction();
                     result = new
                     {
-                        Html = this.RenderViewToString(MVC.File.Views._fileSubscribe, false),
+                        Html = _viewRenderWrapper.RenderViewToString(this,MVC.File.Views._fileSubscribe, false),
                         Success = true
                     };
                 }
@@ -398,9 +406,9 @@ namespace FileExchange.Controllers
             try
             {
                 int totalRecords = 0;
-                int userId = (int)_webSecurity.GetCurrentUserId();
+                int userId = _webSecurity.GetCurrentUserId();
 
-                List<ExchangeFile> userFiles = _fileExchangeService.GetUserFilesPaged(userId, param.iDisplayStart, param.iDisplayLength, out totalRecords);
+                IEnumerable<ExchangeFile> userFiles = _fileExchangeService.GetUserFilesPaged(userId, param.iDisplayStart, param.iDisplayLength, out totalRecords);
                 var resultUserFiles = from val in userFiles
                                       select new[]
                     {

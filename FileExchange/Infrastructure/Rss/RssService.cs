@@ -11,7 +11,6 @@ namespace FileExchange.Infrastructure.Rss
     {
         public static Rss20FeedFormatter GetRssNews(List<News> news, string newsDetailUrl, string siteUrl)
         {
-
             SyndicationFeed feed = new SyndicationFeed("News feed", "This is a news feed", new Uri(siteUrl));
             feed.Categories.Add(new SyndicationCategory("News"));
             feed.Description = new TextSyndicationContent("rss description");

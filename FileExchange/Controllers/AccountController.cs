@@ -14,6 +14,7 @@ using FileExchange.Core.UOW;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using FileExchange.Filters;
+using FileExchange.Infrastructure.Captcha;
 using FileExchange.Infrastructure.UserSecurity;
 using FileExchange.Models;
 
@@ -26,13 +27,16 @@ namespace FileExchange.Controllers
         private IUserInRolesService _userInRolesService { get; set; }
         private IUnitOfWork _unitOfWork { get; set; }
         private IWebSecurity _webSecurity { get; set; }
+        private ICaptcha _captchaHelper { get; set; }
 
-        public AccountController(IUnitOfWork unitOfWork, IUserProfileService userProfileService, IUserInRolesService userInRolesService, IWebSecurity webSecurity)
+        public AccountController(IUnitOfWork unitOfWork, IUserProfileService userProfileService, IUserInRolesService userInRolesService, IWebSecurity webSecurity,
+           ICaptcha captchaHelper)
         {
             _userProfileService = userProfileService;
             _userInRolesService = userInRolesService;
             _unitOfWork = unitOfWork;
             _webSecurity = webSecurity;
+            _captchaHelper = captchaHelper;
         }
         [AllowAnonymous]
         public virtual ActionResult Login(string returnUrl)
@@ -91,8 +95,7 @@ namespace FileExchange.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Register(RegisterModel model, string captchaValue)
         {
-
-            if (!CaptchaController.IsValidCaptchaValue(captchaValue))
+            if (!_captchaHelper.IsValidCaptchaValue(captchaValue))
                 ModelState.AddModelError("", "Incorrect captcha");
             if (ModelState.IsValid)
             {

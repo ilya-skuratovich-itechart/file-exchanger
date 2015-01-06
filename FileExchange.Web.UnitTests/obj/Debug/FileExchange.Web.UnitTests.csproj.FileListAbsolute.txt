@@ -20,7 +20,6 @@ D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\NLog
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Autofac.Integration.Mvc.dll
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Autofac.Integration.WebApi.dll
-D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\RazorTemplates.Core.dll
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\FileExchange.Core.pdb
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\FileExchange.EmailSender.pdb
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\FileExchange.pdb
@@ -34,8 +33,9 @@ D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\NLog
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Autofac.Integration.Mvc.xml
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\Autofac.Integration.WebApi.xml
-D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\RazorTemplates.Core.xml
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\obj\Debug\FileExchange.Web.UnitTests.dll
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\obj\Debug\FileExchange.Web.UnitTests.pdb
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\KellermanSoftware.Compare-NET-Objects.dll
 D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\KellermanSoftware.Compare-NET-Objects.xml
+D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\PagedList.Mvc.dll
+D:\projects\file manager\FileExchanger\FileExchange.Web.UnitTests\bin\Debug\PagedList.Mvc.xml

@@ -26,9 +26,6 @@ namespace FileExchange.Controllers
     public partial class CaptchaController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public CaptchaController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected CaptchaController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

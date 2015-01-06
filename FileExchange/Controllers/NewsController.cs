@@ -10,6 +10,7 @@ using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Helplers;
 using FileExchange.Infrastructure.Configuration;
+using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Models;
 using FileExchange.Infrastructure.PageList;
 using FileExchange.Infrastructure.UserSecurity;
@@ -22,12 +23,14 @@ namespace FileExchange.Controllers
         private IUnitOfWork _unitOfWork { get; set; }
         private INewsService _newsService { get; set; }
         private IWebSecurity _webSecurity { get; set; }
+        private IFileProvider _fileProvider { get; set; }
 
-        public NewsController(IUnitOfWork unitOfWork, INewsService newsService, IWebSecurity webSecurity)
+        public NewsController(IUnitOfWork unitOfWork, INewsService newsService, IWebSecurity webSecurity,IFileProvider fileProvider)
         {
             _unitOfWork = unitOfWork;
             _newsService = newsService;
             _webSecurity = webSecurity;
+            _fileProvider = fileProvider;
         }
 
         [HttpGet]
@@ -44,7 +47,6 @@ namespace FileExchange.Controllers
             var news = _newsService.GetLastNews(10);
             model.News = AutoMapper.Mapper.Map<List<FileExchange.Models.EditNewsModel>>(news);
             model.News = model.News ?? new List<EditNewsModel>();
-
             return PartialView(MVC.News.Views.ViewNames._lastNews, model);
         }
 
@@ -54,7 +56,6 @@ namespace FileExchange.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         [Authorize(Roles = UserRoleNames.EditNewsAllowRoles)]
@@ -86,7 +87,6 @@ namespace FileExchange.Controllers
             }
         }
 
-
         public virtual ActionResult ViewNews(int page = 1, int pageSize = 10)
         {
             int totalItemsCount;
@@ -102,7 +102,6 @@ namespace FileExchange.Controllers
             return View(news);
         }
 
-
         [HttpGet]
         [Authorize(Roles = UserRoleNames.EditNewsAllowRoles)]
         public virtual ActionResult EditNews(int newsid)
@@ -110,7 +109,6 @@ namespace FileExchange.Controllers
             EditNewsModel model = AutoMapper.Mapper.Map<FileExchange.Models.EditNewsModel>(_newsService.GetById(newsid));
             return View(model);
         }
-
 
         [HttpPost]
         [Authorize(Roles = UserRoleNames.EditNewsAllowRoles)]
@@ -120,29 +118,28 @@ namespace FileExchange.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string fileNameToDelete = string.Empty;
                     _unitOfWork.BeginTransaction();
-                        if (news.File.ContentLength > 0)
-                        {
-                            fileNameToDelete = news.UniqImageName;
-                            news.UniqImageName = Guid.NewGuid().ToString() + Path.GetExtension(news.File.FileName);
-                        }
-                        _newsService.Update(news.NewsId, news.Header, news.Text, news.UniqImageName, news.OrigImageName);
-                        if (news.File.ContentLength > 0)
-                        {
-                            var newFilePath =
-                                this.HttpContext.Server.MapPath(string.Format("~/{0}",
-                                    Path.Combine(ConfigHelper.FilesFolder, news.UniqImageName)));
+                    string fileNameToDelete=string.Empty;
+                    if (news.File.ContentLength > 0)
+                    {
+                        fileNameToDelete =_newsService.GetById(1).UniqImageName;
+                        news.UniqImageName = Guid.NewGuid().ToString() + Path.GetExtension(news.File.FileName);
+                    }
+                    _newsService.Update(news.NewsId, news.Header, news.Text, news.UniqImageName, news.OrigImageName);
+                    if (news.File.ContentLength > 0)
+                    {
+                        var newFilePath =
+                            this.HttpContext.Server.MapPath(string.Format("~/{0}",
+                                Path.Combine(ConfigHelper.FilesFolder, news.UniqImageName)));
 
-                            var oldFilePath =
-                                this.HttpContext.Server.MapPath(string.Format("~/{0}",
-                                    Path.Combine(ConfigHelper.FilesFolder, fileNameToDelete)));
-
-                            news.File.SaveAs(newFilePath);
-                            System.IO.File.Delete(oldFilePath);
-                        }
-                        _unitOfWork.SaveChanges();
-                      _unitOfWork.CommitTransaction();
+                        var oldFilePath =
+                            this.HttpContext.Server.MapPath(string.Format("~/{0}",
+                                Path.Combine(ConfigHelper.FilesFolder, fileNameToDelete)));
+                        _fileProvider.SaveAs(news.File, newFilePath);
+                        _fileProvider.Delete(oldFilePath);
+                    }
+                    _unitOfWork.SaveChanges();
+                    _unitOfWork.CommitTransaction();
                     return RedirectToAction(MVC.Home.ActionNames.Index, MVC.Home.Name);
                 }
                 else
@@ -154,7 +151,6 @@ namespace FileExchange.Controllers
                 throw;
             }
         }
-
 
     }
 }

@@ -15,6 +15,7 @@ using FileExchange.Helplers;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
 using FileExchange.Infrastructure.UserSecurity;
+using FileExchange.Infrastructure.ViewsWrappers;
 using FileExchange.Models.DataTable;
 using WebMatrix.WebData;
 
@@ -33,14 +34,15 @@ namespace FileExchange.Areas.Admin.Controllers
 
         private IFileProvider _fileProvider { get; set; }
         private IWebSecurity _webSecurity { get; set; }
-
+        private IViewRenderWrapper _viewRenderHelper { get; set; }
         public UsersController(IUnitOfWork unitOfWork,
             IUserProfileService userProfileService,
             IUserRolesService userRolesService,
             IUserInRolesService userInRolesService,
              IMailer mailer,
             IFileProvider fileProvider,
-            IWebSecurity webSecurity)
+            IWebSecurity webSecurity,
+            IViewRenderWrapper viewRenderHelper)
         {
             _unitOfWork = unitOfWork;
             _userProfileService = userProfileService;
@@ -49,6 +51,7 @@ namespace FileExchange.Areas.Admin.Controllers
             _mailer = mailer;
             _fileProvider = fileProvider;
             _webSecurity = webSecurity;
+            _viewRenderHelper = viewRenderHelper;
         }
 
         //
@@ -56,7 +59,6 @@ namespace FileExchange.Areas.Admin.Controllers
 
         public virtual ActionResult ViewUsers()
         {
-
             return View();
         }
 
@@ -102,12 +104,10 @@ namespace FileExchange.Areas.Admin.Controllers
                     var user = _userProfileService.GetUserById(userId);
                     if (user == null)
                         throw new Exception(string.Format("User not exists. UserId: {0}", userId));
-
                     string resetToken = _webSecurity.GeneratePasswordResetToken(user.UserName, 5);
                     string newPassword = System.Web.Security.Membership.GeneratePassword(10, 2);
                     _webSecurity.ResetPassword(resetToken, newPassword);
-
-                    string templateText = RenderViewHelper.RenderPartialToString(
+                    string templateText = _viewRenderHelper.RenderViewToString(
                         MVC.Admin.EmailTemplates.Views.PasswordChanged,
                         MVC.Admin.EmailTemplates.Views._layout,
                         new {UserName = user.UserName, Password = newPassword});

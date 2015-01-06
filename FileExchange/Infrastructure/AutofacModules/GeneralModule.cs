@@ -8,9 +8,11 @@ using FileExchange.Core.BandwidthThrottling;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
+using FileExchange.Infrastructure.Captcha;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.LoggerManager;
 using FileExchange.Infrastructure.UserSecurity;
+using FileExchange.Infrastructure.ViewsWrappers;
 using Module = Autofac.Module;
 
 namespace FileExchange.Infrastructure.AutofacModules
@@ -23,12 +25,17 @@ namespace FileExchange.Infrastructure.AutofacModules
                 Mailer("fileExchange@localhost", "test", "localhost", 25)).As<IMailer>();
 
             builder.Register(c => new WebSecurityWrapper()).As<IWebSecurity>();
+            
+            builder.Register(c => new FileExchange.Infrastructure.Captcha.Captcha()).As<ICaptcha>();
 
             builder.Register(c => new
                 FileProvider()).As<IFileProvider>();
 
             builder.Register(c => new
                 LoggerManager.LoggerManager()).As<ILogger>();
+
+            builder.Register(c => new
+             ViewRenderWrapper()).As<IViewRenderWrapper>();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
 

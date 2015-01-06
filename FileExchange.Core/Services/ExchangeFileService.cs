@@ -39,7 +39,7 @@ namespace FileExchange.Core.Services
               .FindBy(f => f.UserId == userId && f.FileId == fileId)
               .SingleOrDefault();
         }
-        public List<ExchangeFile> GetUserFilesPaged(int userId, int startRecNum, int pageLenght, out int totalRecords)
+        public IEnumerable<ExchangeFile> GetUserFilesPaged(int userId, int startRecNum, int pageLenght, out int totalRecords)
         {
             return _exchangeFileRepository
               .FindPaged(f => f.UserId == userId, s => s.FileId, startRecNum, pageLenght, out totalRecords)

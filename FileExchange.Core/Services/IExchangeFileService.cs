@@ -12,7 +12,7 @@ namespace FileExchange.Core.Services
 
         List<ExchangeFile> GetAll();
 
-        List<ExchangeFile> GetUserFilesPaged(int userId, int startRecNum, int pageLenght, out int totalRecords);
+        IEnumerable<ExchangeFile> GetUserFilesPaged(int userId, int startRecNum, int pageLenght, out int totalRecords);
 
         IEnumerable<ExchangeFile> GetCategoryFiles(int fileCategoryId, bool isAuthorizedUser);
 

@@ -30,16 +30,14 @@ namespace FileExchange.Controllers
 
         public HttpResponseMessage Get()
         {
-            string host = string.Format("http://www.{0}", System.Web.HttpContext.Current.Request.Url.Host.ToLower());
+            string host = string.Format("http://www.{0}", this.ControllerContext.Request.RequestUri.Host.ToLower());
             string newsUrl = string.Format("{0}/{1}/{2}", host, MVC.News.Name, MVC.News.ActionNames.ViewNews);
-
             Rss20FeedFormatter rss20FeedFormatter = RssService.GetRssNews(_newsService.GetAll(), newsUrl, host);
             var output = new StringBuilder();
             using (var writer = XmlWriter.Create(output, new XmlWriterSettings { Indent = true }))
             {
                 rss20FeedFormatter.WriteTo(writer);
                 writer.Flush();
-
             }
             var doc = new XmlDocument();
             doc.LoadXml(output.ToString());

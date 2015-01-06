@@ -272,11 +272,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Captcha\Captcha.cs" />
+    <Compile Include="Infrastructure\Captcha\ICaptcha.cs" />
     <Compile Include="Infrastructure\Configuration\ConfigHelper.cs" />
     <Compile Include="Infrastructure\FileHelpers\FileHelper.cs" />
     <Compile Include="Helplers\HtmlExtensions.cs" />
     <Compile Include="Helplers\RenderViewHelper.cs" />
-    <Compile Include="Helplers\ViewsHelper.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -296,6 +297,8 @@
     <Compile Include="Infrastructure\Rss\RssService.cs" />
     <Compile Include="Infrastructure\UserSecurity\IWebSecurity.cs" />
     <Compile Include="Infrastructure\UserSecurity\WebSecurityWrapper.cs" />
+    <Compile Include="Infrastructure\ViewsWrappers\IViewRenderWrapper.cs" />
+    <Compile Include="Infrastructure\ViewsWrappers\ViewRenderWrapper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseFileTemplateViewModel.cs" />
     <Compile Include="Models\Captcha.cs" />
@@ -648,8 +651,6 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

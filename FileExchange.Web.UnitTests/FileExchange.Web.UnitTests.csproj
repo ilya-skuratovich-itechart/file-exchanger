@@ -48,9 +48,18 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
@@ -67,11 +76,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FileControllerTests.cs" />
-    <Compile Include="HttpContextHelper.cs" />
+    <Compile Include="Tests\AccountControllerTests.cs" />
+    <Compile Include="Tests\Areas\Admin\UserControllerTests.cs" />
+    <Compile Include="Tests\CaptchaControllerTest.cs" />
+    <Compile Include="Tests\FileControllerTests.cs" />
+    <Compile Include="Infrastructure\ControllerInitializer.cs" />
     <Compile Include="Infrastructure\GlobalTestConfig.cs" />
     <Compile Include="Mappers\MapperService.cs" />
+    <Compile Include="Tests\NewsControlleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\RssControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FileExchange.Core\FileExchange.Core.csproj">
@@ -91,6 +105,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

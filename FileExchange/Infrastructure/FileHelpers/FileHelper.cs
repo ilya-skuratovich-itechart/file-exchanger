@@ -8,10 +8,7 @@ namespace FileExchange.Infrastructure.FileHelpers
 {
     public static class FileHelper
     {
-        public static string GetFullFileFolderPath(string fileName)
-        {
-            return HttpContext.Current.Server.MapPath(string.Format("~/{0}", Path.Combine(ConfigHelper.FilesFolder, fileName).Replace(@"\", "/"))); ;
-        }
+      
         private static IDictionary<string, string> _mappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
 
         #region Big freaking list of mime types

@@ -13,16 +13,20 @@ using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
+using FileExchange.Infrastructure.ActionResults;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.UserSecurity;
+using FileExchange.Infrastructure.ViewsWrappers;
 using FileExchange.Models;
+using FileExchange.Models.DataTable;
+using FileExchange.Web.UnitTests.Infrastructure;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebMatrix.WebData;
 
-namespace FileExchange.Web.UnitTests
+namespace FileExchange.Web.UnitTests.Tests
 {
     [TestClass]
     public class FileControllerTests
@@ -39,6 +43,7 @@ namespace FileExchange.Web.UnitTests
         private Mock<IFileProvider> _fileProviderMock { get; set; }
         private Mock<IWebSecurity> _webSecurityMock{ get; set; }
         private CompareLogic _compareLogic { get; set; }
+        private Mock<IViewRenderWrapper> _viewRenderWrapperMock { get; set; }
         private const int CurrentUserId = 1;
         [TestInitialize()]
         public void TestInitialize()
@@ -55,6 +60,7 @@ namespace FileExchange.Web.UnitTests
             _mailerMock = new Mock<IMailer>();
             _fileProviderMock = new Mock<IFileProvider>();
             _webSecurityMock = new Mock<IWebSecurity>();
+            _viewRenderWrapperMock = new Mock<IViewRenderWrapper>();
             _webSecurityMock.Setup(s => s.GetCurrentUserId()).Returns(CurrentUserId);
            _userProfileServiceMock.Setup(u => u.GetUserById(It.IsAny<int>())).Returns((int userId) => new UserProfile()
             {
@@ -65,12 +71,11 @@ namespace FileExchange.Web.UnitTests
                 UserName = "Test"
             });
 
-
             _fileController = new FileController(_unitOfWorkMock.Object, _fileCategoriesServiceMock.Object,
                 _fileFileNotificationSubscriberServiceMoq.Object,
                 _fileExchangeServiceMock.Object, _fileCommentServiceMock.Object, _bandwidthThrottlingSettingsMock.Object,
-                _userProfileServiceMock.Object, _mailerMock.Object, _fileProviderMock.Object, _webSecurityMock.Object);
-            _fileController.SetMockControllerContext();
+                _userProfileServiceMock.Object, _mailerMock.Object, _fileProviderMock.Object, _webSecurityMock.Object, _viewRenderWrapperMock.Object);
+            _fileController.SetMockControllerContext(MVC.File.Name);
          
         }
 
@@ -419,6 +424,79 @@ namespace FileExchange.Web.UnitTests
             }
             Assert.IsInstanceOfType(result.Model, typeof(IEnumerable<FileCommentsViewModel>), string.Format(
                     "incorrect type for Model.The modelt should be {0} type.", typeof(IEnumerable<FileCommentsViewModel>)));
+        }
+
+        [TestMethod]
+        public void DownloadFile_Result_Test()
+        {
+            const int fileId = 1;
+            _fileExchangeServiceMock.Setup(f => f.GetFilteredFile(fileId, It.IsAny<bool>())).Returns(new ExchangeFile()
+            {
+                FileId = fileId,
+                UniqFileName = "test",
+                OrigFileName = "test"
+            });
+
+           
+            ActionResult actionResult = _fileController.DownloadFile(fileId);
+            Assert.IsInstanceOfType(actionResult, typeof(BandwidthThrottlingFileResult),
+                 string.Format(
+                     "incorrect type for ActionResult.The action result should be BandwidthThrottlingFileResult. Current actionResult has {0} type",
+                     actionResult.GetType()));
+        }
+
+        [TestMethod]
+        public void SubscribeFileNotification_Result_test()
+        {
+            const int fileId = 1;
+            _fileFileNotificationSubscriberServiceMoq.Setup(s => s.UserIsSubscibed(CurrentUserId, fileId))
+                .Returns(false);
+            _fileFileNotificationSubscriberServiceMoq.Setup(s => s.Add(CurrentUserId, fileId)).Returns(
+                new FileNotificationSubscribers()
+                {
+                    FileId = fileId,
+                    Subscriberid = 1,
+                    UserId = CurrentUserId
+                });
+            ActionResult actionResult = _fileController.SubscribeFileNotification(fileId);
+            Assert.IsInstanceOfType(actionResult, typeof(JsonResult),
+                 string.Format(
+                     "incorrect type for ActionResult.The action result should be JsonResult. Current actionResult has {0} type",
+                     actionResult.GetType()));
+        }
+
+        [TestMethod]
+        public void UnscribeFileNotification_Result_test()
+        {
+            const int fileId = 1;
+            _fileFileNotificationSubscriberServiceMoq.Setup(s => s.UserIsSubscibed(CurrentUserId, fileId))
+                .Returns(true);
+           
+            ActionResult actionResult = _fileController.UnscribeFileNotification(fileId);
+            Assert.IsInstanceOfType(actionResult, typeof(JsonResult),
+                 string.Format(
+                     "incorrect type for ActionResult.The action result should be JsonResult. Current actionResult has {0} type",
+                     actionResult.GetType()));
+        }
+        
+        [TestMethod]
+        public void ViewCategoryFilesTableFilter_Result_test()
+        {
+            ActionResult actionResult = _fileController.ViewCategoryFilesTableFilter(new DefaultDataTablesRequest());
+            Assert.IsInstanceOfType(actionResult, typeof(JsonResult),
+                 string.Format(
+                     "incorrect type for ActionResult.The action result should be JsonResult. Current actionResult has {0} type",
+                     actionResult.GetType()));
+        }
+
+        [TestMethod]
+        public void UserFilesTableFilter_Result_test()
+        {
+            ActionResult actionResult = _fileController.UserFilesTableFilter(new JQueryDataTablesModel());
+            Assert.IsInstanceOfType(actionResult, typeof(JsonResult),
+                 string.Format(
+                     "incorrect type for ActionResult.The action result should be JsonResult. Current actionResult has {0} type",
+                     actionResult.GetType()));
         }
     }
 }
