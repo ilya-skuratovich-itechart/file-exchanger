@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using FileExchange.Controllers;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Infrastructure.Captcha;

@@ -1,13 +1,9 @@
 ﻿using System.Web.Mvc;
 using FileExchange.Areas.Admin.Controllers;
 using FileExchange.Areas.Admin.Models;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
-using FileExchange.EmailSender;
-using FileExchange.Infrastructure.FileHelpers;
-using FileExchange.Infrastructure.UserSecurity;
-using FileExchange.Infrastructure.ViewsWrappers;
 using FileExchange.Web.UnitTests.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 using FileExchange.Core;
+using FileExchange.Core.DAL.DbContext;
 using FileExchange.Models;
 
 namespace FileExchange

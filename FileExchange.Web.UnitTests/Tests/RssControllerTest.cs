@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using FileExchange.Controllers;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Infrastructure.CustomHttpContent;
 using FileExchange.Web.UnitTests.Infrastructure;

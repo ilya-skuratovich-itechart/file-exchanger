@@ -11,7 +11,6 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Xml;
-using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Services;
 using FileExchange.Infrastructure.CustomHttpContent;
 using FileExchange.Infrastructure.Rss;

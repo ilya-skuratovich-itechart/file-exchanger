@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Xml.Linq;
-using EntityFramework.Extensions;
-using FileExchange.Core.UOW;
 
-namespace FileExchange.Core.Repositories
+namespace FileExchange.Core.DAL.Repository
 {
 
     public class GenericRepository<T> : IGenericRepository<T>
         where T : class
     {
-        protected DbContext _entities;
+        protected System.Data.Entity.DbContext _entities;
         protected  IDbSet<T> _dbset;
 
         public GenericRepository()
         {
             
         }
-        public void InitializeDbContext(DbContext entities)
+        public void InitializeDbContext(System.Data.Entity.DbContext entities)
         {
             _entities = entities;
             _dbset = entities.Set<T>();

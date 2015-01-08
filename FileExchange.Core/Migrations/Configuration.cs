@@ -1,5 +1,7 @@
-using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.Data;
+using FileExchange.Core.DAL;
+using FileExchange.Core.DAL.DbContext;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.EntityConfiguration;
 
 namespace FileExchange.Core.Migrations
@@ -9,7 +11,7 @@ namespace FileExchange.Core.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    public sealed class Configuration : DbMigrationsConfiguration<FileExchange.Core.FileExchangeDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<FileExchangeDbContext>
     {
         public Configuration()
         {
@@ -17,33 +19,28 @@ namespace FileExchange.Core.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-       
-
-        protected override void Seed(FileExchange.Core.FileExchangeDbContext context)
+        protected override void Seed(FileExchangeDbContext context)
         {
-            
-
-         
             context.UserRoles.AddOrUpdate(
                 new UserRoles()
                 {
-                    RoleId = (int)UserRoleTypes.Admin,
-                    RoleName =UserRoleNames.Admin
+                    RoleId = (int) UserRoleTypes.Admin,
+                    RoleName = UserRoleNames.Admin
                 });
 
             context.UserRoles.AddOrUpdate(
                 new UserRoles()
                 {
-                    RoleId = (int)UserRoleTypes.Moderator,
+                    RoleId = (int) UserRoleTypes.Moderator,
                     RoleName = UserRoleNames.Moderator
                 });
 
             context.UserRoles.AddOrUpdate(
-               new UserRoles()
-               {
-                   RoleId = (int)UserRoleTypes.ActiveUser,
-                   RoleName = UserRoleNames.ActiveUser
-               });
+                new UserRoles()
+                {
+                    RoleId = (int) UserRoleTypes.ActiveUser,
+                    RoleName = UserRoleNames.ActiveUser
+                });
 
 
             context.FielCategories.AddOrUpdate(new FileCategories()

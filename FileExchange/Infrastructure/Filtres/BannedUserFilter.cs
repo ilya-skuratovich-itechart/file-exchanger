@@ -4,22 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Autofac;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
+using FileExchange.Core.UOW;
 
 namespace FileExchange.Infrastructure.Filtres
 {
     public class BannedUserFilter : AuthorizeAttribute
     {
-        private Dictionary<string,List<string>> _actionsToSkip { get; set; }
+        private Dictionary<string, List<string>> _actionsToSkip { get; set; }
         private IUserProfileService _userProfileService { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="actionsToSkip">key - controller name, value - actionName</param>
-        public BannedUserFilter( Dictionary<string,List<string>> actionsToSkip)
-        {
-            _userProfileService=AutofacConfig.ApplicationContainer.Container.Resolve<IUserProfileService>();
+        public BannedUserFilter(Dictionary<string, List<string>> actionsToSkip,IUserProfileService userProfileService)
+        {        
+            _actionsToSkip = actionsToSkip;
+            _userProfileService = userProfileService;
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)

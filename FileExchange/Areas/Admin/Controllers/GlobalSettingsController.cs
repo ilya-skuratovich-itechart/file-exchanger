@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using FileExchange.Areas.Admin.Models;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.Infrastructure.ModelBinders;

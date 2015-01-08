@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FileExchange.Core.BusinessObjects
+namespace FileExchange.Core.DAL.Entity
 {
     [Table("webpages_Roles")]
     public class UserRoles

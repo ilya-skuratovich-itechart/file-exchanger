@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace FileExchange.Infrastructure.ViewsWrappers
+namespace FileExchange.Infrastructure.ViewsHelpers
 {
     public interface IViewRenderWrapper
     {

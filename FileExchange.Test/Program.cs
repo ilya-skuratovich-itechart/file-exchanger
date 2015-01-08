@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using Autofac;
 using FileExchange.Core;
 using FileExchange.Core.AutofacModules;
-using FileExchange.Core.BusinessObjects;
-using FileExchange.Core.Repositories;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using Xipton.Razor;

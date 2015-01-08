@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FileExchange.Core.DTO;
 using FileExchange.EmailSender;
-using FileExchange.Infrastructure.ViewsWrappers;
+using FileExchange.Infrastructure.ViewsHelpers;
 
 namespace FileExchange.Infrastructure.Notifications.FileNotification
 {

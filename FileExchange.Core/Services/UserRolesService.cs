@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using FileExchange.Core.BusinessObjects;
-using FileExchange.Core.Repositories;
+using FileExchange.Core.DAL.Entity;
+using FileExchange.Core.DAL.Repository;
 using FileExchange.Core.UOW;
 
 namespace FileExchange.Core.Services

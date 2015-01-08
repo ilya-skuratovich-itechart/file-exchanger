@@ -1,5 +1,5 @@
-D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\AutoMapper.Net4.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\NLog.config
 D:\projects\file manager\FileExchanger\FileExchange\bin\FileExchange.dll.config
 D:\projects\file manager\FileExchanger\FileExchange\bin\FileExchange.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\FileExchange.pdb
@@ -25,6 +25,7 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\Microsoft.Web.Mvc.FixedD
 D:\projects\file manager\FileExchanger\FileExchange\bin\Microsoft.Web.WebPages.OAuth.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\MvcCheckBoxList.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\Newtonsoft.Json.dll
+D:\projects\file manager\FileExchanger\FileExchange\bin\NLog.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.Mvc.dll
 D:\projects\file manager\FileExchanger\FileExchange\bin\RazorTemplates.Core.dll
@@ -50,10 +51,12 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\Autofac.Integration.WebA
 D:\projects\file manager\FileExchanger\FileExchange\bin\AutoMapper.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\EntityFramework.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\EntityFramework.SqlServer.xml
+D:\projects\file manager\FileExchanger\FileExchange\bin\NLog.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\PagedList.Mvc.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\RazorTemplates.Core.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Helpers.xml
+D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.Razor.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.Deployment.xml
 D:\projects\file manager\FileExchanger\FileExchange\bin\System.Web.WebPages.Razor.xml
@@ -102,6 +105,3 @@ D:\projects\file manager\FileExchanger\FileExchange\bin\zh-Hant\System.Spatial.r
 D:\projects\file manager\FileExchanger\FileExchange\obj\Debug\FileExchange.Web.csprojResolveAssemblyReference.cache
 D:\projects\file manager\FileExchanger\FileExchange\obj\Debug\FileExchange.dll
 D:\projects\file manager\FileExchanger\FileExchange\obj\Debug\FileExchange.pdb
-D:\projects\file manager\FileExchanger\FileExchange\bin\NLog.config
-D:\projects\file manager\FileExchanger\FileExchange\bin\NLog.dll
-D:\projects\file manager\FileExchanger\FileExchange\bin\NLog.xml

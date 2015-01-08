@@ -276,14 +276,13 @@
     <Compile Include="Infrastructure\Captcha\ICaptcha.cs" />
     <Compile Include="Infrastructure\Configuration\ConfigHelper.cs" />
     <Compile Include="Infrastructure\FileHelpers\FileHelper.cs" />
-    <Compile Include="Helplers\HtmlExtensions.cs" />
-    <Compile Include="Helplers\RenderViewHelper.cs" />
+    <Compile Include="Infrastructure\CustomHtmlHelpers\HtmlExtensions.cs" />
+    <Compile Include="Infrastructure\ViewsHelpers\RenderViewHelper.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CustomAttirbutes\GlobalHandleErrorAttribute.cs" />
     <Compile Include="Infrastructure\CustomAttirbutes\WebApiGlobalExceptionFilter.cs" />
-    <Compile Include="Infrastructure\CustomHtmlHelpers\MenuHelpers.cs" />
     <Compile Include="Infrastructure\CustomHttpContent\JsonHttpContent.cs" />
     <Compile Include="Infrastructure\FileHelpers\FileProvider.cs" />
     <Compile Include="Infrastructure\FileHelpers\IFileProvider.cs" />
@@ -297,8 +296,8 @@
     <Compile Include="Infrastructure\Rss\RssService.cs" />
     <Compile Include="Infrastructure\UserSecurity\IWebSecurity.cs" />
     <Compile Include="Infrastructure\UserSecurity\WebSecurityWrapper.cs" />
-    <Compile Include="Infrastructure\ViewsWrappers\IViewRenderWrapper.cs" />
-    <Compile Include="Infrastructure\ViewsWrappers\ViewRenderWrapper.cs" />
+    <Compile Include="Infrastructure\ViewsHelpers\IViewRenderWrapper.cs" />
+    <Compile Include="Infrastructure\ViewsHelpers\ViewRenderWrapper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseFileTemplateViewModel.cs" />
     <Compile Include="Models\Captcha.cs" />

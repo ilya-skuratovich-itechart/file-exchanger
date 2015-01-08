@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 
 namespace FileExchange.Core.EntityConfiguration
 {

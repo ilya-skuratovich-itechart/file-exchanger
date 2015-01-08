@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq.Expressions;
 
-namespace FileExchange.Core.Repositories
+namespace FileExchange.Core.DAL.Repository
 {
     public interface IGenericRepository<T> where T : class
     {
-        void InitializeDbContext(DbContext entities);
+        void InitializeDbContext(System.Data.Entity.DbContext entities);
         IEnumerable<T> GetAll(string[] includes = null);
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate, string[] includes = null);
 

@@ -4,6 +4,7 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using FileExchange.Core;
+using FileExchange.Core.DAL.DbContext;
 using WebMatrix.WebData;
 
 namespace FileExchange.Filters

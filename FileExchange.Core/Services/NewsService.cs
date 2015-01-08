@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using FileExchange.Core.BusinessObjects;
-using FileExchange.Core.Repositories;
 using FileExchange.Core.UOW;
 using System.ServiceModel.Syndication;
+using FileExchange.Core.DAL.Entity;
+using FileExchange.Core.DAL.Repository;
 
 namespace FileExchange.Core.Services
 {

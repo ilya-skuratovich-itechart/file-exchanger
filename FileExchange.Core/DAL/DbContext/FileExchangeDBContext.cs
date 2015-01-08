@@ -1,11 +1,12 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.EntityConfiguration;
 
-namespace FileExchange.Core
+namespace FileExchange.Core.DAL.DbContext
 {
-    public class FileExchangeDbContext : DbContext
+    public class FileExchangeDbContext : System.Data.Entity.DbContext
     {
         public DbSet<UserProfile> UserProfiles { get; set; }
 
@@ -30,8 +31,8 @@ namespace FileExchange.Core
         public FileExchangeDbContext()
             : base("FileExchangeDbConnectionString")
         {
-
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MembershipMapping());

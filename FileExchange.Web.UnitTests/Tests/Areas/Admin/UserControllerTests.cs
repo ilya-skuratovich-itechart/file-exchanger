@@ -3,14 +3,14 @@ using System.Web.Mvc;
 using FileExchange.Areas.Admin.Controllers;
 using FileExchange.Areas.Admin.Models;
 using FileExchange.Controllers;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Infrastructure.Captcha;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.UserSecurity;
-using FileExchange.Infrastructure.ViewsWrappers;
+using FileExchange.Infrastructure.ViewsHelpers;
 using FileExchange.Models.DataTable;
 using FileExchange.Web.UnitTests.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -116,8 +116,7 @@ namespace FileExchange.Web.UnitTests.Tests.Areas.Admin
             {
                 UserId = 1,
                 UserName = "test",
-                UserEmail = "test@test.su",
-                RolesIds = new int[0]
+                UserEmail = "test@test.su"
             };
             ActionResult actionResult = _userController.EditUser(userModel);
             Assert.IsInstanceOfType(actionResult, typeof (RedirectToRouteResult),

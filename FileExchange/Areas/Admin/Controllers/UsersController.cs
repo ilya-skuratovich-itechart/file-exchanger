@@ -7,15 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using FileExchange.Areas.Admin.Models;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
-using FileExchange.Helplers;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
 using FileExchange.Infrastructure.UserSecurity;
-using FileExchange.Infrastructure.ViewsWrappers;
+using FileExchange.Infrastructure.ViewsHelpers;
 using FileExchange.Models.DataTable;
 using WebMatrix.WebData;
 
@@ -88,7 +87,7 @@ namespace FileExchange.Areas.Admin.Controllers
                 throw new Exception(string.Format("userProfile not exists. UserId:{0}", userModel.UserId));
             userProfile.MaxDonwloadSpeedKbps = userModel.MaxDonwloadSpeedKbps;
             userProfile.FileMaxSizeKbps = userModel.FileMaxSizeKbps;
-            _userInRolesService.UpdateUserInRoles(userProfile.UserId, userModel.RolesIds.ToList());
+            _userInRolesService.UpdateUserInRoles(userProfile.UserId, userModel.RolesIds==null?new List<int>() : userModel.RolesIds.ToList());
             _userProfileService.Update(userProfile);
             _unitOfWork.SaveChanges();
             _unitOfWork.CommitTransaction();

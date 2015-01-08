@@ -13,14 +13,13 @@ using System.Web.Script.Serialization;
 using Autofac;
 using FileExchange.Areas.Admin.Models;
 using FileExchange.Core.BandwidthThrottling;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Infrastructure.ActionResults;
-using FileExchange.Core.BusinessObjects;
 using FileExchange.Core.DTO;
 using FileExchange.Core.FileNotification;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
-using FileExchange.Helplers;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.ModelBinders;
@@ -29,7 +28,7 @@ using FileExchange.Models;
 using FileExchange.Models.DataTable;
 using FileExchange.Infrastructure.Notifications.FileNotification;
 using FileExchange.Infrastructure.UserSecurity;
-using FileExchange.Infrastructure.ViewsWrappers;
+using FileExchange.Infrastructure.ViewsHelpers;
 using WebMatrix.WebData;
 
 namespace FileExchange.Controllers

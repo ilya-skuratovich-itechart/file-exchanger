@@ -1,18 +1,22 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using FileExchange.Controllers;
 using FileExchange.Core.BandwidthThrottling;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Infrastructure.Captcha;
 using FileExchange.Infrastructure.FileHelpers;
+using FileExchange.Infrastructure.Filtres;
 using FileExchange.Infrastructure.LoggerManager;
 using FileExchange.Infrastructure.UserSecurity;
-using FileExchange.Infrastructure.ViewsWrappers;
+using FileExchange.Infrastructure.ViewsHelpers;
 using Module = Autofac.Module;
 
 namespace FileExchange.Infrastructure.AutofacModules
@@ -21,6 +25,8 @@ namespace FileExchange.Infrastructure.AutofacModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            RegisterFilters(builder);
+
             builder.Register(c => new
                 Mailer("fileExchange@localhost", "test", "localhost", 25)).As<IMailer>();
 
@@ -29,10 +35,10 @@ namespace FileExchange.Infrastructure.AutofacModules
             builder.Register(c => new FileExchange.Infrastructure.Captcha.Captcha()).As<ICaptcha>();
 
             builder.Register(c => new
-                FileProvider()).As<IFileProvider>();
+                FileProvider()).As<IFileProvider>().SingleInstance();
 
             builder.Register(c => new
-                LoggerManager.LoggerManager()).As<ILogger>();
+                LoggerManager.LoggerManager()).As<ILogger>().SingleInstance();
 
             builder.Register(c => new
              ViewRenderWrapper()).As<IViewRenderWrapper>();
@@ -52,9 +58,9 @@ namespace FileExchange.Infrastructure.AutofacModules
                 .UsingConstructor(typeof(IUnitOfWork))
                 .InstancePerHttpRequest();
 
+
             builder.RegisterType<UserProfileService>().As<IUserProfileService>()
-                .UsingConstructor(typeof(IUnitOfWork))
-                .InstancePerHttpRequest();
+                .UsingConstructor(typeof(IUnitOfWork)).InstancePerHttpRequest();
 
             builder.RegisterType<FileCommentService>().As<IFileCommentService>()
                 .UsingConstructor(typeof(IUnitOfWork))
@@ -82,6 +88,26 @@ namespace FileExchange.Infrastructure.AutofacModules
                 .InstancePerHttpRequest();
 
             base.Load(builder);
+        }
+
+        private void RegisterFilters(ContainerBuilder builder)
+        {
+            Dictionary<string, List<string>> excludeBannedUserDic = new Dictionary<string, List<string>>()
+            {
+                {MVC.Account.Name, new List<string>() {MVC.Account.ActionNames.UserBanned}},
+            };
+      
+            builder.Register(c => new BannedUserFilter(excludeBannedUserDic,c.Resolve<IUserProfileService>()))
+                .AsAuthorizationFilterFor<HomeController>().InstancePerHttpRequest();
+
+            builder.Register(c => new BannedUserFilter(excludeBannedUserDic, c.Resolve<IUserProfileService>()))
+               .AsAuthorizationFilterFor<AccountController>().InstancePerHttpRequest();
+
+            builder.Register(c => new BannedUserFilter(excludeBannedUserDic, c.Resolve<IUserProfileService>()))
+               .AsAuthorizationFilterFor<FileController>().InstancePerHttpRequest();
+
+            builder.Register(c => new BannedUserFilter(excludeBannedUserDic, c.Resolve<IUserProfileService>()))
+               .AsAuthorizationFilterFor<NewsController>().InstancePerHttpRequest();
         }
     }
 }

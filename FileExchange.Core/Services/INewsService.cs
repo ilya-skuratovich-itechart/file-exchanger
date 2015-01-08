@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel.Syndication;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 
 namespace FileExchange.Core.Services
 {

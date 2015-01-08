@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.DTO;
 
 namespace FileExchange.Core.Services

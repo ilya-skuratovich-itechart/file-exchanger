@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 
 namespace FileExchange.Core.Services
 {

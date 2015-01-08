@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FileExchange.Areas.Admin.Models;
-using FileExchange.Core.BusinessObjects;
-using FileExchange.Helplers;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Models;
 

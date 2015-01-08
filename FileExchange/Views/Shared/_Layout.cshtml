@@ -25,11 +25,11 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse col-md-10">
                 <ul class="nav navbar-nav">
-                    <li class="@Html.IsActive(MVC.Home.ActionNames.Index, MVC.Home.Name)"><a href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)">Home</a></li>
-                    <li class="@Html.IsActive(MVC.News.ActionNames.ViewNews, MVC.News.Name)"><a href="@Url.Action(MVC.News.ActionNames.ViewNews, MVC.News.Name)">News</a></li>
+                    <li class="@Html.MenuIsActive(MVC.Home.ActionNames.Index, MVC.Home.Name)"><a href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name)">Home</a></li>
+                    <li class="@Html.MenuIsActive(MVC.News.ActionNames.ViewNews, MVC.News.Name)"><a href="@Url.Action(MVC.News.ActionNames.ViewNews, MVC.News.Name)">News</a></li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li class="@Html.IsActive(MVC.File.ActionNames.UserFiles, MVC.File.Name)"><a href="@Url.Action(MVC.File.ActionNames.UserFiles, MVC.File.Name)">My files</a></li>
+                        <li class="@Html.MenuIsActive(MVC.File.ActionNames.UserFiles, MVC.File.Name)"><a href="@Url.Action(MVC.File.ActionNames.UserFiles, MVC.File.Name)">My files</a></li>
                     }
 
                 </ul>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 
 namespace FileExchange.Core.Services
 {

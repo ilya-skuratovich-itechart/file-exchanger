@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Transactions;
+using FileExchange.Core.DAL;
+using FileExchange.Core.DAL.DbContext;
 
 namespace FileExchange.Core.UOW
 {

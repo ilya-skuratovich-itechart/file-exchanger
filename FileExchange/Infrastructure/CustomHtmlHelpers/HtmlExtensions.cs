@@ -1,17 +1,27 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Web.Mvc;
 
 namespace FileExchange.Infrastructure.CustomHtmlHelpers
 {
-    public static class MenuHelpers
+    public static class HtmlExtensions
     {
-        public static string IsActive(this HtmlHelper htmlHelper, string menuActionName, string menuControllerName)
+        public static MvcHtmlString RemoveHtmlTags(this HtmlHelper html,string htmlContent,int? displayLength=null)
+        {
+            string content = Regex.Replace(htmlContent, @"<[^>]*>", String.Empty);
+            if (displayLength.HasValue)
+                content = content.Length > displayLength.Value ? content.Remove(displayLength.Value) : content;
+            return MvcHtmlString.Create(content);
+        }
+
+        public static string MenuIsActive(this HtmlHelper htmlHelper, string menuActionName, string menuControllerName)
         {
             string controllerName =
-                (string) htmlHelper.ViewContext.RouteData.GetRequiredString("controller");
+                (string)htmlHelper.ViewContext.RouteData.GetRequiredString("controller");
 
             string actionName =
-                (string) htmlHelper.ViewContext.RouteData.GetRequiredString("action");
-            string result = string.Empty;
+                (string)htmlHelper.ViewContext.RouteData.GetRequiredString("action");
+            string result = String.Empty;
             if (MVC.File.Name == controllerName && controllerName == menuControllerName)
             {
                 if ((MVC.File.ActionNames.UserFiles == actionName

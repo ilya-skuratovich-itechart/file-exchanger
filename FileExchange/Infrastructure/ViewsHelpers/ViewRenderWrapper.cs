@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Xipton.Razor;
 
-namespace FileExchange.Infrastructure.ViewsWrappers
+namespace FileExchange.Infrastructure.ViewsHelpers
 {
     public class ViewRenderWrapper : IViewRenderWrapper
     {

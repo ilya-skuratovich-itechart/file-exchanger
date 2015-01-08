@@ -5,6 +5,8 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Text;
 using System.Transactions;
+using FileExchange.Core.DAL;
+using FileExchange.Core.DAL.DbContext;
 
 namespace FileExchange.Core.UOW
 {

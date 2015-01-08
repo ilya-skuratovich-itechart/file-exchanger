@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FileExchange.Core.Repositories;
+using FileExchange.Core.DAL.Repository;
 using FileExchange.Core.Services;
 
 namespace FileExchange.Core

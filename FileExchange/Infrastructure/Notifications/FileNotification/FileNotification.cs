@@ -2,7 +2,6 @@
 using Autofac;
 using FileExchange.Core.DTO;
 using FileExchange.EmailSender;
-using FileExchange.Helplers;
 using FileExchange.Models;
 
 namespace FileExchange.Infrastructure.Notifications.FileNotification

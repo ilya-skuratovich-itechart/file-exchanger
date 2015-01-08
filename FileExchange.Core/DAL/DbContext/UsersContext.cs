@@ -1,9 +1,9 @@
 ﻿using System.Data.Entity;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 
-namespace FileExchange.Core
+namespace FileExchange.Core.DAL.DbContext
 {
-    public class UsersContext : DbContext
+    public class UsersContext : System.Data.Entity.DbContext
     {
         public UsersContext()
             : base("FileExchangeDbConnectionString")

@@ -1,9 +1,9 @@
 ﻿using FileExchange.Core.Services;
 using System;
 using System.ServiceModel.Syndication;
-using FileExchange.Core.BusinessObjects;
 using System.Collections.Generic;
 using System.Linq;
+using FileExchange.Core.DAL.Entity;
 
 namespace FileExchange.Infrastructure.Rss
 {

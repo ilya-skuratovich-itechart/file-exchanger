@@ -1,5 +1,5 @@
 ﻿using System;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 
 namespace FileExchange.Core.BandwidthThrottling

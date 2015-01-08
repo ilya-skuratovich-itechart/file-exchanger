@@ -1,9 +1,8 @@
 ﻿using System.IO;
 using AutoMapper;
 using FileExchange.Areas.Admin.Models;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.EmailSender;
-using FileExchange.Helplers;
 using FileExchange.Infrastructure.Configuration;
 using FileExchange.Models;
 

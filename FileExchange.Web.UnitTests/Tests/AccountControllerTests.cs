@@ -2,14 +2,13 @@
 using System.Web.UI.WebControls;
 using FileExchange.Controllers;
 using FileExchange.Core.BandwidthThrottling;
-using FileExchange.Core.BusinessObjects;
+using FileExchange.Core.DAL.Entity;
 using FileExchange.Core.Services;
 using FileExchange.Core.UOW;
 using FileExchange.EmailSender;
 using FileExchange.Infrastructure.Captcha;
 using FileExchange.Infrastructure.FileHelpers;
 using FileExchange.Infrastructure.UserSecurity;
-using FileExchange.Infrastructure.ViewsWrappers;
 using FileExchange.Models;
 using FileExchange.Web.UnitTests.Infrastructure;
 using KellermanSoftware.CompareNetObjects;
