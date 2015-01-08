@@ -71,7 +71,7 @@
     <Compile Include="Data\UserRoleNames.cs" />
     <Compile Include="DTO\FileUserNotification.cs" />
     <Compile Include="EntityConfiguration\Mappings.cs" />
-    <Compile Include="FileExchangeDBContext.cs" />
+    <Compile Include="DAL\FileExchangeDBContext.cs" />
     <Compile Include="FileNotification\FileNotificationTracker.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,9 +102,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FileExchange.EmailSender\FileExchange.EmailSender.csproj">

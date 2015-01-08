@@ -36,15 +36,6 @@ namespace FileExchange.Infrastructure.ViewsWrappers
             return result;
         }
 
-        private RazorMachine CreateRazorMachineWithoutContentProviders(bool includeGeneratedSourceCode = false,
-            string rootOperatorPath = null, bool htmlEncode = true)
-        {
-            var rm = new RazorMachine(includeGeneratedSourceCode: includeGeneratedSourceCode, htmlEncode: htmlEncode,
-                rootOperatorPath: rootOperatorPath);
-            rm.Context.TemplateFactory.ContentManager.ClearAllContentProviders();
-            return rm;
-        }
-
         private string MapPath(string filePath)
         {
             return HttpContext.Current != null

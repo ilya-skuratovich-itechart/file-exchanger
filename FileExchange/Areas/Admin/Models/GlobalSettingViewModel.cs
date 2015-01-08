@@ -4,10 +4,9 @@ namespace FileExchange.Areas.Admin.Models
 {
     public class GlobalSettingViewModel
     {
+        [Required]
         public int SettingId { get; set; }
 
-        [Required()]
-        [MaxLength(50)]
         [Display(Name = "Setting name:")]
         public string SettingName { get; set; }
 

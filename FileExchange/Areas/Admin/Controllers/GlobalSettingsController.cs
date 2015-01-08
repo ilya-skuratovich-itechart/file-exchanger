@@ -49,8 +49,10 @@ namespace FileExchange.Areas.Admin.Controllers
             if (!settingValueRegex.Match(settingModel.SettingValue).Success)
             {
                 ModelState.AddModelError(NameOf<GlobalSettingViewModel>.Property(s=>s.SettingValue), "incorrect setting value.");
-                return View(settingModel);
+               
             }
+            if (!ModelState.IsValid)
+                return View(settingModel);
             _globalSettingService.Update(settingModel.SettingId,settingModel.SettingValue);
             _unitOfWork.SaveChanges();
             return RedirectToAction(MVC.Admin.GlobalSettings.ActionNames.ViewSettings);

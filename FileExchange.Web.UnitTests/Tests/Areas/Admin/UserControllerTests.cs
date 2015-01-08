@@ -81,7 +81,7 @@ namespace FileExchange.Web.UnitTests.Tests.Areas.Admin
                         actionResult.GetType()));
             }
             else if (!(result.Model is EditUserViewModel))
-                Assert.Fail("incorrect model type.");
+                Assert.Fail("incorrect type of model.");
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace FileExchange.Web.UnitTests.Tests.Areas.Admin
                         actionResult.GetType()));
             }
             else if (!(result.Model is EditUserViewModel))
-                Assert.Fail("incorrect model type.");
+                Assert.Fail("incorrect type of model.");
         }
 
         [TestMethod]
